@@ -2,8 +2,9 @@
 Orchestrator: load fetcher output (sample or live) -> merge into one entry
 per keyword -> run every analysis module -> compute KPIs + Needs Attention
 alerts + history deltas -> write data/keyword_research_data.json +
-data/keyword_history.json -> emit the self-contained static
-keyword-research-dashboard.html.
+data/keyword_history.json -> emit the self-contained static index.html
+(named index.html, not keyword-research-dashboard.html, so Vercel serves it
+at the domain root with zero output-directory/rewrite configuration).
 
 Usage:
     python build_keyword_research_dashboard.py            # --phase sample (default)
@@ -36,7 +37,7 @@ DATA_DIR = os.path.join(ROOT, "data")
 SAMPLE_DIR = os.path.join(DATA_DIR, "sample")
 OUTPUT_JSON = os.path.join(DATA_DIR, "keyword_research_data.json")
 HISTORY_JSON = os.path.join(DATA_DIR, "keyword_history.json")
-OUTPUT_HTML = os.path.join(ROOT, "keyword-research-dashboard.html")
+OUTPUT_HTML = os.path.join(ROOT, "index.html")
 
 HIGH_PRIORITY_CONFIDENCE_FLOOR = 55
 MAX_POSITION_HISTORY_POINTS = 8

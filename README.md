@@ -17,7 +17,8 @@ python scripts/verify_build.py
 pytest tests/test_scoring.py -q
 python -m http.server 8000
 ```
-Then open `http://localhost:8000/keyword-research-dashboard.html`.
+Then open `http://localhost:8000/` (built as `index.html` so Vercel serves
+it at the domain root with no output-directory config needed).
 
 ## Phase 1 (current, sample data) vs Phase 2 (live)
 
@@ -77,7 +78,7 @@ Hermitage, Kairali Heritage Resort.
 `.github/workflows/weekly_refresh.yml` runs Monday mornings (08:00 IST) +
 on-demand via `workflow_dispatch`, and commits the refreshed
 `data/keyword_research_data.json`, `data/keyword_history.json`, and
-`keyword-research-dashboard.html` straight back to this repo. Live runs will
+`index.html` straight back to this repo. Live runs will
 fail loudly (not silently fall back to sample data) until `SEMRUSH_API_KEY`
 and the Google credentials are set as repo secrets.
 

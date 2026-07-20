@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-20T16:55:24.876247+00:00",
+  "generatedAt": "2026-07-20T17:41:46.572817+00:00",
   "phase": "sample",
   "kpis": {
     "totalKeywords": 38,
@@ -9,11 +9,11 @@
     "avgConfidenceScore": 56.3
   },
   "kpiDeltas": {
-    "totalKeywords": 4,
+    "totalKeywords": 0,
     "highPriorityKeywords": 0,
-    "contentGapsIdentified": -2,
-    "complianceRiskFlagged": 1,
-    "avgConfidenceScore": -8.7
+    "contentGapsIdentified": 0,
+    "complianceRiskFlagged": 0,
+    "avgConfidenceScore": 0.0
   },
   "entries": [
     {
@@ -2621,13 +2621,6 @@
       "keyword": "ayurveda miracle cure for diabetes",
       "text": "“ayurveda miracle cure for diabetes” is flagged for unsubstantiated medical-claim language (cure, miracle) -- do not use in ads or landing-page copy as-is.",
       "source": "Compliance Check"
-    },
-    {
-      "severity": "medium",
-      "category": "RANK DROP",
-      "keyword": "ayurvedic weight loss treatment",
-      "text": "Ranking for “ayurvedic weight loss treatment” dropped from position 8.1 to 12.4 since the last refresh.",
-      "source": "GSC"
     },
     {
       "severity": "medium",
