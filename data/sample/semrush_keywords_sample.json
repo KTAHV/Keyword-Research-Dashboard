@@ -1,0 +1,47 @@
+{
+  "panchakarma treatment kerala": {"volumeByCountry": {"in": 2900, "us": 320, "uk": 210, "ae": 480, "de": 90}, "cpc": 145, "difficulty": 38, "parentTopic": "panchakarma treatment", "relatedQuestions": ["what is panchakarma treatment", "how long does panchakarma treatment take"]},
+  "ayurvedic treatment packages kerala": {"volumeByCountry": {"in": 1900, "us": 260, "uk": 170, "ae": 310}, "cpc": 132, "difficulty": 42, "parentTopic": "ayurvedic treatment packages", "relatedQuestions": ["what is the cost of ayurvedic treatment in kerala"]},
+  "best ayurveda hospital kerala": {"volumeByCountry": {"in": 3600, "us": 410, "uk": 260, "ae": 520}, "cpc": 158, "difficulty": 51, "parentTopic": "ayurveda hospital kerala", "relatedQuestions": ["how to choose a genuine ayurveda hospital"]},
+  "nabh accredited ayurveda hospital": {"volumeByCountry": {"in": 590, "us": 70, "uk": 40}, "cpc": 121, "difficulty": 29, "parentTopic": "nabh ayurveda hospital", "relatedQuestions": []},
+  "ayurvedic weight loss treatment": {"volumeByCountry": {"in": 4400, "us": 880, "uk": 390, "ae": 210}, "cpc": 98, "difficulty": 47, "parentTopic": "ayurvedic weight loss", "relatedQuestions": []},
+  "ayurvedic treatment for chronic pain": {"volumeByCountry": {"in": 1600, "us": 340, "uk": 180}, "cpc": 112, "difficulty": 35, "parentTopic": "ayurveda chronic pain", "relatedQuestions": ["is ayurveda treatment effective for chronic pain", "can ayurveda cure chronic back pain"]},
+  "ayurveda detox retreat kerala": {"volumeByCountry": {"in": 1300, "us": 410, "uk": 260, "au": 140}, "cpc": 165, "difficulty": 44, "parentTopic": "ayurveda detox retreat", "relatedQuestions": []},
+  "wellness resort kerala ayurveda": {"volumeByCountry": {"in": 2100, "us": 380, "uk": 210, "au": 160}, "cpc": 141, "difficulty": 49, "parentTopic": "wellness resort kerala", "relatedQuestions": []},
+  "ayurveda treatment for foreigners kerala": {"volumeByCountry": {"us": 260, "uk": 190, "ae": 220, "de": 140, "au": 110}, "cpc": 175, "difficulty": 31, "parentTopic": "ayurveda treatment foreigners", "relatedQuestions": []},
+  "ayurvedic hospital for nri": {"volumeByCountry": {"ae": 310, "us": 180, "uk": 120, "qa": 90, "kw": 70}, "cpc": 168, "difficulty": 27, "parentTopic": "ayurveda hospital nri", "relatedQuestions": []},
+
+  "what is panchakarma treatment": {"volumeByCountry": {"in": 5400, "us": 720, "uk": 310}, "cpc": 62, "difficulty": 22, "parentTopic": "panchakarma treatment", "relatedQuestions": []},
+  "how long does panchakarma treatment take": {"volumeByCountry": {"in": 880, "us": 140}, "cpc": 48, "difficulty": 18, "parentTopic": "panchakarma treatment", "relatedQuestions": []},
+  "is ayurveda treatment effective for chronic pain": {"volumeByCountry": {"in": 320, "us": 210, "uk": 90}, "cpc": 55, "difficulty": 24, "parentTopic": "ayurveda chronic pain", "relatedQuestions": []},
+  "what is the cost of ayurvedic treatment in kerala": {"volumeByCountry": {"in": 2400, "us": 310, "uk": 180, "ae": 210}, "cpc": 71, "difficulty": 26, "parentTopic": "ayurvedic treatment cost", "relatedQuestions": []},
+  "why is kerala famous for ayurveda": {"volumeByCountry": {"in": 1900, "us": 260}, "cpc": 34, "difficulty": 19, "parentTopic": "kerala ayurveda", "relatedQuestions": []},
+  "how to choose a genuine ayurveda hospital": {"volumeByCountry": {"in": 410, "us": 90, "uk": 60}, "cpc": 58, "difficulty": 21, "parentTopic": "ayurveda hospital kerala", "relatedQuestions": []},
+  "can ayurveda cure chronic back pain": {"volumeByCountry": {"in": 720, "us": 180}, "cpc": 44, "difficulty": 23, "parentTopic": "ayurveda chronic pain", "relatedQuestions": []},
+
+  "ayurveda retreat for stress and anxiety": {"volumeByCountry": {"in": 1400, "us": 620, "uk": 340, "au": 210}, "cpc": 138, "difficulty": 33, "parentTopic": "ayurveda stress anxiety", "relatedQuestions": []},
+  "post covid recovery ayurveda treatment": {"volumeByCountry": {"in": 980, "us": 210, "uk": 140}, "cpc": 92, "difficulty": 28, "parentTopic": "ayurveda post covid recovery", "relatedQuestions": []},
+  "ayurvedic fertility treatment kerala": {"volumeByCountry": {"in": 1700, "us": 290, "ae": 240}, "cpc": 119, "difficulty": 40, "parentTopic": "ayurvedic fertility treatment", "relatedQuestions": []},
+  "ayurveda treatment for diabetes management": {"volumeByCountry": {"in": 2200, "us": 340, "uk": 160}, "cpc": 104, "difficulty": 37, "parentTopic": "ayurveda diabetes management", "relatedQuestions": []},
+  "authentic panchakarma vs spa panchakarma": {"volumeByCountry": {"in": 260, "us": 110, "uk": 60}, "cpc": 51, "difficulty": 20, "parentTopic": "panchakarma treatment", "relatedQuestions": []},
+
+  "ayurvedic massage near me": {"volumeByCountry": {"in": 8100, "us": 2400, "uk": 890}, "cpc": 39, "difficulty": 55, "parentTopic": "ayurvedic massage", "relatedQuestions": []},
+  "kerala spa with happy ending": {"volumeByCountry": {"in": 590, "us": 40}, "cpc": 18, "difficulty": 60, "parentTopic": "kerala spa", "relatedQuestions": []},
+  "ayurveda home remedies for weight loss": {"volumeByCountry": {"in": 3200, "us": 410}, "cpc": 12, "difficulty": 30, "parentTopic": "ayurveda home remedies", "relatedQuestions": []},
+  "how to make ayurvedic oil at home": {"volumeByCountry": {"in": 1900, "us": 220}, "cpc": 9, "difficulty": 25, "parentTopic": "ayurvedic oil", "relatedQuestions": []},
+  "ayurveda hospital jobs kerala": {"volumeByCountry": {"in": 720}, "cpc": 21, "difficulty": 15, "parentTopic": "ayurveda hospital jobs", "relatedQuestions": []},
+  "panchakarma therapist salary": {"volumeByCountry": {"in": 480}, "cpc": 14, "difficulty": 12, "parentTopic": "panchakarma therapist", "relatedQuestions": []},
+
+  "guaranteed cure for chronic pain ayurveda": {"volumeByCountry": {"in": 390, "us": 90}, "cpc": 82, "difficulty": 34, "parentTopic": "ayurveda chronic pain", "relatedQuestions": []},
+  "ayurveda miracle cure for diabetes": {"volumeByCountry": {"in": 610, "us": 130}, "cpc": 76, "difficulty": 36, "parentTopic": "ayurveda diabetes management", "relatedQuestions": []},
+
+  "vaidyagrama vs kairali ayurveda": {"volumeByCountry": {"in": 210, "us": 60}, "cpc": 41, "difficulty": 22, "parentTopic": "kairali brand comparison", "relatedQuestions": []},
+  "somatheeram ayurveda packages cost": {"volumeByCountry": {"in": 480, "us": 90, "uk": 60}, "cpc": 88, "difficulty": 32, "parentTopic": "ayurveda treatment cost", "relatedQuestions": []},
+  "best ayurveda retreat kerala for couples": {"volumeByCountry": {"in": 890, "us": 260, "uk": 140, "au": 90}, "cpc": 149, "difficulty": 45, "parentTopic": "ayurveda retreat kerala", "relatedQuestions": []},
+
+  "panchakarma treatment cost kerala": {"volumeByCountry": {"in": 2600, "us": 340, "uk": 190, "ae": 260}, "cpc": 128, "difficulty": 39, "parentTopic": "panchakarma treatment", "relatedQuestions": []},
+  "ayurveda treatment packages for couples": {"volumeByCountry": {"in": 760, "us": 210, "uk": 110}, "cpc": 118, "difficulty": 36, "parentTopic": "ayurvedic treatment packages", "relatedQuestions": []},
+
+  "ayurveda treatment kerala for uk patients": {"volumeByCountry": {"uk": 480, "us": 60}, "cpc": 189, "difficulty": 24, "parentTopic": "ayurveda treatment foreigners", "relatedQuestions": []},
+  "ayurveda retreat dubai patients kerala": {"volumeByCountry": {"ae": 390, "sa": 140, "qa": 90}, "cpc": 172, "difficulty": 23, "parentTopic": "ayurveda treatment foreigners", "relatedQuestions": []},
+  "ayurveda hospital kerala for german patients": {"volumeByCountry": {"de": 310, "fr": 60}, "cpc": 155, "difficulty": 21, "parentTopic": "ayurveda treatment foreigners", "relatedQuestions": []}
+}

@@ -1,0 +1,16 @@
+{
+  "kpiHistory": [
+    {
+      "date": "2026-07-13",
+      "totalKeywords": 34,
+      "highPriorityKeywords": 9,
+      "contentGapsIdentified": 8,
+      "complianceRiskFlagged": 2,
+      "avgConfidenceScore": 65.0
+    }
+  ],
+  "positionHistory": {
+    "ayurvedic weight loss treatment": [{"date": "2026-07-13", "position": 8.1}],
+    "panchakarma treatment cost kerala": [{"date": "2026-07-13", "position": 3.1}]
+  }
+}

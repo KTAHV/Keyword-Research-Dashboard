@@ -1,0 +1,8 @@
+# Phase 2 only -- needed once the real fetchers (GSC/GA4/Ads/Semrush) are
+# wired up. Not required for `python build_keyword_research_dashboard.py` in
+# sample phase. Google client versions match the sibling Combined Marketing
+# Dashboard / Page Quality Dashboard repos.
+google-ads==31.1.0
+google-analytics-data==0.23.0
+google-auth-oauthlib==1.4.0
+google-auth==2.56.0

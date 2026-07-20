@@ -1,0 +1,156 @@
+{
+  "kpiHistory": [
+    {
+      "date": "2026-07-13",
+      "totalKeywords": 34,
+      "highPriorityKeywords": 9,
+      "contentGapsIdentified": 8,
+      "complianceRiskFlagged": 2,
+      "avgConfidenceScore": 65.0
+    },
+    {
+      "totalKeywords": 38,
+      "highPriorityKeywords": 9,
+      "contentGapsIdentified": 6,
+      "complianceRiskFlagged": 3,
+      "avgConfidenceScore": 56.3,
+      "date": "2026-07-20"
+    }
+  ],
+  "positionHistory": {
+    "ayurvedic weight loss treatment": [
+      {
+        "date": "2026-07-13",
+        "position": 8.1
+      },
+      {
+        "date": "2026-07-20",
+        "position": 12.4
+      }
+    ],
+    "panchakarma treatment cost kerala": [
+      {
+        "date": "2026-07-13",
+        "position": 3.1
+      },
+      {
+        "date": "2026-07-20",
+        "position": 3.5
+      }
+    ],
+    "panchakarma treatment kerala": [
+      {
+        "date": "2026-07-20",
+        "position": 4.2
+      }
+    ],
+    "ayurvedic treatment packages kerala": [
+      {
+        "date": "2026-07-20",
+        "position": 6.8
+      }
+    ],
+    "best ayurveda hospital kerala": [
+      {
+        "date": "2026-07-20",
+        "position": 8.5
+      }
+    ],
+    "nabh accredited ayurveda hospital": [
+      {
+        "date": "2026-07-20",
+        "position": 3.1
+      }
+    ],
+    "ayurvedic treatment for chronic pain": [
+      {
+        "date": "2026-07-20",
+        "position": 9.7
+      }
+    ],
+    "ayurveda detox retreat kerala": [
+      {
+        "date": "2026-07-20",
+        "position": 5.5
+      }
+    ],
+    "wellness resort kerala ayurveda": [
+      {
+        "date": "2026-07-20",
+        "position": 7.2
+      }
+    ],
+    "ayurveda treatment for foreigners kerala": [
+      {
+        "date": "2026-07-20",
+        "position": 4.8
+      }
+    ],
+    "ayurvedic hospital for nri": [
+      {
+        "date": "2026-07-20",
+        "position": 6.1
+      }
+    ],
+    "what is panchakarma treatment": [
+      {
+        "date": "2026-07-20",
+        "position": 15.2
+      }
+    ],
+    "how long does panchakarma treatment take": [
+      {
+        "date": "2026-07-20",
+        "position": 22.0
+      }
+    ],
+    "is ayurveda treatment effective for chronic pain": [
+      {
+        "date": "2026-07-20",
+        "position": 18.4
+      }
+    ],
+    "why is kerala famous for ayurveda": [
+      {
+        "date": "2026-07-20",
+        "position": 11.3
+      }
+    ],
+    "how to choose a genuine ayurveda hospital": [
+      {
+        "date": "2026-07-20",
+        "position": 25.6
+      }
+    ],
+    "can ayurveda cure chronic back pain": [
+      {
+        "date": "2026-07-20",
+        "position": 30.1
+      }
+    ],
+    "ayurveda treatment packages for couples": [
+      {
+        "date": "2026-07-20",
+        "position": 4.9
+      }
+    ],
+    "ayurveda treatment kerala for uk patients": [
+      {
+        "date": "2026-07-20",
+        "position": 9.2
+      }
+    ],
+    "ayurveda retreat dubai patients kerala": [
+      {
+        "date": "2026-07-20",
+        "position": 13.8
+      }
+    ],
+    "ayurveda hospital kerala for german patients": [
+      {
+        "date": "2026-07-20",
+        "position": 6.4
+      }
+    ]
+  }
+}

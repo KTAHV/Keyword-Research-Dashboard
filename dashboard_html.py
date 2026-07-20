@@ -1,0 +1,513 @@
+"""
+Static HTML/CSS/JS template for the Keyword Research Dashboard. Built
+Python-side (TEMPLATE_HEAD / DASHBOARD_JS / TEMPLATE_TAIL, GA4-dashboard-
+style) since there's no pre-existing hand-authored HTML to patch. render_html
+receives the fully-computed build output (build_keyword_research_dashboard.py
+never leaves any scoring/merging logic to the browser) and the shared
+js_const() helper so data is baked in as inline <script> consts -- no
+runtime fetch().
+"""
+
+SIDEBAR_NAV = [
+    {"id": "overview", "label": "Overview", "section": "research"},
+    {"id": "priority", "label": "Priority Keywords", "section": "research"},
+    {"id": "aeo", "label": "AEO/Voice-Search Opportunities", "section": "research"},
+    {"id": "contentgap", "label": "Content Gap", "section": "research"},
+    {"id": "avoid", "label": "Avoid List", "section": "research"},
+    {"id": "competitorgap", "label": "Competitor Gap", "section": "research"},
+    {"id": "underperforming", "label": "Underperforming Pages", "section": "research"},
+    {"id": "needsattention", "label": "Needs Attention", "section": "workspace", "badgeKey": "needsAttentionCount"},
+    {"id": "analytics", "label": "Analytics", "section": "workspace"},
+    {"id": "settings", "label": "Settings", "section": "workspace"},
+]
+
+TEMPLATE_HEAD = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kairali — Keyword Research Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F4F0; --surface:#FFFFFF; --surface-2:#EDEFE6;
+  --green:#6B7A3E; --green-light:#8A9A57; --green-dim:rgba(107,122,62,0.12);
+  --charcoal:#2E362B; --gold:#A87D3E; --terracotta:#B25C3E;
+  --text:#211F1A; --text-muted:#5C5A4F; --text-faint:#847F70;
+  --border:rgba(46,54,43,0.16);
+  --success:#6B7A3E; --success-bg:rgba(107,122,62,0.12);
+  --warn:#A87D3E; --warn-bg:rgba(168,125,62,0.14);
+  --danger:#B25C3E; --danger-bg:rgba(178,92,62,0.10);
+  --na-bg:rgba(132,127,112,0.12);
+  --radius:10px;
+  --sidebar-bg:#16241A; --sidebar-bg-2:#1D2E20;
+  --sidebar-text:rgba(244,244,240,0.72); --sidebar-text-strong:#F4F4F0;
+  --sidebar-border:rgba(244,244,240,0.10);
+  --sidebar-active-bg:rgba(244,244,240,0.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Work Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.app{display:flex;min-height:100vh}
+
+/* ---------- Sidebar ---------- */
+.sidebar{width:250px;flex-shrink:0;background:var(--sidebar-bg);color:var(--sidebar-text);
+  display:flex;flex-direction:column;padding:1.4rem 1rem;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:0 .4rem;margin-bottom:1.4rem}
+.brand-icon{width:34px;height:34px;border-radius:8px;background:var(--gold);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;flex-shrink:0}
+.brand-name{color:var(--sidebar-text-strong);font-weight:600;font-size:14px;line-height:1.3}
+.brand-sub{font-size:10px;letter-spacing:.08em;color:var(--gold);text-transform:uppercase}
+.nav-section-label{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:rgba(244,244,240,0.38);
+  margin:1.1rem .5rem .5rem}
+.nav-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;border-radius:8px;
+  font-size:13.5px;color:var(--sidebar-text);cursor:pointer;transition:background .12s ease;margin-bottom:2px}
+.nav-item:hover{background:rgba(244,244,240,0.06)}
+.nav-item.active{background:var(--sidebar-active-bg);color:var(--sidebar-text-strong);font-weight:500;
+  box-shadow:inset 3px 0 0 var(--gold)}
+.nav-badge{background:var(--terracotta);color:#fff;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:999px}
+.sidebar-spacer{flex:1}
+.sidebar-user{display:flex;align-items:center;gap:10px;padding:.7rem .4rem 0;border-top:1px solid var(--sidebar-border);margin-top:.8rem}
+.user-avatar{width:30px;height:30px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;
+  justify-content:center;font-weight:600;font-size:13px;flex-shrink:0}
+.user-name{color:var(--sidebar-text-strong);font-size:13px;font-weight:500}
+.user-role{font-size:11px;color:rgba(244,244,240,0.5)}
+
+/* ---------- Main ---------- */
+.main{flex:1;min-width:0;padding:1.75rem 2rem 3rem}
+.hero{background:linear-gradient(135deg,var(--sidebar-bg-2),var(--charcoal));border-radius:16px;padding:1.5rem 1.75rem;
+  color:#fff;margin-bottom:1.5rem}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
+.hero-greeting{font-family:'Cormorant Garamond',Georgia,serif;font-size:26px;font-weight:600;margin:0 0 4px}
+.hero-date{font-size:13px;color:rgba(244,244,240,0.72);margin:0}
+.hero-badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.hero-badge{font-size:11.5px;font-weight:500;padding:5px 12px;border-radius:999px;background:rgba(244,244,240,0.10);
+  color:#fff;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--green-light);display:inline-block}
+.hero-email{font-size:11.5px;color:rgba(244,244,240,0.55);margin-top:6px;text-align:right}
+.hero-meta{display:flex;gap:20px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(244,244,240,0.14);flex-wrap:wrap}
+.hero-meta-item{font-size:13px;color:rgba(244,244,240,0.85);display:flex;align-items:center;gap:6px}
+
+.context-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:1.5rem}
+.breadcrumb{font-size:13px;color:var(--text-muted)}
+.breadcrumb b{color:var(--charcoal);font-weight:600}
+.last-refreshed{font-size:12px;color:var(--text-faint)}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:1.5rem}
+@media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--green);
+  border-radius:var(--radius);padding:1.1rem 1.2rem;box-shadow:0 2px 10px rgba(38,38,32,0.06)}
+.kpi.accent-warn{border-top-color:var(--gold)}
+.kpi.accent-danger{border-top-color:var(--terracotta)}
+.kpi-label{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);font-weight:500;margin:0 0 8px}
+.kpi-value{font-size:27px;font-weight:600;margin:0;line-height:1;letter-spacing:-0.01em;
+  font-variant-numeric:tabular-nums;color:var(--charcoal)}
+.kpi-delta{font-size:12px;margin:8px 0 0;font-weight:600}
+.kpi-delta.up{color:var(--success)}
+.kpi-delta.down{color:var(--danger)}
+.kpi-delta.flat{color:var(--text-faint)}
+
+.two-panel{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:1.5rem}
+@media(max-width:900px){.two-panel{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:0 2px 10px rgba(38,38,32,0.06);overflow:hidden}
+.panel-header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;border-bottom:1px solid var(--border)}
+.panel-title{font-size:14.5px;font-weight:600;color:var(--charcoal);margin:0}
+.panel-badge{font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--danger-bg);color:var(--danger)}
+.panel.needs-attention{border-left:4px solid var(--terracotta)}
+.na-list{list-style:none;margin:0;padding:0}
+.na-item{padding:.85rem 1.2rem;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:flex-start}
+.na-item:last-child{border-bottom:none}
+.na-tag{font-size:10px;font-weight:700;letter-spacing:.02em;padding:3px 8px;border-radius:6px;white-space:nowrap;margin-top:1px}
+.na-tag.high{background:var(--danger-bg);color:var(--danger)}
+.na-tag.medium{background:var(--warn-bg);color:var(--gold)}
+.na-text{font-size:12.5px;color:var(--text);line-height:1.45}
+.na-source{font-size:11px;color:var(--text-faint);white-space:nowrap;margin-left:auto;padding-top:1px}
+.snapshot-list{list-style:none;margin:0;padding:0}
+.snapshot-item{display:flex;justify-content:space-between;align-items:center;padding:.85rem 1.2rem;border-bottom:1px solid var(--border);font-size:13px}
+.snapshot-item:last-child{border-bottom:none}
+.snapshot-kw{color:var(--charcoal);font-weight:500}
+.snapshot-topic{font-size:11px;color:var(--text-faint);display:block;margin-top:2px}
+.snapshot-vol{font-weight:600;color:var(--green);white-space:nowrap}
+
+.view{display:none}
+.view.active{display:block}
+.view-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:600;color:var(--charcoal);margin:0 0 1.1rem}
+
+.table-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:0 2px 10px rgba(38,38,32,0.06)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;white-space:nowrap}
+th{text-align:left;font-weight:500;color:var(--text-faint);font-size:10.5px;text-transform:uppercase;
+  letter-spacing:.04em;padding:10px 12px;border-bottom:1px solid var(--border);background:var(--surface-2)}
+td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px}
+.pill-high{background:var(--success-bg);color:var(--success)}
+.pill-medium{background:var(--warn-bg);color:var(--gold)}
+.pill-low{background:var(--danger-bg);color:var(--danger)}
+.pill-none{background:var(--na-bg);color:var(--text-faint)}
+.pill-flagged{background:var(--danger-bg);color:var(--danger)}
+
+.settings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.settings-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem 1.2rem;
+  box-shadow:0 2px 10px rgba(38,38,32,0.06)}
+.settings-card h4{margin:0 0 6px;font-size:13px;color:var(--charcoal)}
+.settings-card p{margin:0;font-size:12.5px;color:var(--text-muted);line-height:1.5}
+
+footer{margin-top:2rem;padding-top:1.25rem;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--text-faint)}
+.na-note{font-size:12.5px;color:var(--text-faint);font-style:italic;padding:1.2rem}
+</style>
+</head>
+<body>
+"""
+
+TEMPLATE_TAIL = """
+</body>
+</html>
+"""
+
+
+def _sidebar_html():
+    research_items = "".join(_nav_item_html(item) for item in SIDEBAR_NAV if item["section"] == "research")
+    workspace_items = "".join(_nav_item_html(item) for item in SIDEBAR_NAV if item["section"] == "workspace")
+    return f"""
+<div class="sidebar">
+  <div class="brand">
+    <div class="brand-icon">K</div>
+    <div>
+      <div class="brand-name">Kairali Group</div>
+      <div class="brand-sub">Keyword Intelligence</div>
+    </div>
+  </div>
+  <div class="nav-section-label">Research</div>
+  {research_items}
+  <div class="nav-section-label">Workspace</div>
+  {workspace_items}
+  <div class="sidebar-spacer"></div>
+  <div class="sidebar-user">
+    <div class="user-avatar">V</div>
+    <div>
+      <div class="user-name">Vikash</div>
+      <div class="user-role">Digital Marketing Manager</div>
+    </div>
+  </div>
+</div>
+"""
+
+
+def _nav_item_html(item):
+    badge = f'<span class="nav-badge" id="navBadge-{item["id"]}" style="display:none"></span>' if item.get("badgeKey") else ""
+    active = " active" if item["id"] == "overview" else ""
+    return (
+        f'<div class="nav-item{active}" data-view="{item["id"]}" data-label="{item["label"]}">'
+        f'<span>{item["label"]}</span>{badge}</div>'
+    )
+
+
+def _main_shell_html():
+    return """
+<div class="main">
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <h1 class="hero-greeting" id="heroGreeting">Good Morning, Vikash!</h1>
+        <p class="hero-date" id="heroDate"></p>
+      </div>
+      <div>
+        <div class="hero-badges">
+          <span class="hero-badge"><span class="dot"></span> System Online</span>
+          <span class="hero-badge">Digital Marketing Manager &middot; MARKETING</span>
+        </div>
+        <p class="hero-email">vikash@ayurvedichealingvillage.com</p>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <span class="hero-meta-item" id="heroClock"></span>
+    </div>
+  </div>
+
+  <div class="context-row">
+    <div class="breadcrumb">Keyword Research &rsaquo; <b id="breadcrumbSection">Overview</b></div>
+    <div class="last-refreshed" id="lastRefreshed"></div>
+  </div>
+
+  <div id="viewOverview" class="view active">
+    <div class="kpi-grid" id="kpiGrid"></div>
+    <div class="two-panel">
+      <div class="panel needs-attention">
+        <div class="panel-header">
+          <p class="panel-title">Needs Attention</p>
+          <span class="panel-badge" id="needsAttentionBadge"></span>
+        </div>
+        <ul class="na-list" id="needsAttentionList"></ul>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><p class="panel-title">Top 5 Content Gap Opportunities</p></div>
+        <ul class="snapshot-list" id="contentGapSnapshot"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="viewPriority" class="view">
+    <h2 class="view-title">Priority Keywords</h2>
+    <div class="table-wrap"><table id="priorityTable"></table></div>
+  </div>
+
+  <div id="viewAeo" class="view">
+    <h2 class="view-title">AEO / Voice-Search Opportunities</h2>
+    <div class="table-wrap"><table id="aeoTable"></table></div>
+  </div>
+
+  <div id="viewContentgap" class="view">
+    <h2 class="view-title">Content Gap</h2>
+    <div class="table-wrap"><table id="contentGapTable"></table></div>
+  </div>
+
+  <div id="viewAvoid" class="view">
+    <h2 class="view-title">Avoid List</h2>
+    <div class="table-wrap"><table id="avoidTable"></table></div>
+  </div>
+
+  <div id="viewCompetitorgap" class="view">
+    <h2 class="view-title">Competitor Gap</h2>
+    <div class="table-wrap"><table id="competitorGapTable"></table></div>
+  </div>
+
+  <div id="viewUnderperforming" class="view">
+    <h2 class="view-title">Underperforming Pages</h2>
+    <div class="table-wrap"><table id="underperformingTable"></table></div>
+  </div>
+
+  <div id="viewNeedsattention" class="view">
+    <h2 class="view-title">Needs Attention — Full List</h2>
+    <ul class="na-list" id="needsAttentionFullList" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 2px 10px rgba(38,38,32,0.06)"></ul>
+  </div>
+
+  <div id="viewAnalytics" class="view">
+    <h2 class="view-title">Analytics — Cross-Source Confidence</h2>
+    <div class="table-wrap"><table id="analyticsTable"></table></div>
+  </div>
+
+  <div id="viewSettings" class="view">
+    <h2 class="view-title">Settings</h2>
+    <div class="settings-grid" id="settingsGrid"></div>
+  </div>
+
+  <footer>
+    <span>Kairali Ayurvedic Healing Village — Keyword Research Dashboard</span>
+    <span id="footerNote"></span>
+  </footer>
+</div>
+"""
+
+
+DASHBOARD_JS = r"""
+<script>
+function pill(value, kind) {
+  if (value === undefined || value === null) return '<span class="pill pill-none">—</span>';
+  var cls = 'pill-' + String(value).toLowerCase().replace(/\s+/g, '-');
+  return '<span class="pill ' + cls + '">' + value + '</span>';
+}
+
+function fmtVolume(volByCountry) {
+  var total = Object.values(volByCountry || {}).reduce(function (a, b) { return a + b; }, 0);
+  return total.toLocaleString();
+}
+
+function timeOfDayGreeting() {
+  var h = new Date().getHours();
+  if (h < 12) return 'Good Morning';
+  if (h < 17) return 'Good Afternoon';
+  return 'Good Evening';
+}
+
+function renderHero() {
+  document.getElementById('heroGreeting').textContent = timeOfDayGreeting() + ', Vikash!';
+  var now = new Date();
+  document.getElementById('heroDate').textContent = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  function tickClock() {
+    document.getElementById('heroClock').textContent = '⏱ ' + new Date().toLocaleTimeString('en-US');
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+}
+
+function deltaHtml(value) {
+  if (value === null || value === undefined) return '<span class="kpi-delta flat">first refresh</span>';
+  if (value > 0) return '<span class="kpi-delta up">▲ ' + value + ' vs last refresh</span>';
+  if (value < 0) return '<span class="kpi-delta down">▼ ' + Math.abs(value) + ' vs last refresh</span>';
+  return '<span class="kpi-delta flat">flat vs last refresh</span>';
+}
+
+function renderKpis() {
+  var k = DATA.kpis, d = DATA.kpiDeltas;
+  var cards = [
+    { label: 'Total Keywords Analyzed', value: k.totalKeywords, delta: d.totalKeywords, accent: '' },
+    { label: 'High-Priority Keywords Found', value: k.highPriorityKeywords, delta: d.highPriorityKeywords, accent: '' },
+    { label: 'Content Gaps Identified', value: k.contentGapsIdentified, delta: d.contentGapsIdentified, accent: 'accent-warn' },
+    { label: 'Compliance-Risk Keywords Flagged', value: k.complianceRiskFlagged, delta: d.complianceRiskFlagged, accent: 'accent-danger' },
+    { label: 'Avg. Confidence Score', value: k.avgConfidenceScore, delta: d.avgConfidenceScore, accent: '' },
+  ];
+  document.getElementById('kpiGrid').innerHTML = cards.map(function (c) {
+    return '<div class="kpi ' + c.accent + '"><p class="kpi-label">' + c.label + '</p>' +
+      '<p class="kpi-value">' + c.value + '</p>' + deltaHtml(c.delta) + '</div>';
+  }).join('');
+}
+
+function renderNeedsAttention() {
+  var alerts = DATA.needsAttention;
+  document.getElementById('needsAttentionBadge').textContent = alerts.length + ' flagged';
+  var top3 = alerts.slice(0, 3);
+  document.getElementById('needsAttentionList').innerHTML = top3.map(naItemHtml).join('') ||
+    '<li class="na-note">No alerts on this refresh.</li>';
+  document.getElementById('needsAttentionFullList').innerHTML = alerts.map(naItemHtml).join('') ||
+    '<li class="na-note">No alerts on this refresh.</li>';
+  var badgeEl = document.getElementById('navBadge-needsattention');
+  if (alerts.length > 0) { badgeEl.style.display = 'inline-block'; badgeEl.textContent = alerts.length; }
+}
+
+function naItemHtml(a) {
+  return '<li class="na-item"><span class="na-tag ' + a.severity + '">' + a.category + '</span>' +
+    '<span class="na-text">' + a.text + '</span><span class="na-source">' + a.source + '</span></li>';
+}
+
+function renderContentGapSnapshot() {
+  var items = DATA.topContentGapOpportunities;
+  document.getElementById('contentGapSnapshot').innerHTML = items.map(function (i) {
+    return '<li class="snapshot-item"><span><span class="snapshot-kw">' + i.keyword + '</span>' +
+      '<span class="snapshot-topic">' + (i.parentTopic || '') + '</span></span>' +
+      '<span class="snapshot-vol">' + i.totalVolume.toLocaleString() + '/mo</span></li>';
+  }).join('') || '<li class="na-note">No content-gap candidates found.</li>';
+}
+
+function keywordTableHtml(rows) {
+  var head = '<tr><th>Keyword</th><th>Type</th><th>Placement</th><th>Answerable</th><th>Intent</th>' +
+    '<th>AI/Voice Fit</th><th>Audience Fit</th><th>Spam Risk</th><th>Compliance</th><th>Confidence</th><th>Mapped Page</th></tr>';
+  var body = rows.map(function (e) {
+    return '<tr><td>' + e.keyword + '</td><td>' + e.type + '</td><td>' + e.suggestedPlacement + '</td>' +
+      '<td>' + (e.answerable ? 'Yes' : 'No') + '</td><td>' + e.intent + '</td>' +
+      '<td>' + pill(e.aiVoiceSearchFit) + '</td><td>' + pill(e.audienceFitScore) + '</td>' +
+      '<td>' + pill(e.spamRisk) + '</td><td>' + pill(e.complianceRisk) + '</td>' +
+      '<td>' + e.confidenceScore + '</td><td>' + e.mappedPage + '</td></tr>';
+  }).join('');
+  return head + body;
+}
+
+function renderPriorityKeywords() {
+  var rows = DATA.entries.filter(function (e) { return e.intent !== 'Low-Quality' && e.spamRisk === 'None'; })
+    .sort(function (a, b) { return b.confidenceScore - a.confidenceScore; });
+  document.getElementById('priorityTable').innerHTML = keywordTableHtml(rows);
+}
+
+function renderAeo() {
+  var rows = DATA.entries.filter(function (e) { return e.intent !== 'Low-Quality' && e.spamRisk === 'None'; })
+    .sort(function (a, b) { return b.aiVoiceReadiness.compositeScore - a.aiVoiceReadiness.compositeScore; });
+  document.getElementById('aeoTable').innerHTML = keywordTableHtml(rows);
+}
+
+function renderContentGap() {
+  var rows = DATA.entries.filter(function (e) { return e.contentGapCandidate; })
+    .sort(function (a, b) { return fmtVolTotal(b) - fmtVolTotal(a); });
+  document.getElementById('contentGapTable').innerHTML = keywordTableHtml(rows);
+}
+
+function fmtVolTotal(e) {
+  return Object.values(e.coreSearchMetrics.volumeByCountry || {}).reduce(function (a, b) { return a + b; }, 0);
+}
+
+function renderAvoidList() {
+  var head = '<tr><th>Keyword</th><th>Intent</th><th>Reason</th></tr>';
+  var body = DATA.avoidList.map(function (a) {
+    return '<tr><td>' + a.keyword + '</td><td>' + pill(a.intent === 'Low-Quality' ? 'Flagged' : a.intent) + '</td>' +
+      '<td>' + a.reasons.join('; ') + '</td></tr>';
+  }).join('');
+  document.getElementById('avoidTable').innerHTML = head + body || '<tr><td class="na-note">No excluded keywords.</td></tr>';
+}
+
+function renderCompetitorGap() {
+  var head = '<tr><th>Keyword</th><th>Competitor</th><th>Competitor Position</th><th>Our Position</th></tr>';
+  var body = DATA.competitorGapList.map(function (c) {
+    return '<tr><td>' + c.keyword + '</td><td>' + c.competitor + '</td><td>' + c.competitorPosition + '</td>' +
+      '<td>' + (c.ourPosition === null ? 'Not ranking' : c.ourPosition) + '</td></tr>';
+  }).join('');
+  document.getElementById('competitorGapTable').innerHTML = head + body;
+}
+
+function renderUnderperforming() {
+  var head = '<tr><th>Keyword</th><th>Mapped Page</th><th>Position</th><th>Confidence</th></tr>';
+  var body = DATA.underperformingPages.map(function (u) {
+    return '<tr><td>' + u.keyword + '</td><td>' + u.mappedPage + '</td><td>' + u.position + '</td>' +
+      '<td>' + u.confidenceScore + '</td></tr>';
+  }).join('');
+  document.getElementById('underperformingTable').innerHTML = head + body ||
+    '<tr><td class="na-note">No underperforming keywords detected.</td></tr>';
+}
+
+function renderAnalytics() {
+  var head = '<tr><th>Keyword</th><th>GSC</th><th>GA4</th><th>Ads</th><th>Semrush</th><th>Confidence</th></tr>';
+  var body = DATA.entries.map(function (e) {
+    var s = e.crossSourceConfidence.subscores;
+    function cell(v) { return v === null || v === undefined ? '—' : v; }
+    return '<tr><td>' + e.keyword + '</td><td>' + cell(s.gsc) + '</td><td>' + cell(s.ga4) + '</td>' +
+      '<td>' + cell(s.ads) + '</td><td>' + cell(s.semrush) + '</td><td>' + e.confidenceScore + '</td></tr>';
+  }).join('');
+  document.getElementById('analyticsTable').innerHTML = head + body;
+}
+
+function renderSettings() {
+  var cards = [
+    { title: 'Data phase', body: DATA.phase === 'live' ? 'Live data from GSC/GA4/Ads/Semrush.' : 'Sample data (demo fixtures) — run with --phase live once credentials are configured.' },
+    { title: 'Last refreshed', body: new Date(DATA.generatedAt).toLocaleString() },
+    { title: 'Refresh schedule', body: 'Weekly via GitHub Actions cron, plus manual workflow_dispatch trigger.' },
+    { title: 'Google Suggest / Autocomplete', body: 'Approximated from Semrush related/question data — Ahrefs\' native Autocomplete-backed endpoint returned "Insufficient plan" on the connected account.' },
+    { title: 'Semrush live automation', body: 'Pending SEMRUSH_API_KEY in GitHub Actions secrets (separate from the interactive MCP connection).' },
+  ];
+  document.getElementById('settingsGrid').innerHTML = cards.map(function (c) {
+    return '<div class="settings-card"><h4>' + c.title + '</h4><p>' + c.body + '</p></div>';
+  }).join('');
+}
+
+function renderFooterAndMeta() {
+  document.getElementById('footerNote').textContent = DATA.entries.length + ' keywords · phase: ' + DATA.phase;
+  document.getElementById('lastRefreshed').textContent = 'Last refreshed: ' + new Date(DATA.generatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+function wireNav() {
+  var items = document.querySelectorAll('.nav-item');
+  items.forEach(function (item) {
+    item.addEventListener('click', function () {
+      items.forEach(function (i) { i.classList.remove('active'); });
+      item.classList.add('active');
+      document.querySelectorAll('.view').forEach(function (v) { v.classList.remove('active'); });
+      var viewId = 'view' + item.dataset.view.charAt(0).toUpperCase() + item.dataset.view.slice(1);
+      var view = document.getElementById(viewId);
+      if (view) view.classList.add('active');
+      document.getElementById('breadcrumbSection').textContent = item.dataset.label;
+    });
+  });
+}
+
+renderHero();
+renderKpis();
+renderNeedsAttention();
+renderContentGapSnapshot();
+renderPriorityKeywords();
+renderAeo();
+renderContentGap();
+renderAvoidList();
+renderCompetitorGap();
+renderUnderperforming();
+renderAnalytics();
+renderSettings();
+renderFooterAndMeta();
+wireNav();
+</script>
+"""
+
+
+def render_html(data, js_const):
+    data_script = f"<script>\n{js_const('DATA', data)}\n</script>\n"
+    return TEMPLATE_HEAD + '<div class="app">' + _sidebar_html() + _main_shell_html() + "</div>\n" + data_script + DASHBOARD_JS + TEMPLATE_TAIL

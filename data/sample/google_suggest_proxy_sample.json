@@ -1,0 +1,39 @@
+{
+  "_note": "Approximated from Semrush related-terms + question data (see fetchers/fetch_google_suggest_proxy.py docstring) -- NOT literal Google Autocomplete strings. Ahrefs' native Search Suggestions endpoint (which does mirror real Autocomplete) returned 'Insufficient plan' when tested against the current account, so this proxy is the agreed substitute.",
+  "panchakarma treatment": {
+    "suggestions": ["what is panchakarma treatment", "how long does panchakarma treatment take", "panchakarma treatment cost kerala", "authentic panchakarma vs spa panchakarma"],
+    "trending": ["panchakarma treatment cost kerala"]
+  },
+  "ayurvedic treatment packages": {
+    "suggestions": ["what is the cost of ayurvedic treatment in kerala", "ayurveda treatment packages for couples"],
+    "trending": []
+  },
+  "ayurveda hospital kerala": {
+    "suggestions": ["best ayurveda hospital kerala", "how to choose a genuine ayurveda hospital"],
+    "trending": ["best ayurveda hospital kerala"]
+  },
+  "ayurveda chronic pain": {
+    "suggestions": ["ayurvedic treatment for chronic pain", "is ayurveda treatment effective for chronic pain", "can ayurveda cure chronic back pain", "guaranteed cure for chronic pain ayurveda"],
+    "trending": []
+  },
+  "ayurveda stress anxiety": {
+    "suggestions": ["ayurveda retreat for stress and anxiety"],
+    "trending": ["ayurveda retreat for stress and anxiety"]
+  },
+  "ayurveda diabetes management": {
+    "suggestions": ["ayurveda treatment for diabetes management", "ayurveda miracle cure for diabetes"],
+    "trending": ["ayurveda treatment for diabetes management"]
+  },
+  "ayurveda post covid recovery": {
+    "suggestions": ["post covid recovery ayurveda treatment"],
+    "trending": ["post covid recovery ayurveda treatment"]
+  },
+  "ayurvedic fertility treatment": {
+    "suggestions": ["ayurvedic fertility treatment kerala"],
+    "trending": []
+  },
+  "ayurveda treatment foreigners": {
+    "suggestions": ["ayurveda treatment kerala for uk patients", "ayurveda retreat dubai patients kerala", "ayurveda hospital kerala for german patients"],
+    "trending": []
+  }
+}
