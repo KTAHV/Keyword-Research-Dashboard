@@ -64,7 +64,10 @@ from fetchers import fetch_google_ads_search_terms, fetch_gsc, keyword_planner_c
 from scripts import write_credentials  # noqa: E402
 
 MAX_SEED_PHRASES = 6  # cap for the regex-fallback path (no AI available)
-MAX_AI_KEYWORDS = 20  # cap for AI-ideation candidates (Keyword Planner's own per-call limit too)
+MAX_AI_KEYWORDS = 25  # cap for AI-ideation candidates; kept above the ~20-in-table target
+# since compliance exclusions and dedup can trim the list before it reaches the table.
+# keyword_planner_client.py slices its own MAX_KEYWORDS_PER_CALL internally, so this
+# doesn't overrun that API's per-call limit.
 DEMO_SEMRUSH_PATH = os.path.join(ROOT, "data", "sample", "semrush_keywords_sample.json")
 CACHED_DATA_PATH = os.path.join(ROOT, "data", "keyword_research_data.json")
 

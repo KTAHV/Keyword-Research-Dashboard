@@ -166,10 +166,10 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:'Work Sans',-ap
 .search-btn{background:var(--charcoal);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:13.5px;
   font-weight:600;cursor:pointer;font-family:inherit}
 .search-btn:disabled{opacity:.6;cursor:not-allowed}
-.search-status{font-size:12.5px;color:var(--text-muted);margin:10px 0 0}
+.search-status{font-size:12.5px;color:var(--text-muted);margin:14px 0 0}
 .search-status.error{color:var(--danger)}
 .search-banner{font-size:12.5px;padding:10px 14px;border-radius:8px;background:var(--warn-bg);color:var(--gold);
-  margin-bottom:1rem;line-height:1.6}
+  margin-top:.75rem;line-height:1.6}
 .search-banner.live{background:var(--success-bg);color:var(--success)}
 
 .table-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
@@ -301,10 +301,10 @@ def _main_shell_html():
         </div>
       </div>
       <button class="search-btn" id="searchBtn">Search</button>
-      <p class="search-status" id="searchStatus"></p>
     </div>
-    <div id="searchBanner"></div>
     <div class="table-wrap" id="searchResultsWrap" style="display:none"><table id="searchResultsTable"></table></div>
+    <p class="search-status" id="searchStatus"></p>
+    <div id="searchBanner"></div>
   </div>
 
   <div id="viewWeeklyreport" class="view">
@@ -472,7 +472,7 @@ function searchVolumeTableHtml(rows) {
   // here (Weekly Report's keywordTableHtml above is unchanged; Confidence
   // Score is the established Weekly Report concept).
   var head = '<tr><th>Priority</th><th>Keyword</th><th>Type</th><th>Placement</th><th>Answerable</th><th>Intent</th>' +
-    '<th>AI/Voice Fit</th><th>Audience Fit</th><th>Spam Risk</th><th>Compliance</th><th>Search Volume</th><th>Mapped Page</th></tr>';
+    '<th>AEO/GEO Fit</th><th>Audience Fit</th><th>Spam Risk</th><th>Compliance</th><th>Search Volume</th><th>Mapped Page</th></tr>';
   var body = rows.map(function (e) {
     var volCell = (e.searchVolume || 0).toLocaleString() + '<span style="display:block;font-size:10.5px;color:var(--text-faint)">' +
       (e.volumeSource || '') + '</span>';
