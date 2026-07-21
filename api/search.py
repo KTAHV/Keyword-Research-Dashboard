@@ -202,19 +202,32 @@ def _seed_variants(phrase, max_variants=4):
     return variants[:max_variants]
 
 
+def _is_systemic_failure(errors):
+    """True when fetch_related_keywords_multi_db's every-database-failed-
+    identically case fires (see its docstring) -- e.g. HTTP 403 because
+    this Semrush account's plan doesn't include the Related Keywords
+    report at all. Retrying different seed variants against a report the
+    account can't access at all would just repeat the same failure, so
+    the caller should give up on discovery entirely instead of burning
+    more requests."""
+    return len(errors) == 1 and "every configured database" in errors[0]
+
+
 def _semrush_live_lookup(primary_seed, ai_candidates, api_key, warnings):
     discovered, discover_errors = semrush_client.fetch_related_keywords_multi_db(
         primary_seed, api_key, config.SEMRUSH_SEARCH_DATABASES, limit=30
     )
     warnings.extend(discover_errors)
 
-    if not discovered:
+    if not discovered and not _is_systemic_failure(discover_errors):
         for variant in _seed_variants(primary_seed):
             discovered, variant_errors = semrush_client.fetch_related_keywords_multi_db(
                 variant, api_key, config.SEMRUSH_SEARCH_DATABASES, limit=30
             )
             warnings.extend(variant_errors)
             if discovered:
+                break
+            if _is_systemic_failure(variant_errors):
                 break
 
     matches = dict(discovered)

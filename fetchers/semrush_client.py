@@ -30,8 +30,25 @@ def _run_report(report_type, phrase, api_key, database, export_columns, display_
     if display_limit:
         params["display_limit"] = display_limit
 
-    resp = requests.get(BASE_URL, params=params, timeout=TIMEOUT)
-    resp.raise_for_status()
+    # requests' own exception messages (HTTPError, Timeout, ConnectionError,
+    # ...) embed the full request URL, including the "key=..." query param
+    # -- api/search.py surfaces exception text straight to the browser as a
+    # warning, so any of those propagating unsanitized would leak the live
+    # Semrush API key to anyone who triggers this path. Every failure below
+    # is re-raised using only the status code / report metadata, never the
+    # URL/params.
+    try:
+        resp = requests.get(BASE_URL, params=params, timeout=TIMEOUT)
+    except requests.exceptions.RequestException as exc:
+        raise RuntimeError(
+            f"Semrush API request failed for report '{report_type}' "
+            f"(phrase '{phrase}', database '{database}'): {type(exc).__name__}"
+        ) from None
+    if not resp.ok:
+        raise RuntimeError(
+            f"Semrush API HTTP {resp.status_code} for report '{report_type}' "
+            f"(phrase '{phrase}', database '{database}')"
+        )
     text = resp.text.strip()
 
     if text.startswith("ERROR"):
@@ -81,7 +98,7 @@ def fetch_related_keywords_multi_db(phrase, api_key, databases, limit=30):
     database far more often than not). A failure on one database doesn't
     block the others."""
     merged = {}
-    errors = []
+    raw_errors = []  # (database, message) -- "NOTHING FOUND" excluded entirely
     for db in databases:
         try:
             rows = fetch_related_keywords(phrase, api_key, database=db, limit=limit)
@@ -89,10 +106,14 @@ def fetch_related_keywords_multi_db(phrase, api_key, databases, limit=30):
             # "NOTHING FOUND" just means this particular phrase isn't
             # related-keywords-indexed in this database -- common and
             # expected (see api/search.py's seed-variant retry), not worth
-            # surfacing as a warning. Real errors (auth, rate-limit,
-            # network) still are.
-            if "NOTHING FOUND" not in str(exc):
-                errors.append(f"Semrush related-keywords lookup failed for database '{db}': {exc}")
+            # surfacing as a warning. Real errors (auth, permission,
+            # rate-limit, network) still are.
+            message = str(exc)
+            if "NOTHING FOUND" not in message:
+                # Normalize away the database name so four identical
+                # failures (e.g. the same HTTP 403) compare equal below --
+                # _run_report's message includes "database '<db>'" per call.
+                raw_errors.append((db, message, message.replace(f"database '{db}'", "database '<db>'")))
             continue
         for row in rows:
             entry = merged.setdefault(row["keyword"], {"volumeByCountry": {}, "cpc": None, "difficulty": None})
@@ -104,6 +125,16 @@ def fetch_related_keywords_multi_db(phrase, api_key, databases, limit=30):
                 entry["difficulty"] = row["difficulty"]
     # drop anything that ended up with no volume in any database
     merged = {k: v for k, v in merged.items() if v["volumeByCountry"]}
+
+    # The same failure (e.g. HTTP 403 -- this report not included in the
+    # account's plan) typically hits every database identically. Collapse
+    # that into one line instead of one per database so a systemic
+    # permission problem doesn't spam the UI with N near-duplicate warnings.
+    distinct_normalized = {normalized for _, _, normalized in raw_errors}
+    if len(raw_errors) == len(databases) and len(distinct_normalized) == 1:
+        errors = [f"Semrush related-keywords lookup failed for '{phrase}' in every configured database: {distinct_normalized.pop()}"]
+    else:
+        errors = [f"Semrush related-keywords lookup failed for database '{db}': {msg}" for db, msg, _ in raw_errors]
     return merged, errors
 
 

@@ -12,7 +12,7 @@ for _var in (
 ):
     os.environ.pop(_var, None)
 
-from api.search import _demo_semrush_lookup, _seed_variants, run_search  # noqa: E402
+from api.search import _demo_semrush_lookup, _is_systemic_failure, _seed_variants, run_search  # noqa: E402
 
 
 def test_demo_lookup_matches_on_word_overlap_not_just_substring():
@@ -86,3 +86,21 @@ def test_seed_variants_drops_one_word_at_a_time():
 
 def test_seed_variants_empty_for_single_word():
     assert _seed_variants("panchakarma") == []
+
+
+def test_is_systemic_failure_detects_collapsed_all_database_error():
+    # Regression: a 403 (this Semrush plan doesn't include Related
+    # Keywords) hits every database identically -- fetch_related_keywords_
+    # multi_db collapses that into one "every configured database" line;
+    # the caller should recognize it and stop retrying seed variants
+    # instead of repeating the same doomed request four more times.
+    assert _is_systemic_failure(
+        ["Semrush related-keywords lookup failed for 'x' in every configured database: HTTP 403"]
+    )
+
+
+def test_is_systemic_failure_false_for_per_database_errors():
+    assert not _is_systemic_failure(
+        ["Semrush related-keywords lookup failed for database 'in': some transient error"]
+    )
+    assert not _is_systemic_failure([])
