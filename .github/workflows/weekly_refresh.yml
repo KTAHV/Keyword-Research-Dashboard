@@ -27,15 +27,19 @@ jobs:
           pip install -r requirements.txt
           pip install -r requirements-live.txt
 
-      - name: Build dashboard with fresh data
+      - name: Materialize GSC/GA4/Ads credential files from secrets
         env:
-          GOOGLE_ADS_DEVELOPER_TOKEN: ${{ secrets.GOOGLE_ADS_DEVELOPER_TOKEN }}
           GOOGLE_ADS_CLIENT_ID: ${{ secrets.GOOGLE_ADS_CLIENT_ID }}
           GOOGLE_ADS_CLIENT_SECRET: ${{ secrets.GOOGLE_ADS_CLIENT_SECRET }}
+          GOOGLE_ADS_DEVELOPER_TOKEN: ${{ secrets.GOOGLE_ADS_DEVELOPER_TOKEN }}
           GOOGLE_ADS_REFRESH_TOKEN: ${{ secrets.GOOGLE_ADS_REFRESH_TOKEN }}
           GOOGLE_ADS_LOGIN_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_LOGIN_CUSTOMER_ID }}
           GA4_REFRESH_TOKEN: ${{ secrets.GA4_REFRESH_TOKEN }}
           GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
+        run: python scripts/write_credentials.py
+
+      - name: Build dashboard with fresh data
+        env:
           SEMRUSH_API_KEY: ${{ secrets.SEMRUSH_API_KEY }}
         run: python build_keyword_research_dashboard.py --phase live
 

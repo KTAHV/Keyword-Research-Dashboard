@@ -14,6 +14,20 @@ from analysis import ai_voice_readiness, competitor_and_gap, compliance, confide
 HIGH_PRIORITY_CONFIDENCE_FLOOR = 55
 
 
+def resolve_ga4_entry(phase, keyword, gsc_entry, ga4_data):
+    """Sample-phase ga4_engagement_sample.json is keyed by keyword (a Phase-1
+    simplification). Live GA4 has no native search-query dimension, so
+    fetch_ga4.py's live path is keyed by page id instead -- resolve it via
+    the keyword's GSC-derived mapped page. Unmapped keywords get no GA4
+    signal either way, which is correct: no page, nothing to attribute.
+    Shared by build_keyword_research_dashboard.py and api/search.py so
+    both callers resolve GA4 identically."""
+    if phase == "live":
+        page_id = gsc_entry["page"] if gsc_entry else None
+        return ga4_data.get(page_id) if page_id else None
+    return ga4_data.get(keyword)
+
+
 def classify_type_and_placement(keyword, mapped_page_id, is_question):
     word_count = len(keyword.split())
     if is_question:

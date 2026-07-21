@@ -460,6 +460,31 @@ function keywordTableHtml(rows) {
   return head + body;
 }
 
+function sortByPriorityThenVolume(rows) {
+  return rows.slice().sort(function (a, b) {
+    var pr = priorityRank(a.priority) - priorityRank(b.priority);
+    return pr !== 0 ? pr : (b.searchVolume || 0) - (a.searchVolume || 0);
+  });
+}
+
+function searchVolumeTableHtml(rows) {
+  // Search tool only -- Search Volume + source replaces Confidence Score
+  // here (Weekly Report's keywordTableHtml above is unchanged; Confidence
+  // Score is the established Weekly Report concept).
+  var head = '<tr><th>Priority</th><th>Keyword</th><th>Type</th><th>Placement</th><th>Answerable</th><th>Intent</th>' +
+    '<th>AI/Voice Fit</th><th>Audience Fit</th><th>Spam Risk</th><th>Compliance</th><th>Search Volume</th><th>Mapped Page</th></tr>';
+  var body = rows.map(function (e) {
+    var volCell = (e.searchVolume || 0).toLocaleString() + '<span style="display:block;font-size:10.5px;color:var(--text-faint)">' +
+      (e.volumeSource || '') + '</span>';
+    return '<tr><td>' + pill(e.priority) + '</td><td>' + e.keyword + '</td><td>' + e.type + '</td><td>' + e.suggestedPlacement + '</td>' +
+      '<td>' + (e.answerable ? 'Yes' : 'No') + '</td><td>' + e.intent + '</td>' +
+      '<td>' + pill(e.aiVoiceSearchFit) + '</td><td>' + pill(e.audienceFitScore) + '</td>' +
+      '<td>' + pill(e.spamRisk) + '</td><td>' + pill(e.complianceRisk) + '</td>' +
+      '<td>' + volCell + '</td><td>' + e.mappedPage + '</td></tr>';
+  }).join('');
+  return head + body;
+}
+
 function renderPriorityKeywords() {
   var rows = sortByPriorityThenConfidence(
     DATA.entries.filter(function (e) { return e.intent !== 'Low-Quality' && e.spamRisk === 'None'; })
@@ -577,11 +602,14 @@ function runSearch() {
       var bannerCls = data.mode === 'live' ? 'search-banner live' : 'search-banner';
       var volumeText = data.mode === 'live' ? 'Live Semrush data.' : 'Demo volume/CPC data — add SEMRUSH_API_KEY in Vercel to go live.';
       var ideationText = data.ideation === 'ai' ? 'AI-suggested keywords (Claude).' : 'Basic keyword expansion — add ANTHROPIC_API_KEY in Vercel for AI-suggested keywords.';
-      var bannerText = volumeText + ' ' + ideationText;
+      var liveGoogleText = data.liveGoogleCrossReference
+        ? 'Live GSC/Ads cross-reference.'
+        : 'GSC/GA4/Ads from last weekly refresh (not live) — add Google credentials in Vercel to go live.';
+      var bannerText = volumeText + ' ' + ideationText + ' ' + liveGoogleText;
       var warningsHtml = (data.warnings || []).map(function (w) { return '<div>' + w + '</div>'; }).join('');
       document.getElementById('searchBanner').innerHTML = '<div class="' + bannerCls + '">' + bannerText + warningsHtml + '</div>';
-      var sorted = sortByPriorityThenConfidence(data.entries);
-      document.getElementById('searchResultsTable').innerHTML = keywordTableHtml(sorted);
+      var sorted = sortByPriorityThenVolume(data.entries);
+      document.getElementById('searchResultsTable').innerHTML = searchVolumeTableHtml(sorted);
       document.getElementById('searchResultsWrap').style.display = sorted.length ? 'block' : 'none';
     })
     .catch(function (err) {

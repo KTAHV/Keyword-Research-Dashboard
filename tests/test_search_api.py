@@ -3,10 +3,14 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Make sure a leftover ANTHROPIC_API_KEY / SEMRUSH_API_KEY from the dev shell
-# doesn't turn these into live-network tests.
-os.environ.pop("ANTHROPIC_API_KEY", None)
-os.environ.pop("SEMRUSH_API_KEY", None)
+# Make sure leftover credentials from the dev shell don't turn these into
+# live-network tests.
+for _var in (
+    "ANTHROPIC_API_KEY", "SEMRUSH_API_KEY", "GOOGLE_ADS_CLIENT_ID",
+    "GOOGLE_ADS_CLIENT_SECRET", "GSC_REFRESH_TOKEN", "GA4_REFRESH_TOKEN",
+    "GOOGLE_ADS_REFRESH_TOKEN", "GOOGLE_ADS_DEVELOPER_TOKEN", "GOOGLE_ADS_LOGIN_CUSTOMER_ID",
+):
+    os.environ.pop(_var, None)
 
 from api.search import _demo_semrush_lookup, run_search  # noqa: E402
 
@@ -36,3 +40,33 @@ def test_run_search_falls_back_to_basic_ideation_without_anthropic_key():
 def test_run_search_requires_at_least_one_input():
     result = run_search({})
     assert "error" in result
+
+
+def test_run_search_entries_carry_search_volume_and_source():
+    result = run_search({"seedKeyword": "panchakarma"})
+    assert result["entries"], "expected at least one entry"
+    for e in result["entries"]:
+        assert "searchVolume" in e
+        assert e["volumeSource"] == "Demo data"
+
+
+def test_run_search_no_live_google_cross_reference_without_credentials():
+    result = run_search({"seedKeyword": "panchakarma"})
+    assert result["liveGoogleCrossReference"] is False
+
+
+def test_run_search_excludes_patient_nationality_pattern_from_results():
+    # Broad seed that word-overlap-matches sample keywords containing the
+    # "... for uk/german/dubai patients" pattern -- none should survive
+    # into the final entries, even though they're topically related.
+    result = run_search({"seedKeyword": "ayurveda treatment kerala"})
+    leaked = [e["keyword"] for e in result["entries"] if "patient" in e["keyword"]]
+    assert leaked == []
+    assert any("compliance" in w.lower() for w in result["warnings"])
+
+
+def test_run_search_sorted_by_priority_then_volume():
+    result = run_search({"seedKeyword": "ayurveda treatment kerala"})
+    priority_rank = {"High": 0, "Medium": 1, "Low": 2}
+    ranks = [priority_rank[e["priority"]] for e in result["entries"]]
+    assert ranks == sorted(ranks)

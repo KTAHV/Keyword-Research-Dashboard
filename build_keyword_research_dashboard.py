@@ -22,7 +22,7 @@ from datetime import date, datetime, timezone
 
 import config
 from analysis import competitor_and_gap, rules
-from analysis.entry_builder import build_entry
+from analysis.entry_builder import build_entry, resolve_ga4_entry
 from dashboard_html import render_html
 from fetchers import (
     fetch_competitor_keywords,
@@ -152,7 +152,8 @@ def build(phase):
 
     entries = [
         build_entry(
-            keyword, semrush_data, gsc.get(keyword), ga4.get(keyword), ads.get(keyword),
+            keyword, semrush_data, gsc.get(keyword),
+            resolve_ga4_entry(phase, keyword, gsc.get(keyword), ga4), ads.get(keyword),
             competitor_and_gap.competitor_overlap(keyword, competitor_keywords),
             trending_phrases, page_titles,
         )

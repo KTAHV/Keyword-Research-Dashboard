@@ -37,6 +37,40 @@ PAGES = [
 
 PAGE_IDS = [p["id"] for p in PAGES]
 
+# Live GSC/GA4/Ads targets -- same Kairali/ayurvedichealingvillage.com
+# accounts as the sibling Combined Marketing Dashboard family (shared OAuth
+# client, project "erudite-coast-502112-n5"; see fetchers/fetch_gsc.py,
+# fetch_ga4.py, fetch_google_ads_search_terms.py and scripts/authenticate_*.py).
+GSC_SITE_URLS = [
+    f"https://{DOMAIN}/",
+    f"https://www.{DOMAIN}/",
+]
+GA4_PROPERTY_ID = "394301498"
+ADS_CUSTOMER_ID = "7129610573"
+ADS_LOOKBACK = "LAST_30_DAYS"
+GSC_LOOKBACK_DAYS = 90
+GSC_DATA_LAG_DAYS = 3  # GSC data has a processing lag; same as the sibling
+
+# Semrush databases queried per live search (Search tool), matching the
+# international-patient markets in scope, not just India. Confirmed live
+# this session: phrase_related on a real seed yields 30-50 real,
+# volume-backed keywords per database -- this is the primary discovery
+# source now, not a per-AI-keyword exact-match lookup (see
+# api/search.py / fetchers/semrush_client.py).
+SEMRUSH_SEARCH_DATABASES = ["in", "us", "uk", "ae"]
+
+# Google Ads Keyword Planner (KeywordPlanIdeaService) geo-target-constant
+# resource names, used only as a fallback for AI-suggested keywords Semrush
+# has no volume for (see fetchers/keyword_planner_client.py). Standard,
+# stable Google Ads IDs -- not verified against a live account in this
+# environment, so the caller retries without geo targeting if rejected.
+KEYWORD_PLANNER_GEO_TARGETS = [
+    "geoTargetConstants/2356",  # India
+    "geoTargetConstants/2840",  # United States
+    "geoTargetConstants/2826",  # United Kingdom
+    "geoTargetConstants/2784",  # United Arab Emirates
+]
+
 # Tier A: Kerala/South India direct competitors -- same list as Page Quality
 # Dashboard's config.TIER_A_COMPETITORS, live-scrapable (not Cloudflare-blocked).
 TIER_A_COMPETITORS = [
@@ -105,6 +139,22 @@ QUALITY_CONSCIOUS_TERMS = [
 COMPLIANCE_RISK_TERMS = [
     "cure", "guaranteed", "permanent cure", "miracle", "100% effective",
     "no side effects", "instant relief", "overnight cure",
+]
+
+# "patient(s)" directly paired with a specific nationality/country name
+# reads as a targeted medical claim about that population and is excluded
+# from the live Search tool's suggestions entirely (see
+# analysis/compliance.py::is_patient_nationality_pattern). Deliberately
+# does NOT include generic terms already treated as legitimate commercial
+# keywords elsewhere in this dataset -- "international", "foreigners",
+# "nri" are fine; naming a specific country next to "patients" is not.
+NATIONALITY_COUNTRY_TERMS = [
+    "uk", "united kingdom", "britain", "british",
+    "usa", "america", "american", "united states",
+    "gulf", "uae", "dubai", "abu dhabi", "emirati",
+    "saudi", "qatar", "kuwait", "bahrain", "oman",
+    "german", "germany", "french", "france",
+    "australian", "australia", "russian", "russia", "canadian", "canada",
 ]
 
 # Question-starter words used for Type classification (Question-type) and

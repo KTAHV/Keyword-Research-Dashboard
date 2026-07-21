@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-21T06:42:13.543586+00:00",
+  "generatedAt": "2026-07-21T12:21:23.129517+00:00",
   "phase": "sample",
   "kpis": {
     "totalKeywords": 38,
-    "highPriorityKeywords": 9,
+    "highPriorityKeywords": 8,
     "contentGapsIdentified": 6,
-    "complianceRiskFlagged": 3,
+    "complianceRiskFlagged": 6,
     "avgConfidenceScore": 56.3
   },
   "kpiDeltas": {
@@ -65,7 +65,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 90,
@@ -133,7 +134,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 79,
@@ -201,7 +203,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 80,
@@ -268,7 +271,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 70,
@@ -336,7 +340,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 68,
@@ -403,7 +408,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 74,
@@ -471,7 +477,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 79,
@@ -539,7 +546,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 83,
@@ -608,7 +616,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 71,
@@ -677,7 +686,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 71,
@@ -744,7 +754,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 62,
@@ -810,7 +821,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 28,
@@ -877,7 +889,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 30,
@@ -945,7 +958,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 84,
@@ -1011,7 +1025,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 53,
@@ -1078,7 +1093,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 22,
@@ -1148,7 +1164,8 @@
         "overallRisk": "High",
         "flaggedTerms": [
           "cure"
-        ]
+        ],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 23,
@@ -1216,7 +1233,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 72,
@@ -1283,7 +1301,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 48,
@@ -1350,7 +1369,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 63,
@@ -1417,7 +1437,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 73,
@@ -1484,7 +1505,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 33,
@@ -1551,7 +1573,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 66,
@@ -1617,7 +1640,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 25,
@@ -1683,7 +1707,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 91,
@@ -1749,7 +1774,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 65,
@@ -1814,7 +1840,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 40,
@@ -1879,7 +1906,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 36,
@@ -1951,7 +1979,8 @@
         "flaggedTerms": [
           "cure",
           "guaranteed"
-        ]
+        ],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 29,
@@ -2023,7 +2052,8 @@
         "flaggedTerms": [
           "cure",
           "miracle"
-        ]
+        ],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 34,
@@ -2093,7 +2123,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 29,
@@ -2168,7 +2199,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 33,
@@ -2244,7 +2276,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 44,
@@ -2316,7 +2349,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 72,
@@ -2383,7 +2417,8 @@
         "adsHealthcarePolicyRisk": "Low",
         "ymylPolicyRisk": "Low",
         "overallRisk": "Low",
-        "flaggedTerms": []
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
         "confidenceScore": 50,
@@ -2412,8 +2447,10 @@
       "aiVoiceSearchFit": "Medium",
       "audienceFitScore": "Medium",
       "spamRisk": "None",
-      "complianceRisk": "Low",
-      "complianceFlaggedTerms": [],
+      "complianceRisk": "High",
+      "complianceFlaggedTerms": [
+        "patient + specific nationality/country"
+      ],
       "confidenceScore": 63,
       "mappedPageId": "treatment-in-kerala",
       "mappedPage": "Treatment in Kerala",
@@ -2445,11 +2482,14 @@
         "fit": "Medium"
       },
       "complianceCheck": {
-        "medicalComplianceRisk": "Low",
-        "adsHealthcarePolicyRisk": "Low",
-        "ymylPolicyRisk": "Low",
-        "overallRisk": "Low",
-        "flaggedTerms": []
+        "medicalComplianceRisk": "High",
+        "adsHealthcarePolicyRisk": "High",
+        "ymylPolicyRisk": "High",
+        "overallRisk": "High",
+        "flaggedTerms": [
+          "patient + specific nationality/country"
+        ],
+        "patientNationalityPattern": true
       },
       "crossSourceConfidence": {
         "confidenceScore": 63,
@@ -2467,7 +2507,7 @@
         "cannibalizationRisk": true,
         "contentGap": false
       },
-      "priority": "Medium"
+      "priority": "Low"
     },
     {
       "keyword": "ayurveda retreat dubai patients kerala",
@@ -2478,8 +2518,10 @@
       "aiVoiceSearchFit": "Medium",
       "audienceFitScore": "Medium",
       "spamRisk": "None",
-      "complianceRisk": "Low",
-      "complianceFlaggedTerms": [],
+      "complianceRisk": "High",
+      "complianceFlaggedTerms": [
+        "patient + specific nationality/country"
+      ],
       "confidenceScore": 45,
       "mappedPageId": "treatment-in-kerala",
       "mappedPage": "Treatment in Kerala",
@@ -2512,11 +2554,14 @@
         "fit": "Medium"
       },
       "complianceCheck": {
-        "medicalComplianceRisk": "Low",
-        "adsHealthcarePolicyRisk": "Low",
-        "ymylPolicyRisk": "Low",
-        "overallRisk": "Low",
-        "flaggedTerms": []
+        "medicalComplianceRisk": "High",
+        "adsHealthcarePolicyRisk": "High",
+        "ymylPolicyRisk": "High",
+        "overallRisk": "High",
+        "flaggedTerms": [
+          "patient + specific nationality/country"
+        ],
+        "patientNationalityPattern": true
       },
       "crossSourceConfidence": {
         "confidenceScore": 45,
@@ -2534,7 +2579,7 @@
         "cannibalizationRisk": true,
         "contentGap": false
       },
-      "priority": "Medium"
+      "priority": "Low"
     },
     {
       "keyword": "ayurveda hospital kerala for german patients",
@@ -2545,8 +2590,10 @@
       "aiVoiceSearchFit": "Medium",
       "audienceFitScore": "High",
       "spamRisk": "None",
-      "complianceRisk": "Low",
-      "complianceFlaggedTerms": [],
+      "complianceRisk": "High",
+      "complianceFlaggedTerms": [
+        "patient + specific nationality/country"
+      ],
       "confidenceScore": 60,
       "mappedPageId": "treatment-in-kerala-german",
       "mappedPage": "Behandlung in Kerala (German)",
@@ -2578,11 +2625,14 @@
         "fit": "Medium"
       },
       "complianceCheck": {
-        "medicalComplianceRisk": "Low",
-        "adsHealthcarePolicyRisk": "Low",
-        "ymylPolicyRisk": "Low",
-        "overallRisk": "Low",
-        "flaggedTerms": []
+        "medicalComplianceRisk": "High",
+        "adsHealthcarePolicyRisk": "High",
+        "ymylPolicyRisk": "High",
+        "overallRisk": "High",
+        "flaggedTerms": [
+          "patient + specific nationality/country"
+        ],
+        "patientNationalityPattern": true
       },
       "crossSourceConfidence": {
         "confidenceScore": 60,
@@ -2600,7 +2650,7 @@
         "cannibalizationRisk": false,
         "contentGap": false
       },
-      "priority": "High"
+      "priority": "Low"
     }
   ],
   "needsAttention": [
@@ -2658,6 +2708,27 @@
       "category": "COMPLIANCE RISK",
       "keyword": "ayurveda miracle cure for diabetes",
       "text": "“ayurveda miracle cure for diabetes” is flagged for unsubstantiated medical-claim language (cure, miracle) -- do not use in ads or landing-page copy as-is.",
+      "source": "Compliance Check"
+    },
+    {
+      "severity": "high",
+      "category": "COMPLIANCE RISK",
+      "keyword": "ayurveda treatment kerala for uk patients",
+      "text": "“ayurveda treatment kerala for uk patients” is flagged for unsubstantiated medical-claim language (patient + specific nationality/country) -- do not use in ads or landing-page copy as-is.",
+      "source": "Compliance Check"
+    },
+    {
+      "severity": "high",
+      "category": "COMPLIANCE RISK",
+      "keyword": "ayurveda retreat dubai patients kerala",
+      "text": "“ayurveda retreat dubai patients kerala” is flagged for unsubstantiated medical-claim language (patient + specific nationality/country) -- do not use in ads or landing-page copy as-is.",
+      "source": "Compliance Check"
+    },
+    {
+      "severity": "high",
+      "category": "COMPLIANCE RISK",
+      "keyword": "ayurveda hospital kerala for german patients",
+      "text": "“ayurveda hospital kerala for german patients” is flagged for unsubstantiated medical-claim language (patient + specific nationality/country) -- do not use in ads or landing-page copy as-is.",
       "source": "Compliance Check"
     },
     {

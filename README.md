@@ -26,17 +26,53 @@ Runs entirely against `data/sample/*.json` fixtures shaped like the real
 fetcher output. The merge/scoring/HTML-generation code never changes between
 phases — only `--phase sample` vs `--phase live`.
 
-Two things are needed before Phase 2 works:
+Three things are needed before Phase 2 works — status as of this README:
 
-1. **Fresh GSC / GA4 / Google Ads credentials**, scoped to this standalone
+1. **`SEMRUSH_API_KEY`** — done, set in both GitHub Actions secrets and Vercel.
+2. **`ANTHROPIC_API_KEY`** — done, set in Vercel (only needed by the live
+   Search tool, see below — not by the weekly batch).
+3. **Fresh GSC / GA4 / Google Ads credentials**, scoped to this standalone
    repo's own GitHub Actions secrets (not reused from the Combined Marketing
-   Dashboard repo — see `.env.example`).
-2. **A Semrush REST API key** (`SEMRUSH_API_KEY`) — separate from the
-   Semrush MCP connection used interactively in Claude Code, which cannot be
-   called from a headless GitHub Actions script. Find it at semrush.com →
-   profile menu → Subscription info →
-   `https://www.semrush.com/subscription-info/api-units/`. **Status: pending**
-   — not yet confirmed whether the current plan exposes one.
+   Dashboard repo) — **done**, see below.
+
+### GSC / GA4 / Google Ads — one-time OAuth setup
+
+`fetchers/fetch_gsc.py`, `fetch_ga4.py`, and `fetch_google_ads_search_terms.py`
+mirror the sibling Combined Marketing Dashboard family's exact live patterns
+(raw REST `searchAnalytics.query` for GSC, `BetaAnalyticsDataClient` for
+GA4, `GoogleAdsClient` GAQL for Ads), targeting the same Kairali accounts:
+GA4 property `394301498`, GSC sites `ayurvedichealingvillage.com` (both the
+apex and `www.` variants), Ads customer `7129610573` under MCC `9230793935`.
+All three reuse the same shared Google Cloud OAuth client (project
+`erudite-coast-502112-n5`) the sibling dashboards already use — but this
+repo gets its **own, fresh refresh tokens**, not copies of the siblings'.
+
+1. Copy `credentials.json` from an existing sibling dashboard folder (e.g.
+   `Combined Marketing Dashboard\GSC Dashboard\credentials.json`) into this
+   repo's root. Never commit it — already in `.gitignore`.
+2. Run `scripts/authenticate_all.py` locally — one browser window opens,
+   requesting the GSC + GA4 + Ads scopes together in a single consent grant
+   (log in as `seo@ktahv.com`): writes `token_gsc.json` + `token_ga4.json`
+   and prints the one refresh token to use for `GOOGLE_ADS_REFRESH_TOKEN`
+   too (Ads has no token file of its own — it lives in `google-ads.yaml`,
+   see `fetch_google_ads_search_terms.py`).
+3. Add these as GitHub Actions repo secrets (Settings → Secrets and
+   variables → Actions): `GOOGLE_ADS_CLIENT_ID`, `GOOGLE_ADS_CLIENT_SECRET`
+   (both from `credentials.json`), `GOOGLE_ADS_DEVELOPER_TOKEN`,
+   `GOOGLE_ADS_LOGIN_CUSTOMER_ID` (`9230793935`), `GOOGLE_ADS_REFRESH_TOKEN`,
+   `GA4_REFRESH_TOKEN`, `GSC_REFRESH_TOKEN`. The weekly workflow's
+   `scripts/write_credentials.py` step turns these into `token_gsc.json`,
+   `token_ga4.json`, and `google-ads.yaml` at build time — nothing is ever
+   committed.
+4. **Vercel** (Project → Settings → Environment Variables) needs a subset of
+   the same six: `GOOGLE_ADS_CLIENT_ID`, `GOOGLE_ADS_CLIENT_SECRET`,
+   `GOOGLE_ADS_DEVELOPER_TOKEN`, `GOOGLE_ADS_LOGIN_CUSTOMER_ID`,
+   `GOOGLE_ADS_REFRESH_TOKEN`, `GSC_REFRESH_TOKEN` — so the live Search tool
+   can cross-reference GSC + Ads per search. **`GA4_REFRESH_TOKEN` is
+   deliberately NOT set in Vercel** — GA4 has no native search-query
+   dimension (only GSC does), so it's excluded entirely from the Search
+   tool's live cross-referencing; GA4 stays weekly-batch/page-level only
+   (see `api/search.py`'s module docstring).
 
 ## Search tool (live, on-demand) — the dashboard's default landing view
 
@@ -54,24 +90,33 @@ zero-config convention). It reuses this repo's own `analysis/` scoring
 modules via `analysis/entry_builder.py`, so the weekly batch and the live
 search can never score a keyword differently.
 
-- **Semrush** is the only source queried live per search for volume/CPC/
-  difficulty — it's the only one of the four that can say anything about a
-  brand-new keyword (GSC/GA4/Ads only have data for queries that have
-  already driven real traffic).
-- If a searched keyword happens to match one already in the last
-  weekly-committed `data/keyword_research_data.json`, its real GSC/GA4/Ads
-  signal (ranking position, mapped page, confidence subscores) is folded in.
-  Otherwise those sources are honestly shown as "no data yet" — never
+- **Semrush** volume/CPC/difficulty comes from `phrase_related` (real
+  discovery, not exact-match-only) on the seed, across every market in
+  `config.SEMRUSH_SEARCH_DATABASES` (`in`, `us`, `uk`, `ae`) — plus a
+  best-effort `phrase_this` exact lookup per AI-suggested candidate. If an
+  AI-suggested candidate still has no volume after that, and Google Ads
+  credentials are configured, **Google Keyword Planner**
+  (`fetchers/keyword_planner_client.py`) is queried as a fallback so a
+  seed rarely dead-ends with "nothing found".
+- **GSC + Ads** are queried live per search (position/mapped-page from GSC,
+  paid-verification signal from Ads) when Google credentials are set in
+  Vercel — see the OAuth setup section above. **GA4 is not part of this
+  live path** (no native search-query dimension); if a searched keyword
+  happens to match one already in the last weekly-committed
+  `data/keyword_research_data.json`, its cached GA4 signal is folded in
+  instead. Otherwise GA4 is honestly shown as "no data yet" — never
   fabricated.
-- **Credentials**: reuses `SEMRUSH_API_KEY` — but it must be added in **two
-  separate places**: GitHub Actions secrets (weekly cron, per above) *and*
+- **Compliance filter**: any candidate or discovered keyword that pairs
+  "patient(s)" with a specific nationality/country name (e.g. "for uk
+  patients", "for gulf patients") is excluded from results entirely, not
+  just downranked — see `analysis/compliance.py::is_patient_nationality_pattern`.
+- **Credentials**: `SEMRUSH_API_KEY` must be added in **two separate
+  places**: GitHub Actions secrets (weekly cron, per above) *and*
   Vercel → Project → Settings → Environment Variables (for `api/search.py`
   at request time). Until the Vercel one is set, the tool runs in a clearly
   labelled **demo mode** (matches against the local sample keyword universe,
   via word-overlap so it still returns something useful, instead of calling
   Semrush), so the whole feature is testable end-to-end today.
-- Live mode prices India (`in`) search volume only, to bound Semrush
-  API-unit cost per search click.
 
 ### AI keyword ideation (Claude)
 
@@ -167,6 +212,6 @@ and the Google credentials are set as repo secrets.
   inputs, and the Weekly Report's tier-tabbed KPI/keyword-list views.
 - `data/sample/` — fixtures; `data/keyword_research_data.json` /
   `data/keyword_history.json` — weekly build output, also read at request
-  time by `api/search.py` for GSC/GA4/Ads cross-referencing.
+  time by `api/search.py` as a cached-GA4 / cross-reference fallback.
 - `scripts/verify_build.py` — schema sanity check, no browser needed.
 - `tests/test_scoring.py` — pytest for the analysis/scoring math.

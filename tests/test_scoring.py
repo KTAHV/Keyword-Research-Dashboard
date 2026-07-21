@@ -252,3 +252,40 @@ def test_ai_keyword_ideation_raises_without_api_key(monkeypatch):
         assert False, "should have raised RuntimeError"
     except RuntimeError as e:
         assert "ANTHROPIC_API_KEY" in str(e)
+
+
+def test_is_patient_nationality_pattern_flags_specific_country():
+    assert compliance.is_patient_nationality_pattern("ayurveda treatment kerala for uk patients") is True
+    assert compliance.is_patient_nationality_pattern("ayurveda hospital kerala for german patients") is True
+    assert compliance.is_patient_nationality_pattern("ayurveda retreat dubai patients kerala") is True
+
+
+def test_is_patient_nationality_pattern_allows_generic_terms():
+    # "international"/"foreigners"/"nri" are legitimate existing keywords
+    # elsewhere in this dataset -- must NOT be caught by this rule.
+    assert compliance.is_patient_nationality_pattern("ayurvedic wellness retreat for international patients") is False
+    assert compliance.is_patient_nationality_pattern("ayurveda treatment for foreigners kerala") is False
+    assert compliance.is_patient_nationality_pattern("ayurvedic hospital for nri") is False
+    assert compliance.is_patient_nationality_pattern("panchakarma treatment kerala") is False
+
+
+def test_compliance_check_marks_patient_nationality_pattern_high():
+    result = compliance.compliance_check("ayurveda treatment kerala for uk patients")
+    assert result["overallRisk"] == "High"
+    assert result["patientNationalityPattern"] is True
+
+
+def test_resolve_ga4_entry_sample_phase_keyed_by_keyword():
+    ga4_data = {"panchakarma treatment kerala": {"sessions": 100}}
+    result = entry_builder.resolve_ga4_entry("sample", "panchakarma treatment kerala", {"page": "panchakarma-treatment"}, ga4_data)
+    assert result == {"sessions": 100}
+
+
+def test_resolve_ga4_entry_live_phase_keyed_by_page():
+    ga4_data = {"panchakarma-treatment": {"sessions": 250}}
+    gsc_entry = {"page": "panchakarma-treatment"}
+    result = entry_builder.resolve_ga4_entry("live", "panchakarma treatment kerala", gsc_entry, ga4_data)
+    assert result == {"sessions": 250}
+
+    # unmapped keyword (no GSC page) -> no GA4 signal, live phase
+    assert entry_builder.resolve_ga4_entry("live", "some new keyword", None, ga4_data) is None
