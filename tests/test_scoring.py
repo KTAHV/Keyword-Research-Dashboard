@@ -4,7 +4,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from analysis import ai_voice_readiness, competitor_and_gap, compliance, confidence, intent_and_audience
-from analysis import entry_builder, phrase_extraction
+from analysis import ai_keyword_ideation, entry_builder, phrase_extraction
 
 
 def test_spam_risk_flag():
@@ -218,3 +218,37 @@ def test_extract_seed_phrases_finds_repeated_phrase():
 def test_extract_seed_phrases_empty_text():
     assert phrase_extraction.extract_seed_phrases("") == []
     assert phrase_extraction.extract_seed_phrases("   ") == []
+
+
+def test_content_words_filters_stopwords():
+    words = phrase_extraction.content_words("The Best Ayurveda Hospital in Kerala")
+    assert "best" in words and "ayurveda" in words and "hospital" in words and "kerala" in words
+    assert "the" not in words and "in" not in words
+
+
+def test_ai_keyword_ideation_normalize_dedupes_and_lowercases():
+    normalized = ai_keyword_ideation.normalize_keywords(
+        ["Panchakarma Treatment Kerala", "panchakarma treatment kerala", "What is Panchakarma?"]
+    )
+    assert normalized == ["panchakarma treatment kerala", "what is panchakarma?"]
+
+
+def test_ai_keyword_ideation_normalize_caps_at_max():
+    many = [f"keyword {i}" for i in range(40)]
+    assert len(ai_keyword_ideation.normalize_keywords(many)) == ai_keyword_ideation.MAX_KEYWORDS
+
+
+def test_ai_keyword_ideation_build_input_text():
+    text = ai_keyword_ideation.build_input_text("panchakarma", "some page content")
+    assert "panchakarma" in text
+    assert "some page content" in text
+    assert ai_keyword_ideation.build_input_text("", "") == ""
+
+
+def test_ai_keyword_ideation_raises_without_api_key(monkeypatch):
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    try:
+        ai_keyword_ideation.suggest_keywords("panchakarma")
+        assert False, "should have raised RuntimeError"
+    except RuntimeError as e:
+        assert "ANTHROPIC_API_KEY" in str(e)

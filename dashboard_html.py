@@ -529,6 +529,7 @@ function renderSettings() {
     { title: 'Refresh schedule', body: 'Weekly via GitHub Actions cron, plus manual workflow_dispatch trigger.' },
     { title: 'Google Suggest / Autocomplete', body: 'Approximated from Semrush related/question data — Ahrefs\' native Autocomplete-backed endpoint returned "Insufficient plan" on the connected account.' },
     { title: 'Search tool (live, on-demand)', body: 'POST /api/search — a Vercel serverless function. Needs SEMRUSH_API_KEY set in Vercel → Project → Settings → Environment Variables (separate from the GitHub Actions secret used by the weekly cron). Runs in demo mode, clearly labelled, until that key is set.' },
+    { title: 'AI keyword ideation (Claude)', body: 'claude-opus-4-8 via the official Anthropic SDK proposes candidate keywords like an Ayurveda-marketing expert; every score still comes from this repo\'s own rule-based pipeline. Needs ANTHROPIC_API_KEY in Vercel (separate from Semrush and from any Claude Code/Claude.ai subscription — pay-as-you-go API billing, ~$0.01–0.02/search). Falls back to basic keyword expansion until set.' },
     { title: 'Semrush weekly-batch automation', body: 'Pending SEMRUSH_API_KEY in GitHub Actions secrets (separate from the Vercel environment variable above and from the interactive MCP connection).' },
   ];
   document.getElementById('settingsGrid').innerHTML = cards.map(function (c) {
@@ -574,7 +575,9 @@ function runSearch() {
         'Found ' + data.entries.length + ' keyword(s) for: ' + data.resolvedSeeds.join(', '), false
       );
       var bannerCls = data.mode === 'live' ? 'search-banner live' : 'search-banner';
-      var bannerText = data.mode === 'live' ? 'Live Semrush data.' : 'Demo data — add SEMRUSH_API_KEY in Vercel to go live.';
+      var volumeText = data.mode === 'live' ? 'Live Semrush data.' : 'Demo volume/CPC data — add SEMRUSH_API_KEY in Vercel to go live.';
+      var ideationText = data.ideation === 'ai' ? 'AI-suggested keywords (Claude).' : 'Basic keyword expansion — add ANTHROPIC_API_KEY in Vercel for AI-suggested keywords.';
+      var bannerText = volumeText + ' ' + ideationText;
       var warningsHtml = (data.warnings || []).map(function (w) { return '<div>' + w + '</div>'; }).join('');
       document.getElementById('searchBanner').innerHTML = '<div class="' + bannerCls + '">' + bannerText + warningsHtml + '</div>';
       var sorted = sortByPriorityThenConfidence(data.entries);

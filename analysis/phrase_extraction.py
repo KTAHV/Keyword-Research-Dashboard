@@ -21,7 +21,7 @@ STOPWORDS = {
 WORD_RE = re.compile(r"[a-zA-Z]+")
 
 
-def _content_words(text):
+def content_words(text):
     return [w.lower() for w in WORD_RE.findall(text) if w.lower() not in STOPWORDS and len(w) > 1]
 
 
@@ -31,7 +31,7 @@ def extract_seed_phrases(text, limit=5, min_words=2, max_words=4):
     if not text or not text.strip():
         return []
 
-    words = _content_words(text)
+    words = content_words(text)
     counts = Counter()
     for n in range(min_words, max_words + 1):
         for i in range(len(words) - n + 1):

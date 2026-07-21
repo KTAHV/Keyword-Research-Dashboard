@@ -54,9 +54,10 @@ zero-config convention). It reuses this repo's own `analysis/` scoring
 modules via `analysis/entry_builder.py`, so the weekly batch and the live
 search can never score a keyword differently.
 
-- **Semrush** is the only source queried live per search — it's the only one
-  of the four that can say anything about a brand-new keyword (GSC/GA4/Ads
-  only have data for queries that have already driven real traffic).
+- **Semrush** is the only source queried live per search for volume/CPC/
+  difficulty — it's the only one of the four that can say anything about a
+  brand-new keyword (GSC/GA4/Ads only have data for queries that have
+  already driven real traffic).
 - If a searched keyword happens to match one already in the last
   weekly-committed `data/keyword_research_data.json`, its real GSC/GA4/Ads
   signal (ranking position, mapped page, confidence subscores) is folded in.
@@ -66,11 +67,38 @@ search can never score a keyword differently.
   separate places**: GitHub Actions secrets (weekly cron, per above) *and*
   Vercel → Project → Settings → Environment Variables (for `api/search.py`
   at request time). Until the Vercel one is set, the tool runs in a clearly
-  labelled **demo mode** (matches against the local sample keyword universe
-  instead of calling Semrush), so the whole feature is testable end-to-end
-  today.
+  labelled **demo mode** (matches against the local sample keyword universe,
+  via word-overlap so it still returns something useful, instead of calling
+  Semrush), so the whole feature is testable end-to-end today.
 - Live mode prices India (`in`) search volume only, to bound Semrush
   API-unit cost per search click.
+
+### AI keyword ideation (Claude)
+
+Rather than mechanically matching the typed seed against a keyword list, the
+Search tool asks Claude (`analysis/ai_keyword_ideation.py`) to think like an
+Ayurveda-hospital marketing expert about the seed/URL/pasted content and
+propose 15-25 realistic candidate keywords — primary terms, long-tail
+phrases, question variations, international-patient phrasing — before those
+candidates go through this repo's own deterministic scoring pipeline
+(`analysis/entry_builder.py`). Claude only *proposes keyword strings*; every
+score (intent, compliance, AEO, confidence, ...) still comes from the same
+auditable rule-based code the weekly batch uses, never from the model.
+
+- **Model**: `claude-opus-4-8`, via the official `anthropic` Python SDK
+  (structured output / Pydantic schema, not free-text parsing).
+- **Credential**: `ANTHROPIC_API_KEY` — a **new, separate** credential from
+  `SEMRUSH_API_KEY`, and separate from any Claude Code/Claude.ai
+  subscription (this is pay-as-you-go Claude API billing). Get one at
+  `https://console.anthropic.com/settings/keys`, then add it to Vercel →
+  Project → Settings → Environment Variables. **Status: pending.**
+- **Cost**: roughly $0.01–0.02 per search click at Opus rates. Without this
+  key set, the tool falls back to a simpler regex-based keyword expansion —
+  it still works, just without the expert-level understanding.
+- **No auth on the endpoint**: `/api/search` has no login/rate-limit, so
+  anyone who opens the dashboard and clicks Search triggers a (small) paid
+  Claude call once this key is set. Worth knowing before enabling it on a
+  public URL.
 
 ## Google Suggest / Autocomplete — approximated, not literal
 
@@ -129,7 +157,9 @@ and the Google credentials are set as repo secrets.
   `compliance.py`, `competitor_and_gap.py`, `confidence.py`, `rules.py`
   (Needs Attention alert generation), `entry_builder.py` (shared keyword
   scoring/assembly used by both the batch build and `api/search.py`),
-  `phrase_extraction.py` (seed-phrase extraction from pasted URL/content).
+  `phrase_extraction.py` (regex-based fallback seed-phrase extraction),
+  `ai_keyword_ideation.py` (Claude-based semantic keyword ideation, the
+  preferred path when `ANTHROPIC_API_KEY` is set).
 - `build_keyword_research_dashboard.py` — weekly-batch orchestrator.
 - `api/search.py` — Vercel serverless function behind the live Search tool.
 - `dashboard_html.py` — static HTML/CSS/JS template: sidebar (Search +
