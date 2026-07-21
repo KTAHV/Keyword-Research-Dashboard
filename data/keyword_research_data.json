@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-20T17:41:46.572817+00:00",
+  "generatedAt": "2026-07-21T05:49:08.649514+00:00",
   "phase": "sample",
   "kpis": {
     "totalKeywords": 38,
@@ -82,7 +82,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": true,
         "contentGap": false
-      }
+      },
+      "priority": "High"
     },
     {
       "keyword": "ayurvedic treatment packages kerala",
@@ -149,7 +150,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": true,
         "contentGap": false
-      }
+      },
+      "priority": "High"
     },
     {
       "keyword": "best ayurveda hospital kerala",
@@ -216,7 +218,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": false
-      }
+      },
+      "priority": "High"
     },
     {
       "keyword": "nabh accredited ayurveda hospital",
@@ -282,7 +285,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": false
-      }
+      },
+      "priority": "High"
     },
     {
       "keyword": "ayurvedic weight loss treatment",
@@ -349,7 +353,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": false
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "ayurvedic treatment for chronic pain",
@@ -415,7 +420,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": true,
         "contentGap": false
-      }
+      },
+      "priority": "High"
     },
     {
       "keyword": "ayurveda detox retreat kerala",
@@ -482,7 +488,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": false
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "wellness resort kerala ayurveda",
@@ -549,7 +556,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": false
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "ayurveda treatment for foreigners kerala",
@@ -617,7 +625,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": true,
         "contentGap": false
-      }
+      },
+      "priority": "High"
     },
     {
       "keyword": "ayurvedic hospital for nri",
@@ -685,7 +694,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": false
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "what is panchakarma treatment",
@@ -751,7 +761,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": true,
         "contentGap": false
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "how long does panchakarma treatment take",
@@ -816,7 +827,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": true,
         "contentGap": false
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "is ayurveda treatment effective for chronic pain",
@@ -882,7 +894,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": true,
         "contentGap": false
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "what is the cost of ayurvedic treatment in kerala",
@@ -949,7 +962,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "why is kerala famous for ayurveda",
@@ -1014,7 +1028,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": false
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "how to choose a genuine ayurveda hospital",
@@ -1080,7 +1095,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": false
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "can ayurveda cure chronic back pain",
@@ -1149,7 +1165,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": true,
         "contentGap": false
-      }
+      },
+      "priority": "Low"
     },
     {
       "keyword": "ayurveda retreat for stress and anxiety",
@@ -1216,7 +1233,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "post covid recovery ayurveda treatment",
@@ -1282,7 +1300,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "ayurvedic fertility treatment kerala",
@@ -1348,7 +1367,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "ayurveda treatment for diabetes management",
@@ -1414,7 +1434,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "High"
     },
     {
       "keyword": "authentic panchakarma vs spa panchakarma",
@@ -1480,7 +1501,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "ayurvedic massage near me",
@@ -1546,7 +1568,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Low"
     },
     {
       "keyword": "kerala spa with happy ending",
@@ -1611,7 +1634,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Low"
     },
     {
       "keyword": "ayurveda home remedies for weight loss",
@@ -1676,7 +1700,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Low"
     },
     {
       "keyword": "how to make ayurvedic oil at home",
@@ -1741,7 +1766,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Low"
     },
     {
       "keyword": "ayurveda hospital jobs kerala",
@@ -1805,7 +1831,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Low"
     },
     {
       "keyword": "panchakarma therapist salary",
@@ -1869,7 +1896,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Low"
     },
     {
       "keyword": "guaranteed cure for chronic pain ayurveda",
@@ -1940,7 +1968,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Low"
     },
     {
       "keyword": "ayurveda miracle cure for diabetes",
@@ -2011,7 +2040,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Low"
     },
     {
       "keyword": "vaidyagrama vs kairali ayurveda",
@@ -2084,7 +2114,8 @@
         },
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "somatheeram ayurveda packages cost",
@@ -2158,7 +2189,8 @@
         },
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "best ayurveda retreat kerala for couples",
@@ -2233,7 +2265,8 @@
         },
         "cannibalizationRisk": false,
         "contentGap": true
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "panchakarma treatment cost kerala",
@@ -2300,7 +2333,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": true,
         "contentGap": false
-      }
+      },
+      "priority": "High"
     },
     {
       "keyword": "ayurveda treatment packages for couples",
@@ -2366,7 +2400,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": true,
         "contentGap": false
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "ayurveda treatment kerala for uk patients",
@@ -2431,7 +2466,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": true,
         "contentGap": false
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "ayurveda retreat dubai patients kerala",
@@ -2497,7 +2533,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": true,
         "contentGap": false
-      }
+      },
+      "priority": "Medium"
     },
     {
       "keyword": "ayurveda hospital kerala for german patients",
@@ -2562,7 +2599,8 @@
         "competitorOverlap": null,
         "cannibalizationRisk": false,
         "contentGap": false
-      }
+      },
+      "priority": "High"
     }
   ],
   "needsAttention": [

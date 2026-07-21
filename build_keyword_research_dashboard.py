@@ -21,7 +21,8 @@ import os
 from datetime import date, datetime, timezone
 
 import config
-from analysis import ai_voice_readiness, competitor_and_gap, compliance, confidence, intent_and_audience, rules
+from analysis import competitor_and_gap, rules
+from analysis.entry_builder import build_entry
 from dashboard_html import render_html
 from fetchers import (
     fetch_competitor_keywords,
@@ -39,7 +40,6 @@ OUTPUT_JSON = os.path.join(DATA_DIR, "keyword_research_data.json")
 HISTORY_JSON = os.path.join(DATA_DIR, "keyword_history.json")
 OUTPUT_HTML = os.path.join(ROOT, "index.html")
 
-HIGH_PRIORITY_CONFIDENCE_FLOOR = 55
 MAX_POSITION_HISTORY_POINTS = 8
 
 
@@ -55,28 +55,6 @@ def page_title_by_id():
     return {p["id"]: p["title"] for p in config.PAGES}
 
 
-def classify_type_and_placement(keyword, mapped_page_id, is_question):
-    word_count = len(keyword.split())
-    if is_question:
-        kw_type = "Question"
-    elif word_count >= 5:
-        kw_type = "Long-tail"
-    elif word_count <= 3:
-        kw_type = "Primary"
-    else:
-        kw_type = "Secondary"
-
-    if kw_type == "Question":
-        placement = "FAQ Schema"
-    elif kw_type == "Primary":
-        placement = "H1" if mapped_page_id else "Meta Title"
-    elif kw_type == "Secondary":
-        placement = "H2"
-    else:
-        placement = "H3" if mapped_page_id else "Meta Description"
-    return kw_type, placement
-
-
 def collect_trending_phrases(suggest_proxy_data):
     trending = set()
     for seed_data in suggest_proxy_data.values():
@@ -84,94 +62,9 @@ def collect_trending_phrases(suggest_proxy_data):
     return trending
 
 
-def build_entry(keyword, semrush_data, gsc_data, ga4_data, ads_data, competitor_data,
-                 trending_phrases, page_titles):
-    volume_by_country = semrush_data.get("volumeByCountry", {})
-    cpc = semrush_data.get("cpc")
-    difficulty = semrush_data.get("difficulty")
-    parent_topic = semrush_data.get("parentTopic")
-
-    gsc_entry = gsc_data.get(keyword)
-    ga4_entry = ga4_data.get(keyword)
-    ads_entry = ads_data.get(keyword)
-
-    mapped_page_id = gsc_entry["page"] if gsc_entry else None
-    current_position = gsc_entry["position"] if gsc_entry else None
-
-    question = intent_and_audience.is_question(keyword)
-    intent = intent_and_audience.classify_intent(keyword)
-    spam_risk = intent_and_audience.spam_risk_flag(keyword)
-    medical_specificity = intent_and_audience.medical_specificity_score(keyword)
-    audience_fit = intent_and_audience.audience_fit_score(keyword, volume_by_country, cpc)
-
-    ai_voice = ai_voice_readiness.ai_voice_fit(keyword, medical_specificity)
-    compliance_result = compliance.compliance_check(keyword)
-    confidence_score, confidence_subscores = confidence.compute_confidence(
-        gsc_entry, ga4_entry, ads_entry, volume_by_country, difficulty
-    )
-    underperf = confidence.underperformance_flag(gsc_entry, ga4_entry)
-    competitor_gap = competitor_and_gap.competitor_overlap(keyword, competitor_data)
-
-    kw_type, placement = classify_type_and_placement(keyword, mapped_page_id, question)
-    answerable = question or ai_voice["answerabilityScore"] >= 50
-
-    entry = {
-        "keyword": keyword,
-        "type": kw_type,
-        "suggestedPlacement": placement,
-        "answerable": answerable,
-        "intent": intent,
-        "aiVoiceSearchFit": ai_voice["fit"],
-        "audienceFitScore": audience_fit,
-        "spamRisk": spam_risk,
-        "complianceRisk": compliance_result["overallRisk"],
-        "complianceFlaggedTerms": compliance_result["flaggedTerms"],
-        "confidenceScore": confidence_score,
-        "mappedPageId": mapped_page_id,
-        "mappedPage": page_titles.get(mapped_page_id, "Content Gap") if mapped_page_id else "Content Gap",
-        "parentTopic": parent_topic,
-        "underperformanceFlag": underperf,
-        "competitorGap": competitor_gap,
-        "coreSearchMetrics": {
-            "volumeByCountry": volume_by_country,
-            "competition": difficulty,
-            "cpc": cpc,
-            "currentRankingPosition": current_position,
-            "trendingPhrase": keyword in trending_phrases,
-        },
-        "audienceFitIntent": {
-            "intent": intent,
-            "audienceFitScore": audience_fit,
-            "spamRiskFlag": spam_risk,
-            "medicalSpecificityScore": medical_specificity,
-        },
-        "aiVoiceReadiness": ai_voice,
-        "complianceCheck": compliance_result,
-        "crossSourceConfidence": {
-            "confidenceScore": confidence_score,
-            "subscores": confidence_subscores,
-            "underperformanceFlag": underperf,
-        },
-    }
-    entry["contentGapCandidate"] = competitor_and_gap.is_content_gap_candidate(entry)
-    entry["competitorContentGap"] = {
-        "competitorOverlap": competitor_gap,
-        "cannibalizationRisk": False,  # filled in after full-list pass
-        "contentGap": entry["mappedPageId"] is None,
-    }
-    return entry
-
-
 def compute_kpis(entries):
     total = len(entries)
-    high_priority = sum(
-        1 for e in entries
-        if e["audienceFitScore"] == "High"
-        and e["spamRisk"] == "None"
-        and e["complianceRisk"] != "High"
-        and e["intent"] != "Low-Quality"
-        and e["confidenceScore"] >= HIGH_PRIORITY_CONFIDENCE_FLOOR
-    )
+    high_priority = sum(1 for e in entries if e["priority"] == "High")
     content_gaps = sum(1 for e in entries if e["contentGapCandidate"])
     compliance_flagged = sum(1 for e in entries if e["complianceRisk"] == "High")
     avg_confidence = round(sum(e["confidenceScore"] for e in entries) / total, 1) if total else 0.0
@@ -258,7 +151,11 @@ def build(phase):
     page_titles = page_title_by_id()
 
     entries = [
-        build_entry(keyword, semrush_data, gsc, ga4, ads, competitor_keywords, trending_phrases, page_titles)
+        build_entry(
+            keyword, semrush_data, gsc.get(keyword), ga4.get(keyword), ads.get(keyword),
+            competitor_and_gap.competitor_overlap(keyword, competitor_keywords),
+            trending_phrases, page_titles,
+        )
         for keyword, semrush_data in semrush.items()
     ]
 

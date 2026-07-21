@@ -4,6 +4,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from analysis import ai_voice_readiness, competitor_and_gap, compliance, confidence, intent_and_audience
+from analysis import entry_builder, phrase_extraction
 
 
 def test_spam_risk_flag():
@@ -108,3 +109,112 @@ def test_detect_cannibalization():
     ]
     flagged = competitor_and_gap.detect_cannibalization(entries)
     assert flagged == {"a", "b"}
+
+
+def test_compute_confidence_from_subscores_renormalizes():
+    all_four = confidence.compute_confidence_from_subscores({"gsc": 80, "ga4": 60, "ads": 40, "semrush": 90})
+    assert 0 <= all_four <= 100
+
+    semrush_only = confidence.compute_confidence_from_subscores(
+        {"gsc": None, "ga4": None, "ads": None, "semrush": 90}
+    )
+    assert semrush_only == 90  # only source present -> its own score, fully renormalized
+
+
+def test_build_entry_matches_page_quality_dashboard():
+    page_titles = {"panchakarma-treatment": "Panchakarma Treatment"}
+    semrush_data = {"volumeByCountry": {"in": 2900, "us": 320}, "cpc": 145, "difficulty": 38, "parentTopic": "panchakarma treatment"}
+    gsc_entry = {"impressions": 4800, "clicks": 310, "ctr": 6.5, "position": 4.2, "page": "panchakarma-treatment"}
+    entry = entry_builder.build_entry(
+        "panchakarma treatment kerala", semrush_data, gsc_entry, None, None, None, set(), page_titles
+    )
+    assert entry["mappedPage"] == "Panchakarma Treatment"
+    assert entry["type"] == "Primary"
+    assert entry["suggestedPlacement"] == "H1"
+    assert "priority" in entry and entry["priority"] in ("High", "Medium", "Low")
+
+
+def test_priority_band_low_for_spam_or_high_compliance_risk():
+    base = {"spamRisk": "None", "intent": "Commercial", "complianceRisk": "Low",
+            "audienceFitScore": "High", "confidenceScore": 90}
+    assert entry_builder.priority_band(base) == "High"
+
+    spam = dict(base, spamRisk="Flagged")
+    assert entry_builder.priority_band(spam) == "Low"
+
+    risky = dict(base, complianceRisk="High")
+    assert entry_builder.priority_band(risky) == "Low"
+
+    low_confidence = dict(base, confidenceScore=20)
+    assert entry_builder.priority_band(low_confidence) == "Medium"
+
+
+def test_enrich_with_cached_signal_borrows_gsc_ga4_ads():
+    page_titles = {}
+    semrush_only = entry_builder.build_entry(
+        "panchakarma treatment kerala",
+        {"volumeByCountry": {"in": 2900}, "cpc": 145, "difficulty": 38, "parentTopic": "panchakarma treatment"},
+        None, None, None, None, set(), page_titles,
+    )
+    assert semrush_only["crossSourceConfidence"]["subscores"]["gsc"] is None
+
+    cached_entry = {
+        "mappedPageId": "panchakarma-treatment",
+        "mappedPage": "Panchakarma Treatment",
+        "coreSearchMetrics": {"currentRankingPosition": 4.2},
+        "underperformanceFlag": False,
+        "crossSourceConfidence": {"subscores": {"gsc": 96, "ga4": 85, "ads": 70, "semrush": 60}},
+    }
+    original_semrush_only_score = semrush_only["confidenceScore"]
+    enriched = entry_builder.enrich_with_cached_signal(semrush_only, cached_entry)
+    assert enriched["mappedPage"] == "Panchakarma Treatment"
+    assert enriched["coreSearchMetrics"]["currentRankingPosition"] == 4.2
+    assert enriched["crossSourceConfidence"]["subscores"]["gsc"] == 96
+    assert 0 <= enriched["confidenceScore"] <= 100
+    # composite confidence now blends GSC/GA4/Ads too, not Semrush alone -> should shift
+    assert enriched["confidenceScore"] != original_semrush_only_score
+
+def test_enrich_with_cached_signal_recomputes_placement():
+    page_titles = {}
+    semrush_only = entry_builder.build_entry(
+        "panchakarma treatment kerala",
+        {"volumeByCountry": {"in": 2900}, "cpc": 145, "difficulty": 38, "parentTopic": "panchakarma treatment"},
+        None, None, None, None, set(), page_titles,
+    )
+    assert semrush_only["type"] == "Primary"
+    assert semrush_only["suggestedPlacement"] == "Meta Title"  # no mapped page yet
+
+    cached_entry = {
+        "mappedPageId": "panchakarma-treatment",
+        "mappedPage": "Panchakarma Treatment",
+        "coreSearchMetrics": {"currentRankingPosition": 4.2},
+        "underperformanceFlag": False,
+        "crossSourceConfidence": {"subscores": {"gsc": 96, "ga4": 85, "ads": 70, "semrush": 60}},
+    }
+    enriched = entry_builder.enrich_with_cached_signal(semrush_only, cached_entry)
+    assert enriched["suggestedPlacement"] == "H1"  # now that a page is mapped
+
+
+def test_enrich_with_cached_signal_no_match_leaves_entry_unchanged():
+    page_titles = {}
+    fresh_entry = entry_builder.build_entry(
+        "panchakarma treatment kerala",
+        {"volumeByCountry": {"in": 2900}, "cpc": 145, "difficulty": 38, "parentTopic": "panchakarma treatment"},
+        None, None, None, None, set(), page_titles,
+    )
+    no_match = entry_builder.enrich_with_cached_signal(fresh_entry, None)
+    assert no_match["crossSourceConfidence"]["subscores"]["gsc"] is None
+
+
+def test_extract_seed_phrases_finds_repeated_phrase():
+    text = (
+        "panchakarma treatment kerala is popular. Our panchakarma treatment kerala "
+        "program includes panchakarma treatment kerala for chronic pain."
+    )
+    phrases = phrase_extraction.extract_seed_phrases(text, limit=3)
+    assert any("panchakarma treatment" in p for p in phrases)
+
+
+def test_extract_seed_phrases_empty_text():
+    assert phrase_extraction.extract_seed_phrases("") == []
+    assert phrase_extraction.extract_seed_phrases("   ") == []

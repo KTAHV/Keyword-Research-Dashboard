@@ -9,16 +9,27 @@ runtime fetch().
 """
 
 SIDEBAR_NAV = [
-    {"id": "overview", "label": "Overview", "section": "research"},
-    {"id": "priority", "label": "Priority Keywords", "section": "research"},
-    {"id": "aeo", "label": "AEO/Voice-Search Opportunities", "section": "research"},
-    {"id": "contentgap", "label": "Content Gap", "section": "research"},
-    {"id": "avoid", "label": "Avoid List", "section": "research"},
-    {"id": "competitorgap", "label": "Competitor Gap", "section": "research"},
-    {"id": "underperforming", "label": "Underperforming Pages", "section": "research"},
+    {"id": "search", "label": "Search", "section": "research"},
+    {"id": "weeklyreport", "label": "Weekly Report", "section": "research"},
     {"id": "needsattention", "label": "Needs Attention", "section": "workspace", "badgeKey": "needsAttentionCount"},
     {"id": "analytics", "label": "Analytics", "section": "workspace"},
     {"id": "settings", "label": "Settings", "section": "workspace"},
+]
+
+# The "Weekly Report" sidebar item holds all 7 of the original batch views
+# as internal tier-tabs (Overview stays as that view's default panel, the
+# other 6 are additional tabs) -- nothing from the original design was
+# deleted, it moved one level deeper. See _main_shell_html().
+WEEKLY_REPORT_TABS = [
+    # tableId is explicit (not derived from id) because the render*() JS
+    # functions below already reference specific camelCase table ids
+    # (contentGapTable, competitorGapTable) predating this tab structure.
+    {"id": "priority", "label": "Priority Keywords", "tableId": "priorityTable"},  # default/active tab
+    {"id": "aeo", "label": "AEO/Voice-Search Opportunities", "tableId": "aeoTable"},
+    {"id": "contentgap", "label": "Content Gap", "tableId": "contentGapTable"},
+    {"id": "avoid", "label": "Avoid List", "tableId": "avoidTable"},
+    {"id": "competitorgap", "label": "Competitor Gap", "tableId": "competitorGapTable"},
+    {"id": "underperforming", "label": "Underperforming Pages", "tableId": "underperformingTable"},
 ]
 
 TEMPLATE_HEAD = """<!DOCTYPE html>
@@ -135,6 +146,32 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:'Work Sans',-ap
 .view.active{display:block}
 .view-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:600;color:var(--charcoal);margin:0 0 1.1rem}
 
+.tier-tabs{display:flex;gap:4px;background:var(--surface-2);border-radius:999px;padding:4px;margin-bottom:1.25rem;flex-wrap:wrap}
+.tier-tab{font-family:'Work Sans',sans-serif;font-size:12.5px;padding:7px 16px;border-radius:999px;border:none;
+  background:transparent;color:var(--text-muted);cursor:pointer;transition:all .2s ease}
+.tier-tab.active{background:var(--green);color:#fff;font-weight:500}
+.tier-panel{display:none}
+.tier-panel.active{display:block}
+
+.search-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;
+  box-shadow:0 2px 10px rgba(38,38,32,0.06);margin-bottom:1.5rem}
+.search-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:1.1rem}
+@media(max-width:900px){.search-grid{grid-template-columns:1fr}}
+.search-field label{display:block;font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;
+  letter-spacing:.05em;margin-bottom:6px}
+.search-field input,.search-field textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 11px;
+  font-family:inherit;font-size:13px;color:var(--text);background:var(--bg);resize:vertical}
+.search-field textarea{min-height:88px}
+.search-field input:focus,.search-field textarea:focus{outline:none;border-color:var(--green)}
+.search-btn{background:var(--charcoal);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:13.5px;
+  font-weight:600;cursor:pointer;font-family:inherit}
+.search-btn:disabled{opacity:.6;cursor:not-allowed}
+.search-status{font-size:12.5px;color:var(--text-muted);margin:10px 0 0}
+.search-status.error{color:var(--danger)}
+.search-banner{font-size:12.5px;padding:10px 14px;border-radius:8px;background:var(--warn-bg);color:var(--gold);
+  margin-bottom:1rem;line-height:1.6}
+.search-banner.live{background:var(--success-bg);color:var(--success)}
+
 .table-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
   box-shadow:0 2px 10px rgba(38,38,32,0.06)}
 table{width:100%;border-collapse:collapse;font-size:12.5px;white-space:nowrap}
@@ -200,15 +237,28 @@ def _sidebar_html():
 
 def _nav_item_html(item):
     badge = f'<span class="nav-badge" id="navBadge-{item["id"]}" style="display:none"></span>' if item.get("badgeKey") else ""
-    active = " active" if item["id"] == "overview" else ""
+    active = " active" if item["id"] == "search" else ""
     return (
         f'<div class="nav-item{active}" data-view="{item["id"]}" data-label="{item["label"]}">'
         f'<span>{item["label"]}</span>{badge}</div>'
     )
 
 
+def _weekly_report_tabs_html():
+    tabs = "".join(
+        f'<button class="tier-tab{" active" if i == 0 else ""}" data-tier="{t["id"]}">{t["label"]}</button>'
+        for i, t in enumerate(WEEKLY_REPORT_TABS)
+    )
+    panels = "".join(f"""
+  <div class="tier-panel{" active" if i == 0 else ""}" id="tier{t["id"].capitalize()}">
+    <div class="table-wrap"><table id="{t["tableId"]}"></table></div>
+  </div>""" for i, t in enumerate(WEEKLY_REPORT_TABS))
+    return tabs, panels
+
+
 def _main_shell_html():
-    return """
+    tier_tabs_html, tier_panels_html = _weekly_report_tabs_html()
+    return f"""
 <div class="main">
   <div class="hero">
     <div class="hero-top">
@@ -230,11 +280,34 @@ def _main_shell_html():
   </div>
 
   <div class="context-row">
-    <div class="breadcrumb">Keyword Research &rsaquo; <b id="breadcrumbSection">Overview</b></div>
+    <div class="breadcrumb">Keyword Research &rsaquo; <b id="breadcrumbSection">Search</b></div>
     <div class="last-refreshed" id="lastRefreshed"></div>
   </div>
 
-  <div id="viewOverview" class="view active">
+  <div id="viewSearch" class="view active">
+    <div class="search-panel">
+      <div class="search-grid">
+        <div class="search-field">
+          <label for="searchSeed">Type your seed keywords/service</label>
+          <input type="text" id="searchSeed" placeholder="e.g. panchakarma for weight loss">
+        </div>
+        <div class="search-field">
+          <label for="searchUrl">Paste your URL</label>
+          <input type="text" id="searchUrl" placeholder="https://example.com/page">
+        </div>
+        <div class="search-field">
+          <label for="searchContent">Paste your content</label>
+          <textarea id="searchContent" placeholder="Paste a page's text here"></textarea>
+        </div>
+      </div>
+      <button class="search-btn" id="searchBtn">Search</button>
+      <p class="search-status" id="searchStatus"></p>
+    </div>
+    <div id="searchBanner"></div>
+    <div class="table-wrap" id="searchResultsWrap" style="display:none"><table id="searchResultsTable"></table></div>
+  </div>
+
+  <div id="viewWeeklyreport" class="view">
     <div class="kpi-grid" id="kpiGrid"></div>
     <div class="two-panel">
       <div class="panel needs-attention">
@@ -249,36 +322,11 @@ def _main_shell_html():
         <ul class="snapshot-list" id="contentGapSnapshot"></ul>
       </div>
     </div>
-  </div>
 
-  <div id="viewPriority" class="view">
-    <h2 class="view-title">Priority Keywords</h2>
-    <div class="table-wrap"><table id="priorityTable"></table></div>
-  </div>
-
-  <div id="viewAeo" class="view">
-    <h2 class="view-title">AEO / Voice-Search Opportunities</h2>
-    <div class="table-wrap"><table id="aeoTable"></table></div>
-  </div>
-
-  <div id="viewContentgap" class="view">
-    <h2 class="view-title">Content Gap</h2>
-    <div class="table-wrap"><table id="contentGapTable"></table></div>
-  </div>
-
-  <div id="viewAvoid" class="view">
-    <h2 class="view-title">Avoid List</h2>
-    <div class="table-wrap"><table id="avoidTable"></table></div>
-  </div>
-
-  <div id="viewCompetitorgap" class="view">
-    <h2 class="view-title">Competitor Gap</h2>
-    <div class="table-wrap"><table id="competitorGapTable"></table></div>
-  </div>
-
-  <div id="viewUnderperforming" class="view">
-    <h2 class="view-title">Underperforming Pages</h2>
-    <div class="table-wrap"><table id="underperformingTable"></table></div>
+    <div class="tier-tabs" id="weeklyReportTabs">
+      {tier_tabs_html}
+    </div>
+    {tier_panels_html}
   </div>
 
   <div id="viewNeedsattention" class="view">
@@ -383,11 +431,27 @@ function renderContentGapSnapshot() {
   }).join('') || '<li class="na-note">No content-gap candidates found.</li>';
 }
 
+var PRIORITY_RANK = { High: 0, Medium: 1, Low: 2 };
+
+function priorityRank(p) {
+  // NOT `PRIORITY_RANK[p] || 3` -- High's rank is 0, which `||` treats as
+  // falsy and would wrongly fall back to 3, sorting High-priority rows last.
+  var r = PRIORITY_RANK[p];
+  return r === undefined ? 3 : r;
+}
+
+function sortByPriorityThenConfidence(rows) {
+  return rows.slice().sort(function (a, b) {
+    var pr = priorityRank(a.priority) - priorityRank(b.priority);
+    return pr !== 0 ? pr : b.confidenceScore - a.confidenceScore;
+  });
+}
+
 function keywordTableHtml(rows) {
-  var head = '<tr><th>Keyword</th><th>Type</th><th>Placement</th><th>Answerable</th><th>Intent</th>' +
+  var head = '<tr><th>Priority</th><th>Keyword</th><th>Type</th><th>Placement</th><th>Answerable</th><th>Intent</th>' +
     '<th>AI/Voice Fit</th><th>Audience Fit</th><th>Spam Risk</th><th>Compliance</th><th>Confidence</th><th>Mapped Page</th></tr>';
   var body = rows.map(function (e) {
-    return '<tr><td>' + e.keyword + '</td><td>' + e.type + '</td><td>' + e.suggestedPlacement + '</td>' +
+    return '<tr><td>' + pill(e.priority) + '</td><td>' + e.keyword + '</td><td>' + e.type + '</td><td>' + e.suggestedPlacement + '</td>' +
       '<td>' + (e.answerable ? 'Yes' : 'No') + '</td><td>' + e.intent + '</td>' +
       '<td>' + pill(e.aiVoiceSearchFit) + '</td><td>' + pill(e.audienceFitScore) + '</td>' +
       '<td>' + pill(e.spamRisk) + '</td><td>' + pill(e.complianceRisk) + '</td>' +
@@ -397,8 +461,9 @@ function keywordTableHtml(rows) {
 }
 
 function renderPriorityKeywords() {
-  var rows = DATA.entries.filter(function (e) { return e.intent !== 'Low-Quality' && e.spamRisk === 'None'; })
-    .sort(function (a, b) { return b.confidenceScore - a.confidenceScore; });
+  var rows = sortByPriorityThenConfidence(
+    DATA.entries.filter(function (e) { return e.intent !== 'Low-Quality' && e.spamRisk === 'None'; })
+  );
   document.getElementById('priorityTable').innerHTML = keywordTableHtml(rows);
 }
 
@@ -459,15 +524,91 @@ function renderAnalytics() {
 
 function renderSettings() {
   var cards = [
-    { title: 'Data phase', body: DATA.phase === 'live' ? 'Live data from GSC/GA4/Ads/Semrush.' : 'Sample data (demo fixtures) — run with --phase live once credentials are configured.' },
+    { title: 'Data phase (Weekly Report)', body: DATA.phase === 'live' ? 'Live data from GSC/GA4/Ads/Semrush.' : 'Sample data (demo fixtures) — run with --phase live once credentials are configured.' },
     { title: 'Last refreshed', body: new Date(DATA.generatedAt).toLocaleString() },
     { title: 'Refresh schedule', body: 'Weekly via GitHub Actions cron, plus manual workflow_dispatch trigger.' },
     { title: 'Google Suggest / Autocomplete', body: 'Approximated from Semrush related/question data — Ahrefs\' native Autocomplete-backed endpoint returned "Insufficient plan" on the connected account.' },
-    { title: 'Semrush live automation', body: 'Pending SEMRUSH_API_KEY in GitHub Actions secrets (separate from the interactive MCP connection).' },
+    { title: 'Search tool (live, on-demand)', body: 'POST /api/search — a Vercel serverless function. Needs SEMRUSH_API_KEY set in Vercel → Project → Settings → Environment Variables (separate from the GitHub Actions secret used by the weekly cron). Runs in demo mode, clearly labelled, until that key is set.' },
+    { title: 'Semrush weekly-batch automation', body: 'Pending SEMRUSH_API_KEY in GitHub Actions secrets (separate from the Vercel environment variable above and from the interactive MCP connection).' },
   ];
   document.getElementById('settingsGrid').innerHTML = cards.map(function (c) {
     return '<div class="settings-card"><h4>' + c.title + '</h4><p>' + c.body + '</p></div>';
   }).join('');
+}
+
+function setSearchStatus(msg, isError) {
+  var el = document.getElementById('searchStatus');
+  el.textContent = msg || '';
+  el.classList.toggle('error', !!isError);
+}
+
+function runSearch() {
+  var seedKeyword = document.getElementById('searchSeed').value.trim();
+  var url = document.getElementById('searchUrl').value.trim();
+  var content = document.getElementById('searchContent').value.trim();
+  if (!seedKeyword && !url && !content) {
+    setSearchStatus('Type a seed keyword, paste a URL, or paste content first.', true);
+    return;
+  }
+
+  var btn = document.getElementById('searchBtn');
+  btn.disabled = true;
+  setSearchStatus('Searching…', false);
+  document.getElementById('searchBanner').innerHTML = '';
+  document.getElementById('searchResultsWrap').style.display = 'none';
+
+  fetch('/api/search', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ seedKeyword: seedKeyword, url: url, content: content }),
+  })
+    .then(function (r) { return r.json().then(function (data) { return { ok: r.ok, data: data }; }); })
+    .then(function (res) {
+      btn.disabled = false;
+      var data = res.data;
+      if (!res.ok || data.error) {
+        setSearchStatus(data.error || 'Search failed.', true);
+        return;
+      }
+      setSearchStatus(
+        'Found ' + data.entries.length + ' keyword(s) for: ' + data.resolvedSeeds.join(', '), false
+      );
+      var bannerCls = data.mode === 'live' ? 'search-banner live' : 'search-banner';
+      var bannerText = data.mode === 'live' ? 'Live Semrush data.' : 'Demo data — add SEMRUSH_API_KEY in Vercel to go live.';
+      var warningsHtml = (data.warnings || []).map(function (w) { return '<div>' + w + '</div>'; }).join('');
+      document.getElementById('searchBanner').innerHTML = '<div class="' + bannerCls + '">' + bannerText + warningsHtml + '</div>';
+      var sorted = sortByPriorityThenConfidence(data.entries);
+      document.getElementById('searchResultsTable').innerHTML = keywordTableHtml(sorted);
+      document.getElementById('searchResultsWrap').style.display = sorted.length ? 'block' : 'none';
+    })
+    .catch(function (err) {
+      btn.disabled = false;
+      setSearchStatus('Search failed: ' + err, true);
+    });
+}
+
+function wireSearch() {
+  document.getElementById('searchBtn').addEventListener('click', runSearch);
+  ['searchSeed', 'searchUrl'].forEach(function (id) {
+    document.getElementById(id).addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); runSearch(); }
+    });
+  });
+}
+
+function wireTierTabs() {
+  var tabs = document.querySelectorAll('#weeklyReportTabs .tier-tab');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      document.querySelectorAll('.tier-panel').forEach(function (p) { p.classList.remove('active'); });
+      var panelId = 'tier' + tab.dataset.tier.charAt(0).toUpperCase() + tab.dataset.tier.slice(1);
+      var panel = document.getElementById(panelId);
+      if (panel) panel.classList.add('active');
+      document.getElementById('breadcrumbSection').textContent = 'Weekly Report › ' + tab.textContent;
+    });
+  });
 }
 
 function renderFooterAndMeta() {
@@ -504,6 +645,8 @@ renderAnalytics();
 renderSettings();
 renderFooterAndMeta();
 wireNav();
+wireTierTabs();
+wireSearch();
 </script>
 """
 

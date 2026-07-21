@@ -53,6 +53,16 @@ def _semrush_subscore(volume_by_country, difficulty):
     return _clamp(round(volume_points + difficulty_points))
 
 
+def compute_confidence_from_subscores(subscores):
+    """subscores: dict with any subset of gsc/ga4/ads/semrush keys, values
+    0-100 or None. Renormalizes config.CONFIDENCE_WEIGHTS over whichever
+    keys are present and not None. Returns the composite 0-100 score."""
+    available = {k: v for k, v in subscores.items() if v is not None}
+    weights = {k: config.CONFIDENCE_WEIGHTS[k] for k in available}
+    weight_sum = sum(weights.values()) or 1
+    return round(sum(available[k] * (weights[k] / weight_sum) for k in available))
+
+
 def compute_confidence(gsc, ga4, ads, volume_by_country, difficulty):
     subscores = {
         "gsc": _gsc_subscore(gsc),
@@ -60,10 +70,7 @@ def compute_confidence(gsc, ga4, ads, volume_by_country, difficulty):
         "ads": _ads_subscore(ads),
         "semrush": _semrush_subscore(volume_by_country, difficulty),
     }
-    available = {k: v for k, v in subscores.items() if v is not None}
-    weights = {k: config.CONFIDENCE_WEIGHTS[k] for k in available}
-    weight_sum = sum(weights.values()) or 1
-    composite = round(sum(available[k] * (weights[k] / weight_sum) for k in available))
+    composite = compute_confidence_from_subscores(subscores)
     return composite, subscores
 
 
