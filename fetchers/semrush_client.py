@@ -86,7 +86,13 @@ def fetch_related_keywords_multi_db(phrase, api_key, databases, limit=30):
         try:
             rows = fetch_related_keywords(phrase, api_key, database=db, limit=limit)
         except Exception as exc:
-            errors.append(f"Semrush related-keywords lookup failed for database '{db}': {exc}")
+            # "NOTHING FOUND" just means this particular phrase isn't
+            # related-keywords-indexed in this database -- common and
+            # expected (see api/search.py's seed-variant retry), not worth
+            # surfacing as a warning. Real errors (auth, rate-limit,
+            # network) still are.
+            if "NOTHING FOUND" not in str(exc):
+                errors.append(f"Semrush related-keywords lookup failed for database '{db}': {exc}")
             continue
         for row in rows:
             entry = merged.setdefault(row["keyword"], {"volumeByCountry": {}, "cpc": None, "difficulty": None})

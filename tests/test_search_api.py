@@ -12,7 +12,7 @@ for _var in (
 ):
     os.environ.pop(_var, None)
 
-from api.search import _demo_semrush_lookup, run_search  # noqa: E402
+from api.search import _demo_semrush_lookup, _seed_variants, run_search  # noqa: E402
 
 
 def test_demo_lookup_matches_on_word_overlap_not_just_substring():
@@ -70,3 +70,19 @@ def test_run_search_sorted_by_priority_then_volume():
     priority_rank = {"High": 0, "Medium": 1, "Low": 2}
     ranks = [priority_rank[e["priority"]] for e in result["entries"]]
     assert ranks == sorted(ranks)
+
+
+def test_seed_variants_drops_one_word_at_a_time():
+    # Regression: Semrush's phrase_related can return NOTHING FOUND for a
+    # specific 3-word phrase ("ayurveda treatment kerala") while a 2-word
+    # subset of it ("ayurveda kerala") has real data -- confirmed live.
+    # Every single-word-drop variant must be offered as a retry, not just
+    # the trailing-word-dropped one.
+    variants = _seed_variants("ayurveda treatment kerala")
+    assert "ayurveda kerala" in variants
+    assert "treatment kerala" in variants
+    assert "ayurveda treatment" in variants
+
+
+def test_seed_variants_empty_for_single_word():
+    assert _seed_variants("panchakarma") == []

@@ -183,11 +183,39 @@ def _fetch_live_google_signal(available, warnings):
     return gsc_data, ads_data
 
 
+def _seed_variants(phrase, max_variants=4):
+    """phrase_related only returns data when the seed itself is
+    related-keywords-indexed in Semrush -- confirmed empirically that even
+    plausible 3-word phrases like "ayurveda treatment kerala" can come back
+    NOTHING FOUND in every database while a 2-word subset of the same
+    phrase ("ayurveda kerala") has real data. Drop one word at a time
+    (keeping the rest in order) so a broader variant gets a chance instead
+    of the whole discovery step giving up on one exact phrasing."""
+    words = phrase.split()
+    if len(words) <= 1:
+        return []
+    variants = []
+    for i in range(len(words)):
+        variant = " ".join(words[:i] + words[i + 1:])
+        if variant and variant not in variants:
+            variants.append(variant)
+    return variants[:max_variants]
+
+
 def _semrush_live_lookup(primary_seed, ai_candidates, api_key, warnings):
     discovered, discover_errors = semrush_client.fetch_related_keywords_multi_db(
         primary_seed, api_key, config.SEMRUSH_SEARCH_DATABASES, limit=30
     )
     warnings.extend(discover_errors)
+
+    if not discovered:
+        for variant in _seed_variants(primary_seed):
+            discovered, variant_errors = semrush_client.fetch_related_keywords_multi_db(
+                variant, api_key, config.SEMRUSH_SEARCH_DATABASES, limit=30
+            )
+            warnings.extend(variant_errors)
+            if discovered:
+                break
 
     matches = dict(discovered)
     for keyword in ai_candidates:
@@ -196,6 +224,22 @@ def _semrush_live_lookup(primary_seed, ai_candidates, api_key, warnings):
         overview = semrush_client.fetch_phrase_overview_multi_db(keyword, api_key, config.SEMRUSH_SEARCH_DATABASES)
         if overview:
             matches[keyword] = overview
+            continue
+        # The exact AI-suggested phrase is a miss -- try a couple of its
+        # shorter word-subsets too (phrase_this is exact-match, so a long
+        # AI phrase like "best ayurvedic panchakarma retreat for foreign
+        # patients" can miss even when a real core phrase within it, e.g.
+        # "ayurvedic panchakarma retreat", is indexed). A hit here is added
+        # as its own keyword entry -- its volume belongs to the variant
+        # phrase, not fabricated for the original AI phrase.
+        for variant in _seed_variants(keyword, max_variants=2):
+            if variant in matches:
+                continue
+            variant_overview = semrush_client.fetch_phrase_overview_multi_db(
+                variant, api_key, config.SEMRUSH_SEARCH_DATABASES
+            )
+            if variant_overview:
+                matches[variant] = variant_overview
     return matches
 
 

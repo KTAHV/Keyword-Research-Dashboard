@@ -2,7 +2,10 @@
 # wired up. Not required for `python build_keyword_research_dashboard.py` in
 # sample phase. Google client versions match the sibling Combined Marketing
 # Dashboard / Page Quality Dashboard repos.
-google-ads==31.1.0
+#
+# google-ads/google-auth-oauthlib/google-auth live in requirements.txt
+# instead (Vercel's live Search tool needs them too -- only installs
+# requirements.txt, not this file). Only GA4's client stays here: the
+# weekly batch (GitHub Actions, installs both files) is the only caller
+# left, since api/search.py deliberately never imports fetch_ga4.
 google-analytics-data==0.23.0
-google-auth-oauthlib==1.4.0
-google-auth==2.56.0

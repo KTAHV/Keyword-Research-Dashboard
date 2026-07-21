@@ -3,3 +3,11 @@ beautifulsoup4==4.12.3
 anthropic==0.117.0
 pydantic==2.13.4
 pytest==8.3.3
+
+# Needed by api/search.py's live GSC + Google Ads cross-reference and
+# Keyword Planner fallback (Vercel only installs this file, not
+# requirements-live.txt -- see that file's docstring for why GA4's client
+# stays out of this list: api/search.py never imports fetch_ga4).
+google-ads==31.1.0
+google-auth-oauthlib==1.4.0
+google-auth==2.56.0
