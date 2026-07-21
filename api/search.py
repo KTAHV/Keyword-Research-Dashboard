@@ -164,6 +164,18 @@ def _materialize_google_credentials():
     return written
 
 
+def _clean_exc_message(exc, max_len=180):
+    """Every warning in the response is rendered straight into the page for
+    the user to read -- library exceptions (grpc, requests, ...) are often
+    multi-line, full of internal debug fields, and occasionally embed
+    request internals. Collapse to one short line so the Search tool's
+    banner stays readable instead of dumping a stack-trace-shaped blob."""
+    text = " ".join(str(exc).split())
+    if len(text) > max_len:
+        text = text[:max_len].rstrip() + "..."
+    return text
+
+
 def _fetch_live_google_signal(available, warnings):
     """Live per-search GSC + Ads, used instead of the cached weekly
     snapshot when Google credentials are configured. Each source fails
@@ -174,12 +186,12 @@ def _fetch_live_google_signal(available, warnings):
         try:
             gsc_data = fetch_gsc.fetch("live")
         except Exception as exc:
-            warnings.append(f"Live GSC lookup failed: {exc}")
+            warnings.append(f"Live GSC lookup failed: {_clean_exc_message(exc)}")
     if "ads" in available:
         try:
             ads_data = fetch_google_ads_search_terms.fetch("live")
         except Exception as exc:
-            warnings.append(f"Live Google Ads lookup failed: {exc}")
+            warnings.append(f"Live Google Ads lookup failed: {_clean_exc_message(exc)}")
     return gsc_data, ads_data
 
 
@@ -210,7 +222,7 @@ def _is_systemic_failure(errors):
     account can't access at all would just repeat the same failure, so
     the caller should give up on discovery entirely instead of burning
     more requests."""
-    return len(errors) == 1 and "every configured database" in errors[0]
+    return len(errors) == 1 and "Related Keywords" in errors[0] and "isn't available" in errors[0]
 
 
 def _semrush_live_lookup(primary_seed, ai_candidates, api_key, warnings):
@@ -265,7 +277,13 @@ def _keyword_planner_fallback(ai_candidates, matches, google_available, warnings
     try:
         kp_data = keyword_planner_client.generate_keyword_ideas(missing)
     except Exception as exc:
-        warnings.append(f"Google Keyword Planner fallback failed: {exc}")
+        if "DEVELOPER_TOKEN_NOT_APPROVED" in str(exc):
+            warnings.append(
+                "Google Keyword Planner needs Basic/Standard API access for this Ads account "
+                "(currently Test/Explorer access) -- skipped."
+            )
+        else:
+            warnings.append(f"Google Keyword Planner fallback failed: {_clean_exc_message(exc)}")
         return {}
     # KeywordPlanIdeaService returns one combined metric across the
     # requested geo targets, not a per-country breakdown -- "kp" is a
@@ -278,15 +296,19 @@ def _keyword_planner_fallback(ai_candidates, matches, google_available, warnings
 
 
 def _volume_and_source(mode, semrush_data):
-    if mode == "demo":
-        return sum((semrush_data or {}).get("volumeByCountry", {}).values()), "Demo data"
     vol_by_country = (semrush_data or {}).get("volumeByCountry", {})
+    if not vol_by_country:
+        # Distinct from "Demo data" / a real source -- this candidate
+        # simply has no pricing yet (e.g. Semrush's Related Keywords
+        # report unavailable and no exact-match hit either), not a
+        # genuinely-zero-volume keyword.
+        return 0, "No volume data"
     total = sum(vol_by_country.values())
+    if mode == "demo":
+        return total, "Demo data"
     if "kp" in vol_by_country:
         return total, "Google Keyword Planner"
-    if vol_by_country:
-        return total, "Semrush (" + ", ".join(sorted(k.upper() for k in vol_by_country)) + ")"
-    return 0, "No volume data"
+    return total, "Semrush (" + ", ".join(sorted(k.upper() for k in vol_by_country)) + ")"
 
 
 def run_search(body):
@@ -360,12 +382,18 @@ def run_search(body):
             "(pairs \"patient(s)\" with a specific nationality/country)."
         )
 
-    if not matches:
-        return {
-            "mode": mode, "ideation": ideation, "resolvedSeeds": candidates,
-            "warnings": warnings + ["No matching keywords found for these seeds."],
-            "entries": [],
-        }
+    # Every compliant AI-suggested candidate gets a row even if Semrush had
+    # no volume for it -- Type/Placement/Intent/Compliance/AI-Voice-Fit
+    # don't depend on Semrush at all, so dropping a keyword just because
+    # pricing was unavailable (common now that phrase_related is 403 for
+    # this account -- see semrush_client.py) throws away real, useful
+    # scoring for no reason. `matches` keys not in `candidates` (real
+    # discoveries/variants) are kept too and come first, since those do
+    # have real volume.
+    empty_semrush = {"volumeByCountry": {}, "cpc": None, "difficulty": None}
+    all_keywords = dict(matches)
+    for kw in candidates:
+        all_keywords.setdefault(kw, empty_semrush)
 
     page_titles = _page_titles()
     live_google = bool(google_available) and mode == "live"
@@ -382,7 +410,7 @@ def run_search(body):
             )
 
     entries = []
-    for keyword, semrush_data in matches.items():
+    for keyword, semrush_data in all_keywords.items():
         if live_google:
             gsc_entry = gsc_data.get(keyword)
             ads_entry = ads_data.get(keyword)

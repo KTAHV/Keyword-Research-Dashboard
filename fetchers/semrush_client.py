@@ -132,7 +132,11 @@ def fetch_related_keywords_multi_db(phrase, api_key, databases, limit=30):
     # permission problem doesn't spam the UI with N near-duplicate warnings.
     distinct_normalized = {normalized for _, _, normalized in raw_errors}
     if len(raw_errors) == len(databases) and len(distinct_normalized) == 1:
-        errors = [f"Semrush related-keywords lookup failed for '{phrase}' in every configured database: {distinct_normalized.pop()}"]
+        # Short and non-technical -- this is the common case when the
+        # account's plan doesn't include this report at all, so it's
+        # expected to show up on every search, not a one-off glitch worth
+        # a raw error dump.
+        errors = ["Semrush's Related Keywords (bulk discovery) report isn't available for this account/plan -- showing exact-match keyword pricing only where available."]
     else:
         errors = [f"Semrush related-keywords lookup failed for database '{db}': {msg}" for db, msg, _ in raw_errors]
     return merged, errors

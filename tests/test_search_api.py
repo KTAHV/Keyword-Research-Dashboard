@@ -47,7 +47,10 @@ def test_run_search_entries_carry_search_volume_and_source():
     assert result["entries"], "expected at least one entry"
     for e in result["entries"]:
         assert "searchVolume" in e
-        assert e["volumeSource"] == "Demo data"
+        assert e["volumeSource"] in ("Demo data", "No volume data")
+    # The demo lookup's word-overlap match against the sample universe
+    # should find at least one real "Demo data" entry for this seed.
+    assert any(e["volumeSource"] == "Demo data" for e in result["entries"])
 
 
 def test_run_search_no_live_google_cross_reference_without_credentials():
@@ -91,11 +94,11 @@ def test_seed_variants_empty_for_single_word():
 def test_is_systemic_failure_detects_collapsed_all_database_error():
     # Regression: a 403 (this Semrush plan doesn't include Related
     # Keywords) hits every database identically -- fetch_related_keywords_
-    # multi_db collapses that into one "every configured database" line;
-    # the caller should recognize it and stop retrying seed variants
-    # instead of repeating the same doomed request four more times.
+    # multi_db collapses that into one short, non-technical line; the
+    # caller should recognize it and stop retrying seed variants instead
+    # of repeating the same doomed request four more times.
     assert _is_systemic_failure(
-        ["Semrush related-keywords lookup failed for 'x' in every configured database: HTTP 403"]
+        ["Semrush's Related Keywords (bulk discovery) report isn't available for this account/plan -- showing exact-match keyword pricing only where available."]
     )
 
 

@@ -61,7 +61,7 @@ def test_fetch_related_keywords_multi_db_collapses_identical_errors():
         )
     assert merged == {}
     assert len(errors) == 1
-    assert "every configured database" in errors[0]
+    assert "Related Keywords" in errors[0] and "isn't available" in errors[0]
 
 
 def test_fetch_related_keywords_multi_db_keeps_distinct_errors_separate():
