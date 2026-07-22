@@ -242,18 +242,22 @@ def build(phase, brand_key=None):
         if output_data is not None:
             built_counts[key] = len(output_data["entries"])
 
-    # Combined index.html always includes every brand that currently has a
-    # data file on disk -- so building just one brand locally (--brand)
-    # doesn't require or clobber the others.
+    # The brand SELECTOR always lists every registered brand, regardless of
+    # whether a weekly data file exists yet -- the Search tool is live/on-
+    # demand and doesn't need one (see api/search.py), so a brand-new
+    # brand must be selectable there immediately. BRAND_DATA (the actual
+    # Weekly Report payload) only includes brands that currently have a
+    # data file on disk; dashboard_html.py's renderAll() shows a clear
+    # "no report yet" state for any brand missing from it instead of
+    # crashing or silently showing another brand's data.
+    brand_list = [{"key": key, "label": brand.label} for key, brand in config.BRANDS.items()]
     brand_data = {}
-    brand_list = []
-    for key, brand in config.BRANDS.items():
+    for key in config.BRANDS:
         path = _output_json_path(key)
         if not os.path.exists(path):
             continue
         with open(path, encoding="utf-8") as f:
             brand_data[key] = json.load(f)
-        brand_list.append({"key": key, "label": brand.label})
 
     html = render_html(brand_data, brand_list, js_const)
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:

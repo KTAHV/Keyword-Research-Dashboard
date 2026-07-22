@@ -666,14 +666,42 @@ function renderFooterAndMeta() {
   document.getElementById('lastRefreshed').textContent = 'Last refreshed: ' + new Date(DATA.generatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
+function renderNoWeeklyReportYet() {
+  var brand = BRAND_LIST.filter(function (b) { return b.key === CURRENT_BRAND; })[0];
+  var label = brand ? brand.label : CURRENT_BRAND;
+  document.getElementById('kpiGrid').innerHTML =
+    '<div class="na-note" style="grid-column:1/-1">No weekly report has been generated for ' + label +
+    ' yet — the Search tool above still works live for this brand right now. The next scheduled (or manually triggered) weekly refresh will populate this.</div>';
+  document.getElementById('needsAttentionBadge').textContent = '';
+  var navBadgeEl = document.getElementById('navBadge-needsattention');
+  if (navBadgeEl) navBadgeEl.style.display = 'none';
+  document.getElementById('needsAttentionList').innerHTML = '<li class="na-note">No data yet.</li>';
+  document.getElementById('needsAttentionFullList').innerHTML = '<li class="na-note">No data yet.</li>';
+  document.getElementById('contentGapSnapshot').innerHTML = '<li class="na-note">No data yet.</li>';
+  ['priorityTable', 'aeoTable', 'contentGapTable', 'avoidTable', 'competitorGapTable', 'underperformingTable', 'analyticsTable'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = '';
+  });
+  document.getElementById('footerBrand').textContent = label + ' — Keyword Research Dashboard';
+  document.getElementById('footerNote').textContent = 'No weekly report yet';
+}
+
 // One shared "active brand" for the whole dashboard -- Weekly Report,
 // Needs Attention, and Analytics all read whichever brand's data is
 // currently selected (see renderAll()); the Search tab sends it with
-// every /api/search request instead.
-var CURRENT_BRAND = BRAND_LIST[0].key;
+// every /api/search request instead. Defaults to the first *registered*
+// brand that actually has a weekly data file, not just BRAND_LIST[0] --
+// a brand-new brand (no report generated yet) can be registered/
+// selectable without being able to be the default landing view.
+var CURRENT_BRAND = (BRAND_LIST.filter(function (b) { return BRAND_DATA[b.key]; })[0] || BRAND_LIST[0]).key;
 var DATA = BRAND_DATA[CURRENT_BRAND];
 
 function renderAll() {
+  if (!BRAND_DATA[CURRENT_BRAND]) {
+    renderNoWeeklyReportYet();
+    return;
+  }
+  DATA = BRAND_DATA[CURRENT_BRAND];
   renderKpis();
   renderNeedsAttention();
   renderContentGapSnapshot();
