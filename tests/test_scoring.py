@@ -275,6 +275,23 @@ def test_compliance_check_marks_patient_nationality_pattern_high():
     assert result["patientNationalityPattern"] is True
 
 
+def test_find_restricted_seed_terms_matches_policy_phrases():
+    assert compliance.find_restricted_seed_terms("ayurveda resort kerala") == ["resort"]
+    assert compliance.find_restricted_seed_terms("permanent cure for back pain") == ["permanent cure"]
+    assert set(compliance.find_restricted_seed_terms("guest spa treatment")) == {"guest", "spa"}
+
+
+def test_find_restricted_seed_terms_word_boundary_avoids_false_positive():
+    # "spa" must not match inside "spasm" -- word-boundary regex, not substring
+    assert compliance.find_restricted_seed_terms("muscle spasm treatment kerala") == []
+    assert compliance.find_restricted_seed_terms("ayurvedic panchakarma treatment") == []
+
+
+def test_find_restricted_seed_terms_empty_for_clean_keyword():
+    assert compliance.find_restricted_seed_terms("panchakarma treatment kerala") == []
+    assert compliance.find_restricted_seed_terms("") == []
+
+
 def test_resolve_ga4_entry_sample_phase_keyed_by_keyword():
     ga4_data = {"panchakarma treatment kerala": {"sessions": 100}}
     result = entry_builder.resolve_ga4_entry("sample", "panchakarma treatment kerala", {"page": "panchakarma-treatment"}, ga4_data)

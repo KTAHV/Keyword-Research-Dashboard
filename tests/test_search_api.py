@@ -1,5 +1,6 @@
 import os
 import sys
+from unittest.mock import patch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -107,3 +108,36 @@ def test_is_systemic_failure_false_for_per_database_errors():
         ["Semrush related-keywords lookup failed for database 'in': some transient error"]
     )
     assert not _is_systemic_failure([])
+
+
+def test_run_search_blocks_restricted_seed_term_with_policy_notice():
+    # Ayurvedic Healing Village's restricted-keyword policy (Google Ads /
+    # tax / medical-claims compliance) -- a seed matching it must never be
+    # searched directly; the response should explain why and still return
+    # real fallback suggestions instead of an empty result.
+    result = run_search({"seedKeyword": "ayurveda resort kerala"})
+    assert result["policyNotice"] is not None
+    assert "resort" in result["policyNotice"]
+    assert "ayurveda resort kerala" not in result["resolvedSeeds"]
+    assert result["entries"], "expected fallback suggestions instead of zero results"
+
+
+def test_run_search_no_policy_notice_for_clean_seed():
+    result = run_search({"seedKeyword": "panchakarma"})
+    assert result.get("policyNotice") is None
+
+
+def test_run_search_excludes_restricted_term_from_discovered_matches():
+    # A restricted term can also arrive via discovery (Semrush phrase_
+    # related, demo word-overlap) rather than the typed seed itself -- the
+    # second compliance pass must catch that too, not just the seed check.
+    with patch(
+        "api.search._demo_semrush_lookup",
+        return_value={
+            "panchakarma treatment kerala": {"volumeByCountry": {"in": 100}, "cpc": None, "difficulty": None},
+            "panchakarma resort kerala": {"volumeByCountry": {"in": 50}, "cpc": None, "difficulty": None},
+        },
+    ):
+        result = run_search({"seedKeyword": "panchakarma"})
+    leaked = [e["keyword"] for e in result["entries"] if "resort" in e["keyword"]]
+    assert leaked == []

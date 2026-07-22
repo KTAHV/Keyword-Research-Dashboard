@@ -9,7 +9,12 @@ Runs live/on-demand (unlike the weekly batch):
    fallback (analysis/phrase_extraction.py).
 2. Compliance filter -- candidates matching "patient(s)" + a specific
    nationality/country name are dropped entirely before scoring (see
-   analysis/compliance.py::is_patient_nationality_pattern).
+   analysis/compliance.py::is_patient_nationality_pattern). Separately, a
+   *typed seed keyword* matching config.RESTRICTED_SEED_TERMS_AHV
+   (ayurvedichealingvillage.com's Google-Ads/tax/medical-claims policy doc)
+   is never searched at all -- the request returns a "policyNotice" and
+   swaps in FALLBACK_SAFE_SEED so the user still gets a full table of
+   compliant suggestions instead of the blocked term.
 3. Semrush discovery -- `phrase_related` (real, volume-backed discovery,
    not exact-match) on the shortest/primary seed, across every database in
    config.SEMRUSH_SEARCH_DATABASES, PLUS a best-effort `phrase_this` exact
@@ -68,6 +73,9 @@ MAX_AI_KEYWORDS = 25  # cap for AI-ideation candidates; kept above the ~20-in-ta
 # since compliance exclusions and dedup can trim the list before it reaches the table.
 # keyword_planner_client.py slices its own MAX_KEYWORDS_PER_CALL internally, so this
 # doesn't overrun that API's per-call limit.
+FALLBACK_SAFE_SEED = "ayurvedic healing village treatments and wellness programs"  # used
+# in place of a seed that matches config.RESTRICTED_SEED_TERMS_AHV, so a blocked search
+# still produces a full table of compliant Ayurvedic Healing Village suggestions.
 DEMO_SEMRUSH_PATH = os.path.join(ROOT, "data", "sample", "semrush_keywords_sample.json")
 CACHED_DATA_PATH = os.path.join(ROOT, "data", "keyword_research_data.json")
 
@@ -320,6 +328,7 @@ def run_search(body):
     content = (body.get("content") or "").strip()
 
     warnings = []
+    policy_notice = None
     resolved_text = ""
 
     if content:
@@ -333,13 +342,34 @@ def run_search(body):
     if not seed_keyword and not resolved_text:
         return {"error": "Type a seed keyword, paste a URL, or paste some content first."}
 
+    # Restricted-keyword policy (Google Ads weight-loss policy + tax
+    # compliance + medical-claims compliance, ayurvedichealingvillage.com-
+    # specific -- see config.RESTRICTED_SEED_TERMS_AHV). A seed matching
+    # this list is never searched directly: no Semrush/GSC/Ads lookup runs
+    # on it at all. Instead it's swapped for a fixed safe seed so the user
+    # still gets a full table of compliant alternative suggestions.
+    seed_policy_matches = compliance.find_restricted_seed_terms(seed_keyword) if seed_keyword else []
+    if seed_policy_matches:
+        policy_notice = (
+            f"\"{seed_keyword}\" was not searched -- it matches Ayurvedic Healing Village's "
+            "restricted-keyword policy (Google Ads policy / tax compliance / medical-claims "
+            f"compliance): {', '.join(seed_policy_matches)}. Showing compliant alternative "
+            "suggestions for Ayurvedic Healing Village instead."
+        )
+        seed_keyword = FALLBACK_SAFE_SEED
+        resolved_text = ""
+
     candidates, ideation, primary_seed = _resolve_candidates(seed_keyword, resolved_text)
     if not candidates:
-        return {"error": "Type a seed keyword, paste a URL, or paste some content first."}
+        return {"error": "Type a seed keyword, paste a URL, or paste some content first.", "policyNotice": policy_notice}
 
-    # Compliance: drop "patient(s)" + specific-nationality/country patterns
-    # before they're ever scored or shown -- see analysis/compliance.py.
-    compliant_candidates = [k for k in candidates if not compliance.is_patient_nationality_pattern(k)]
+    # Compliance: drop "patient(s)" + specific-nationality/country patterns,
+    # and anything matching the restricted-keyword policy above, before
+    # they're ever scored or shown -- see analysis/compliance.py.
+    compliant_candidates = [
+        k for k in candidates
+        if not compliance.is_patient_nationality_pattern(k) and not compliance.find_restricted_seed_terms(k)
+    ]
     excluded_count = len(candidates) - len(compliant_candidates)
     if excluded_count:
         warnings.append(
@@ -351,7 +381,7 @@ def run_search(body):
         return {
             "mode": "demo", "ideation": ideation, "resolvedSeeds": candidates,
             "warnings": warnings + ["All candidate keywords were excluded by the compliance filter."],
-            "entries": [],
+            "entries": [], "policyNotice": policy_notice,
         }
 
     semrush_api_key = os.environ.get("SEMRUSH_API_KEY")
@@ -373,16 +403,20 @@ def run_search(body):
         )
 
     # Discovery (Semrush phrase_related, demo word-overlap) can surface
-    # keywords that were never in `candidates` -- re-apply the compliance
-    # filter to the actual match set, not just the seed candidates, or a
-    # pattern like "... for uk patients" can slip back in via fuzzy match.
-    newly_excluded = [k for k in matches if compliance.is_patient_nationality_pattern(k)]
+    # keywords that were never in `candidates` -- re-apply both compliance
+    # filters to the actual match set, not just the seed candidates, or a
+    # pattern like "... for uk patients" (or a restricted-policy term) can
+    # slip back in via fuzzy match.
+    newly_excluded = [
+        k for k in matches
+        if compliance.is_patient_nationality_pattern(k) or compliance.find_restricted_seed_terms(k)
+    ]
     if newly_excluded:
         for k in newly_excluded:
             del matches[k]
         warnings.append(
             f"{len(newly_excluded)} discovered keyword(s) excluded for compliance "
-            "(pairs \"patient(s)\" with a specific nationality/country)."
+            "(nationality-pairing or restricted-keyword policy)."
         )
 
     # Every compliant AI-suggested candidate gets a row even if Semrush had
@@ -434,6 +468,7 @@ def run_search(body):
         "resolvedSeeds": candidates,
         "warnings": warnings,
         "entries": entries,
+        "policyNotice": policy_notice,
     }
 
 

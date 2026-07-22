@@ -159,6 +159,103 @@ NATIONALITY_COUNTRY_TERMS = [
 
 # Question-starter words used for Type classification (Question-type) and
 # Answerability scoring.
+# Restricted/negative-keyword policy for the live Search tool's SEED input
+# (not the same as COMPLIANCE_RISK_TERMS above, which flags/downranks a
+# *scored* keyword -- this list *blocks the search itself* when the typed
+# seed matches). Sourced from the team's shared policy doc:
+# https://docs.google.com/document/d/1KOQkeUVssyrAOSMH_GQkhJh5Uij-Xf7J7Eo56n_Se14
+# (Google Ads weight-loss policy + tax-compliance + medical-claims
+# compliance for an Ayurvedic hospital). SITE-SPECIFIC to
+# ayurvedichealingvillage.com only -- do not reuse this list if/when
+# Villaraag.com, kairaliproducts.in, or kairaliproducts.com are added to
+# this dashboard; each of those brands will need its own sourced list.
+RESTRICTED_SEED_TERMS_AHV = [
+    # Google Ads weight-loss policy -- specific restricted product/brand terms
+    "2 day diet", "2x powerful slimming", "3 day diet", "3x slimming power",
+    "7 day herbal slim", "7 days diet", "7 diet", "72 hours", "actra sx",
+    "alcohol free hcg weight loss formula", "body shaping", "body slimming",
+    "botanical slimming", "cefurax", "celerite slimming capsules",
+    "dream body slimming capsule", "fasting diet",
+    "hcg diet drops weight loss formula", "hcg diet homeopathic drops",
+    "hcg diet pellets weight loss formula",
+    "hcg extra weight loss homeopathic drops", "hcg fusion 30", "hcg fusion 43",
+    "hcg platinum", "hcg platinum x-14", "hcg platinum x-30", "healthily slim",
+    "herbal viagra", "herbal xanax", "herbal xenicol", "homeopathic hcg",
+    "homeopathic original hcg", "imelda perfect slim", "libidus",
+    "lida daidaihua", "lipostabil", "lose weight coffee", "meizitang",
+    "nasutra", "p57 hoodia", "palmitin", "pau d arco bark", "perfect slim",
+    "pilex", "reduce weight", "slim 30", "slim up",
+    "slimming beauty bitter orange slimming capsules", "slimming formula",
+    "solo slim extra strength", "stamina rx", "staminil", "starcaps",
+    "super fat burner", "venom hyperdrive 3.0", "viapro", "vitalex",
+    "zhen de shou", "zicam cold remedy nasal gel",
+
+    # Tax-compliance terms -- push the property into resort/hospitality GST
+    # classification instead of medical, so avoid entirely
+    "resort", "guest", "spa",
+
+    # Financial claims
+    "cheapest treatment", "lowest price guaranteed", "discount treatment",
+    "buy one get one", "price match guarantee", "competitive prices",
+
+    # Medical claims -- general
+    "permanent cure", "permanent solution", "complete healing",
+    "complete cure", "guaranteed results", "instant relief", "100% effective",
+    "revolutionary treatment", "breakthrough therapy", "magical healing",
+    "complete recovery guaranteed", "superior to modern medicine",
+    "alternative to medication",
+
+    # Disease-specific -- cancer
+    "cancer cure", "cancer treatment", "cancer therapy", "anti-cancer",
+    "cancer healing", "oncology treatment", "chemotherapy alternative",
+    "radiation alternative",
+
+    # Disease-specific -- diabetes
+    "insulin free", "blood sugar cure", "permanent diabetes solution",
+
+    # Pain management
+    "permanent pain relief", "instant pain relief", "complete pain cure",
+    "total pain relief",
+
+    # Paralysis
+    "complete recovery", "permanent recovery", "guaranteed mobility",
+
+    # Weight management
+    "rapid weight loss", "quick weight loss", "instant weight reduction",
+    "belly fat removal", "guaranteed weight loss", "natural weight loss pills",
+    "fast acting", "metabolism booster", "fat burner", "appetite suppressant",
+    "slimming treatment", "weight loss guarantee", "permanent weight loss",
+
+    # Detox & cleansing
+    "total body cleanse", "immunity booster", "blood pressure cure",
+
+    # Skin
+    "permanent skin solution", "complete skin healing",
+    "guaranteed skin treatment",
+
+    # Addiction treatment
+    "quick de-addiction", "painless withdrawal", "instant recovery",
+    "guaranteed sobriety", "withdrawal-free", "complete rehabilitation",
+    "permanent de-addiction",
+
+    # Marketing/promotional -- time-related claims
+    "immediate results", "overnight relief", "quick fix", "rapid recovery",
+    "immediate effect", "overnight transformation",
+
+    # Marketing/promotional -- comparative claims
+    "better than", "superior to", "more effective than", "beats all other",
+    "outperforms", "number one", "top rated", "highest success rate",
+    "most successful",
+
+    # Marketing/promotional -- authority claims
+    "government approved", "fda approved", "officially recognized",
+    "certified cure", "proven results", "scientifically proven",
+    "clinically tested", "expert approved", "universally accepted",
+    "clinically proven",
+]
+
+# Question-starter words used for Type classification (Question-type) and
+# Answerability scoring.
 QUESTION_STARTERS = ["what", "why", "how", "when", "where", "which", "who", "can", "does", "is"]
 
 # Cross-Source Confidence weights -- how much each source contributes when

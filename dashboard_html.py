@@ -171,6 +171,8 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:'Work Sans',-ap
 .search-banner{font-size:12.5px;padding:10px 14px;border-radius:8px;background:var(--warn-bg);color:var(--gold);
   margin-top:.75rem;line-height:1.6}
 .search-banner.live{background:var(--success-bg);color:var(--success)}
+.policy-notice{font-size:12.5px;padding:10px 14px;border-radius:8px;background:var(--danger-bg);color:var(--danger);
+  margin-top:.75rem;line-height:1.6;font-weight:600}
 
 .table-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
   box-shadow:0 2px 10px rgba(38,38,32,0.06)}
@@ -302,6 +304,7 @@ def _main_shell_html():
       </div>
       <button class="search-btn" id="searchBtn">Search</button>
     </div>
+    <div id="policyNotice"></div>
     <div class="table-wrap" id="searchResultsWrap" style="display:none"><table id="searchResultsTable"></table></div>
     <p class="search-status" id="searchStatus"></p>
     <div id="searchBanner"></div>
@@ -576,9 +579,12 @@ function runSearch() {
   }
 
   var btn = document.getElementById('searchBtn');
+  var policyEl = document.getElementById('policyNotice');
   btn.disabled = true;
   setSearchStatus('Searching…', false);
   document.getElementById('searchBanner').innerHTML = '';
+  policyEl.textContent = '';
+  policyEl.className = '';
   document.getElementById('searchResultsWrap').style.display = 'none';
 
   fetch('/api/search', {
@@ -590,6 +596,10 @@ function runSearch() {
     .then(function (res) {
       btn.disabled = false;
       var data = res.data;
+      if (data.policyNotice) {
+        policyEl.textContent = data.policyNotice;
+        policyEl.className = 'policy-notice';
+      }
       if (!res.ok || data.error) {
         setSearchStatus(data.error || 'Search failed.', true);
         return;
