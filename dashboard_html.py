@@ -468,19 +468,17 @@ function sortByPriorityThenVolume(rows) {
 }
 
 function searchVolumeTableHtml(rows) {
-  // Search tool only -- Search Volume + source replaces Confidence Score
-  // here (Weekly Report's keywordTableHtml above is unchanged; Confidence
-  // Score is the established Weekly Report concept).
-  var head = '<tr><th>Priority</th><th>Keyword</th><th>Type</th><th>Placement</th><th>Answerable</th><th>Intent</th>' +
-    '<th>AEO/GEO Fit</th><th>Audience Fit</th><th>Spam Risk</th><th>Compliance</th><th>Search Volume</th><th>Mapped Page</th></tr>';
+  // Search tool only -- Weekly Report's keywordTableHtml above is unchanged.
+  // Priority and Search Volume columns dropped per explicit request; every
+  // other column stays as-is.
+  var head = '<tr><th>Keyword</th><th>Type</th><th>Placement</th><th>Answerable</th><th>Intent</th>' +
+    '<th>AEO/GEO Fit</th><th>Audience Fit</th><th>Spam Risk</th><th>Compliance</th><th>Mapped Page</th></tr>';
   var body = rows.map(function (e) {
-    var volCell = (e.searchVolume || 0).toLocaleString() + '<span style="display:block;font-size:10.5px;color:var(--text-faint)">' +
-      (e.volumeSource || '') + '</span>';
-    return '<tr><td>' + pill(e.priority) + '</td><td>' + e.keyword + '</td><td>' + e.type + '</td><td>' + e.suggestedPlacement + '</td>' +
+    return '<tr><td>' + e.keyword + '</td><td>' + e.type + '</td><td>' + e.suggestedPlacement + '</td>' +
       '<td>' + (e.answerable ? 'Yes' : 'No') + '</td><td>' + e.intent + '</td>' +
       '<td>' + pill(e.aiVoiceSearchFit) + '</td><td>' + pill(e.audienceFitScore) + '</td>' +
       '<td>' + pill(e.spamRisk) + '</td><td>' + pill(e.complianceRisk) + '</td>' +
-      '<td>' + volCell + '</td><td>' + e.mappedPage + '</td></tr>';
+      '<td>' + e.mappedPage + '</td></tr>';
   }).join('');
   return head + body;
 }
