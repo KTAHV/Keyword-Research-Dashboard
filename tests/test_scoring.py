@@ -287,6 +287,16 @@ def test_find_restricted_seed_terms_word_boundary_avoids_false_positive():
     assert compliance.find_restricted_seed_terms("ayurvedic panchakarma treatment") == []
 
 
+def test_find_restricted_seed_terms_matches_simple_plural():
+    # Regression: found live -- "ayurveda retreat for international guests"
+    # (plural) slipped past the filter because the source policy doc only
+    # lists "Guest" (singular) and the matcher was an exact word-boundary
+    # match with no plural handling.
+    assert compliance.find_restricted_seed_terms("ayurveda retreat for international guests") == ["guest"]
+    assert compliance.find_restricted_seed_terms("ayurveda resorts in kerala") == ["resort"]
+    assert compliance.find_restricted_seed_terms("cancer treatments available") == ["cancer treatment"]
+
+
 def test_find_restricted_seed_terms_empty_for_clean_keyword():
     assert compliance.find_restricted_seed_terms("panchakarma treatment kerala") == []
     assert compliance.find_restricted_seed_terms("") == []

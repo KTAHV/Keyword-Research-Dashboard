@@ -50,14 +50,6 @@
     },
     {
       "totalKeywords": 38,
-      "highPriorityKeywords": 9,
-      "contentGapsIdentified": 6,
-      "complianceRiskFlagged": 3,
-      "avgConfidenceScore": 56.3,
-      "date": "2026-07-21"
-    },
-    {
-      "totalKeywords": 38,
       "highPriorityKeywords": 8,
       "contentGapsIdentified": 6,
       "complianceRiskFlagged": 6,
@@ -79,6 +71,14 @@
       "complianceRiskFlagged": 6,
       "avgConfidenceScore": 56.3,
       "date": "2026-07-21"
+    },
+    {
+      "totalKeywords": 38,
+      "highPriorityKeywords": 8,
+      "contentGapsIdentified": 6,
+      "complianceRiskFlagged": 6,
+      "avgConfidenceScore": 56.3,
+      "date": "2026-07-22"
     },
     {
       "totalKeywords": 38,
@@ -120,7 +120,7 @@
         "position": 12.4
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 12.4
       },
       {
@@ -154,7 +154,7 @@
         "position": 3.5
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 3.5
       },
       {
@@ -188,7 +188,7 @@
         "position": 4.2
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 4.2
       },
       {
@@ -222,7 +222,7 @@
         "position": 6.8
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 6.8
       },
       {
@@ -256,7 +256,7 @@
         "position": 8.5
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 8.5
       },
       {
@@ -290,7 +290,7 @@
         "position": 3.1
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 3.1
       },
       {
@@ -324,7 +324,7 @@
         "position": 9.7
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 9.7
       },
       {
@@ -358,7 +358,7 @@
         "position": 5.5
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 5.5
       },
       {
@@ -392,7 +392,7 @@
         "position": 7.2
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 7.2
       },
       {
@@ -426,7 +426,7 @@
         "position": 4.8
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 4.8
       },
       {
@@ -460,7 +460,7 @@
         "position": 6.1
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 6.1
       },
       {
@@ -494,7 +494,7 @@
         "position": 15.2
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 15.2
       },
       {
@@ -528,7 +528,7 @@
         "position": 22.0
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 22.0
       },
       {
@@ -562,7 +562,7 @@
         "position": 18.4
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 18.4
       },
       {
@@ -596,7 +596,7 @@
         "position": 11.3
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 11.3
       },
       {
@@ -630,7 +630,7 @@
         "position": 25.6
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 25.6
       },
       {
@@ -664,7 +664,7 @@
         "position": 30.1
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 30.1
       },
       {
@@ -698,7 +698,7 @@
         "position": 4.9
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 4.9
       },
       {
@@ -732,7 +732,7 @@
         "position": 9.2
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 9.2
       },
       {
@@ -766,7 +766,7 @@
         "position": 13.8
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 13.8
       },
       {
@@ -800,7 +800,7 @@
         "position": 6.4
       },
       {
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "position": 6.4
       },
       {

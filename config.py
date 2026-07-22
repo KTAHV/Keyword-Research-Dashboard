@@ -191,7 +191,9 @@ RESTRICTED_SEED_TERMS_AHV = [
     "zhen de shou", "zicam cold remedy nasal gel",
 
     # Tax-compliance terms -- push the property into resort/hospitality GST
-    # classification instead of medical, so avoid entirely
+    # classification instead of medical, so avoid entirely (the matcher
+    # below also accepts a simple trailing "s", so "guests"/"resorts"/
+    # "spas" are covered without listing them separately).
     "resort", "guest", "spa",
 
     # Financial claims

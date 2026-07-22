@@ -19,7 +19,11 @@ import config  # noqa: E402
 _PATIENT_RE = re.compile(r"\bpatients?\b", re.IGNORECASE)
 _NATIONALITY_RES = [re.compile(rf"\b{re.escape(t)}\b", re.IGNORECASE) for t in config.NATIONALITY_COUNTRY_TERMS]
 _RESTRICTED_SEED_RES = [
-    (term, re.compile(rf"\b{re.escape(term)}\b", re.IGNORECASE))
+    # Trailing "s?" so a simple plural of the term's last word ("guests",
+    # "resorts", "cancer treatments") still matches -- confirmed live that
+    # AI-suggested phrasing routinely pluralizes these, and the source
+    # policy doc only lists singular forms.
+    (term, re.compile(rf"\b{re.escape(term)}s?\b", re.IGNORECASE))
     for term in config.RESTRICTED_SEED_TERMS_AHV
 ]
 
@@ -27,10 +31,11 @@ _RESTRICTED_SEED_RES = [
 def find_restricted_seed_terms(text):
     """Returns every config.RESTRICTED_SEED_TERMS_AHV phrase found in `text`
     (case-insensitive, word-boundary matched so short entries like "spa"
-    don't false-positive inside unrelated words like "spasm"). Used by the
-    live Search tool to block a search on the typed seed outright -- see
-    api/search.py's module docstring -- and to drop any AI-suggested/
-    discovered keyword that still contains one of these terms."""
+    don't false-positive inside unrelated words like "spasm"; a trailing
+    simple plural of the term also matches). Used by the live Search tool
+    to block a search on the typed seed outright -- see api/search.py's
+    module docstring -- and to drop any AI-suggested/discovered keyword
+    that still contains one of these terms."""
     if not text:
         return []
     return [term for term, pattern in _RESTRICTED_SEED_RES if pattern.search(text)]
