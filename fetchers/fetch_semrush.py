@@ -28,13 +28,15 @@ def _fetch_live(brand):
             "SEMRUSH_API_KEY is not set -- Semrush live fetch cannot run. "
             "See module docstring / .env.example for where to find this key."
         )
-    # DIAGNOSTIC (temporary): fetch_phrase_overview_multi_db swallows every
-    # per-database exception silently by design (a miss is normal), which
-    # makes a *systemic* failure (e.g. account API-unit exhaustion) look
+    # Canary call: fetch_phrase_overview_multi_db swallows every per-
+    # database exception silently by design (a miss is normal), which
+    # makes a *systemic* failure (e.g. this Semrush account's API units
+    # exhausted -- confirmed happening 2026-07-22, phrase_this started
+    # 403'ing after having worked earlier the same session) look
     # identical to "no data for any keyword" with no way to tell them
-    # apart from the caller's output alone. Surface the raw error for just
-    # the first keyword/database so a real failure is visible in the
-    # GitHub Actions log instead of silently producing zero entries.
+    # apart from the caller's output alone. Logging one raw sample call's
+    # outcome keeps that distinguishable in the GitHub Actions log instead
+    # of a silent "Skipping <brand>: no keyword data".
     try:
         sample_row = semrush_client.fetch_phrase_overview(
             brand.known_keywords[0], api_key, database=config.SEMRUSH_SEARCH_DATABASES[0]
