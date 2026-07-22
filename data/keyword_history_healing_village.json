@@ -2,14 +2,6 @@
   "kpiHistory": [
     {
       "totalKeywords": 38,
-      "highPriorityKeywords": 9,
-      "contentGapsIdentified": 6,
-      "complianceRiskFlagged": 3,
-      "avgConfidenceScore": 56.3,
-      "date": "2026-07-21"
-    },
-    {
-      "totalKeywords": 38,
       "highPriorityKeywords": 8,
       "contentGapsIdentified": 6,
       "complianceRiskFlagged": 6,
@@ -30,7 +22,15 @@
       "contentGapsIdentified": 6,
       "complianceRiskFlagged": 6,
       "avgConfidenceScore": 56.3,
-      "date": "2026-07-21"
+      "date": "2026-07-22"
+    },
+    {
+      "totalKeywords": 38,
+      "highPriorityKeywords": 8,
+      "contentGapsIdentified": 6,
+      "complianceRiskFlagged": 6,
+      "avgConfidenceScore": 56.3,
+      "date": "2026-07-22"
     },
     {
       "totalKeywords": 38,

@@ -413,6 +413,187 @@ _VR_KNOWN_KEYWORDS = [
 ]
 
 
+# ---------------------------------------------------------------------------
+# Kairali Products -- kairaliproducts.in (Shopify store, 350+ genuine
+# Ayurvedic products). New this round. Real GSC/GA4/Ads data (this
+# session) shows the site's actual highest-traffic category is men's/
+# women's sexual wellness and reproductive-health products (erectile
+# dysfunction, premature ejaculation support, etc.) alongside general
+# wellness (multivitamins, joint-pain oils, skin/hair oils, blood
+# pressure/cholesterol support) -- a real, legitimate part of the catalog,
+# not something to hide, but handled with the same clinical, non-explicit
+# framing a licensed online pharmacy would use (see the compliance lists
+# and AI persona below). kairaliproducts.com is NOT included in
+# gsc_site_urls -- confirmed live this session that this Google account
+# has no Search Console access to it (403), only to kairaliproducts.in.
+# No sourced restricted-keyword policy doc was given for this brand (unlike
+# Healing Village's) -- the lists below are my own compliance-first
+# judgment call (FTC/Google Ads Healthcare-policy-style unsubstantiated-
+# claim language + explicit-content terms), not a client-provided list;
+# happy to replace with a real sourced doc if one exists.
+# ---------------------------------------------------------------------------
+
+_KP_DOMAIN = "kairaliproducts.in"
+
+_KP_PAGES = [
+    {"id": "kp-home", "title": "Kairali Products — Home", "url": f"https://www.{_KP_DOMAIN}/", "lang": "en"},
+    {"id": "mens-sexual-health", "title": "Men's Sexual Health", "url": f"https://www.{_KP_DOMAIN}/collections/men-sexual-health", "lang": "en"},
+    {"id": "erectile-dysfunction", "title": "Erectile Dysfunction Support", "url": f"https://www.{_KP_DOMAIN}/collections/erectile-dysfunction", "lang": "en"},
+    {"id": "premature-ejaculation", "title": "Premature Ejaculation Support", "url": f"https://www.{_KP_DOMAIN}/collections/premature-ejaculation", "lang": "en"},
+    {"id": "sexual-disorder", "title": "Sexual Wellness", "url": f"https://www.{_KP_DOMAIN}/collections/sexual-disorder", "lang": "en"},
+    {"id": "womens-sexual-health", "title": "Women's Sexual Health", "url": f"https://www.{_KP_DOMAIN}/collections/women-sexual-health", "lang": "en"},
+    {"id": "testosterone-booster", "title": "Testosterone Booster", "url": f"https://www.{_KP_DOMAIN}/collections/testosterone-booster", "lang": "en"},
+    {"id": "leg-pain-oil", "title": "Ayurvedic Oil for Leg Pain", "url": f"https://www.{_KP_DOMAIN}/collections/best-ayurvedic-oil-for-leg-pain", "lang": "en"},
+    {"id": "multivitamins", "title": "Multivitamins", "url": f"https://www.{_KP_DOMAIN}/collections/multivitamins", "lang": "en"},
+    {"id": "stress", "title": "Stress Relief", "url": f"https://www.{_KP_DOMAIN}/collections/stress", "lang": "en"},
+    {"id": "cholesterol-treatment", "title": "Cholesterol Support", "url": f"https://www.{_KP_DOMAIN}/collections/cholesterol-treatment", "lang": "en"},
+    {"id": "wholesale-bulk", "title": "Wholesale & Bulk Ayurvedic Products", "url": f"https://www.{_KP_DOMAIN}/collections/ayurvedic-herbal-products-wholesaler-bulk-supplier", "lang": "en"},
+    {"id": "kairbossom-oil", "title": "Kairbossom Ayurvedic Breast Enhancement Massage Oil", "url": f"https://www.{_KP_DOMAIN}/products/kairbossom-ayurvedic-breast-enhancement-massage-oil", "lang": "en"},
+    {"id": "durance-capsules", "title": "Durance Ayurvedic Medicine for PE & ED", "url": f"https://www.{_KP_DOMAIN}/products/durance-ayurvedic-medicine-for-premature-ejaculation-and-erectile-dysfunction", "lang": "en"},
+    {"id": "neem-soap", "title": "Neem Soap", "url": f"https://www.{_KP_DOMAIN}/products/neem-soap-best-antifungal-and-antibacterial-herbal-soap", "lang": "en"},
+    {"id": "nalpamaradi-thailam", "title": "Nalpamaradi Thailam Skin Oil", "url": f"https://www.{_KP_DOMAIN}/products/nalpamaradi-thailam-best-skin-brightening-and-ayurvedic-skin-treatment-oil", "lang": "en"},
+    {"id": "brahmi-thailam", "title": "Brahmi Thailam Head Massage Oil", "url": f"https://www.{_KP_DOMAIN}/products/brahmi-thailam-head-massage-oil-for-hair-fall-hair-growth-headache-and-anxiety", "lang": "en"},
+    {"id": "manasamitram-gulika", "title": "Manasamitram Gulika (Insomnia/Anxiety)", "url": f"https://www.{_KP_DOMAIN}/products/manasamitram-gulika-tablet-ayurvedic-medicine-for-insomnia-depression-and-anxiety", "lang": "en"},
+    {"id": "mulberine-syrup", "title": "Mulberine Multivitamin Syrup", "url": f"https://www.{_KP_DOMAIN}/products/mulberine-ayurvedic-multivitamin-syrup-best-health-tonic-for-general-health", "lang": "en"},
+    {"id": "haridrakandam", "title": "Haridrakandam (Allergy/Skin)", "url": f"https://www.{_KP_DOMAIN}/products/haridrakandam-ayurvedic-medicine-for-allergies-and-skin-diseases", "lang": "en"},
+]
+
+# No named competitor Ayurvedic e-commerce brands given -- Competitor Gap
+# stays empty/N-A for this brand too, same as Villaraag, until real names
+# are provided.
+_KP_TIER_A_COMPETITORS = []
+
+# Explicit/adult-content terms -- kept separate from (but overlapping)
+# restricted_seed_terms below, since the sexual-wellness category makes
+# this a real risk for AI-suggested or discovered candidates, not just
+# typed seeds.
+_KP_EXPLICIT_TERMS = [
+    "escort", "call girl", "call girls", "porn", "xxx", "nude", "sex video",
+    "sex chat", "adult content", "hookup",
+]
+
+_KP_SPAM_TERMS = list(_KP_EXPLICIT_TERMS)
+_KP_DIY_HOME_REMEDY_TERMS = [
+    "at home", "diy", "home remedy", "home remedies", "how to make",
+    "recipe", "self treatment", "without doctor",
+]
+_KP_JOB_SEEKER_TERMS = ["job", "jobs", "vacancy", "career", "hiring", "salary", "internship"]
+
+# Purchase-intent / e-commerce specificity vocabulary -- what "genuinely
+# ready to buy" looks like for a Shopify store, not medical/travel terms.
+_KP_SPECIFICITY_TERMS = [
+    "buy online", "official store", "genuine", "authentic", "certified",
+    "original", "cash on delivery", "free shipping", "order online",
+]
+_KP_QUALITY_CONSCIOUS_TERMS = [
+    "genuine ayurvedic", "authentic ayurvedic", "certified", "trusted brand",
+    "official store", "best quality", "gmp certified", "fssai approved",
+]
+
+# Unsubstantiated-claim vocabulary -- FTC/Google Ads Healthcare policy
+# both prohibit this kind of language for supplements regardless of
+# category; confirmed relevant here ("no side effects" is a real query
+# already driving traffic to this site).
+_KP_COMPLIANCE_RISK_TERMS = [
+    "cure", "guaranteed", "permanent cure", "miracle", "100% effective",
+    "no side effects", "instant relief", "overnight cure",
+]
+_KP_NATIONALITY_COUNTRY_TERMS = []  # not applicable -- no "patient + country" pattern for e-commerce
+
+# Restricted-seed policy for this brand: unsubstantiated medical/marketing
+# claims (deliberately NOT financial/discount terms like "cheapest" or
+# "buy one get one" -- those are legitimate, desirable e-commerce terms,
+# unlike for a hospital) plus explicit-content terms given the sexual-
+# wellness product category.
+_KP_RESTRICTED_SEED_TERMS = [
+    # Medical claims -- general
+    "permanent cure", "permanent solution", "complete healing", "complete cure",
+    "guaranteed results", "instant relief", "100% effective", "revolutionary treatment",
+    "breakthrough therapy", "magical healing", "complete recovery guaranteed",
+    "superior to modern medicine", "alternative to medication", "no side effects",
+
+    # Disease-specific overclaims (relevant -- this brand sells diabetes/
+    # blood-pressure/cholesterol support products)
+    "cancer cure", "diabetes cure", "permanent diabetes solution",
+    "blood sugar cure", "blood pressure cure", "cholesterol cure",
+
+    # Marketing/promotional -- comparative & authority overclaims
+    "better than", "superior to", "more effective than", "beats all other",
+    "outperforms", "number one", "top rated", "highest success rate",
+    "most successful", "government approved", "fda approved",
+    "officially recognized", "certified cure", "proven results",
+    "scientifically proven", "clinically tested", "expert approved",
+    "universally accepted", "clinically proven",
+] + _KP_EXPLICIT_TERMS
+
+_KP_SYSTEM_PROMPT = """You are a senior e-commerce/D2C SEO strategist with 15+ years of \
+hands-on experience marketing regulated health and wellness product \
+brands online -- including deep familiarity with the Kairali Ayurvedic \
+Group's brand family (Ayurvedic Healing Village, Villaraag, and Kairali \
+Products). For this task you are researching keywords specifically for \
+Kairali Products, a Shopify store selling 350+ genuine Ayurvedic \
+products: general wellness supplements (multivitamins, joint-pain oils, \
+skin/hair-care oils, blood pressure and cholesterol support, stress \
+relief) AND a significant men's/women's sexual wellness and \
+reproductive-health product line -- this is real, already the site's \
+highest-traffic category, and should be researched with the same \
+professional, clinical framing a licensed online pharmacy would use, \
+never vulgar or explicit language.
+
+Your audience is health-conscious online shoppers, in India \
+(kairaliproducts.in) and internationally, who are often ready to \
+purchase, not just researching. Purchase-intent phrasing ("buy X \
+online", "X price", "order X", "X for sale", "genuine X", "official \
+store") matters more here than for a hospital or resort -- weight it \
+alongside informational/comparison queries, not instead of them.
+
+Given a seed topic, URL, or pasted page content, suggest realistic \
+search keywords a real shopper would type into Google -- grounded in \
+genuine e-commerce search behavior, not generic SEO-textbook phrasing. \
+Include a mix of:
+- Purchase-intent commercial terms (buy/order/price/genuine/official store)
+- Category and comparison terms
+- Natural-language QUESTIONS (what/how/does/is) suited to featured \
+snippets and AI answer engines
+- Ingredient/formulation-specific terms where relevant (named Ayurvedic \
+herbs/ingredients used in the product line)
+
+As an experienced regulated-health-product marketer you are inherently \
+compliance-aware: never suggest cure/guaranteed-result/permanent-\
+solution/miracle/100%-effective/no-side-effects language or other \
+unsubstantiated medical claims (FTC and Google Ads Healthcare policy \
+both prohibit these for supplements) -- describe benefits with words \
+like "supports," "may help with," or "traditionally used for" instead. \
+For the sexual-wellness category specifically, use the same clinical \
+terminology a pharmacy would ("erectile dysfunction support", \
+"reproductive wellness", "libido support") -- never vulgar, explicit, or \
+adult-content-style language. Return 20-25 distinct keyword phrases, \
+lowercase, no duplicates, no numbering, no explanations -- just the \
+keywords themselves."""
+
+# Bootstrapped from real GSC/GA4/Ads data for kairaliproducts.in this
+# session (branded/category terms already driving traffic) plus AI-
+# ideated purchase-intent opportunity phrases in compliant language.
+_KP_KNOWN_KEYWORDS = [
+    # Branded / already-real (confirmed via live GSC + Google Ads search terms)
+    "kairali ayurvedic products", "ayurvedic medicine for erectile dysfunction",
+    "ayurvedic medicine for premature ejaculation", "brahmi oil",
+    "nalpamaradi thailam", "durance capsules", "lipidex capsule",
+    "safed musli tablet", "neem soap", "manasamitram gulika",
+    "ayurvedic medicine for cholesterol", "yograj guggulu",
+    # Opportunity keywords (AI-ideated, purchase-intent + compliant phrasing)
+    "buy ayurvedic supplements online india", "ayurvedic multivitamin syrup online",
+    "ayurvedic oil for joint pain online", "kairali ayurvedic products official store",
+    "genuine ayurvedic medicine online india", "ayurvedic hair oil for hair fall online",
+    "ayurvedic skin brightening oil online", "testosterone booster ayurvedic capsules",
+    "ayurvedic stress relief tablets online", "ayurvedic blood pressure support capsules",
+    "ayurvedic pcod pcos support tablets", "men's ayurvedic wellness supplements online",
+    "women's ayurvedic wellness supplements online", "ayurvedic reproductive wellness capsules",
+    "ayurvedic diabetes support capsules", "buy ayurvedic massage oil online",
+    "ayurvedic multivitamin for general health", "ayurvedic anti allergy medicine online",
+]
+
+
 BRANDS = {
     "healing_village": BrandConfig(
         key="healing_village", label="Healing Village", domain=_AHV_DOMAIN,
@@ -437,6 +618,18 @@ BRANDS = {
         nationality_country_terms=_VR_NATIONALITY_COUNTRY_TERMS,
         restricted_seed_terms=_VR_RESTRICTED_SEED_TERMS, medical_compliance_enabled=False,
         known_keywords=_VR_KNOWN_KEYWORDS, ai_system_prompt=_VR_SYSTEM_PROMPT,
+    ),
+    "kairali_products": BrandConfig(
+        key="kairali_products", label="Kairali Products", domain=_KP_DOMAIN,
+        gsc_site_urls=[f"https://www.{_KP_DOMAIN}/"],
+        ga4_property_id="321539229", ads_customer_id="3215067901",
+        pages=_KP_PAGES, tier_a_competitors=_KP_TIER_A_COMPETITORS,
+        spam_terms=_KP_SPAM_TERMS, diy_home_remedy_terms=_KP_DIY_HOME_REMEDY_TERMS,
+        job_seeker_terms=_KP_JOB_SEEKER_TERMS, quality_conscious_terms=_KP_QUALITY_CONSCIOUS_TERMS,
+        specificity_terms=_KP_SPECIFICITY_TERMS, compliance_risk_terms=_KP_COMPLIANCE_RISK_TERMS,
+        nationality_country_terms=_KP_NATIONALITY_COUNTRY_TERMS,
+        restricted_seed_terms=_KP_RESTRICTED_SEED_TERMS, medical_compliance_enabled=True,
+        known_keywords=_KP_KNOWN_KEYWORDS, ai_system_prompt=_KP_SYSTEM_PROMPT,
     ),
 }
 DEFAULT_BRAND = "healing_village"
