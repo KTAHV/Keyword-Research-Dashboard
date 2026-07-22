@@ -13,20 +13,23 @@ for _var in (
 ):
     os.environ.pop(_var, None)
 
+import config  # noqa: E402
 from api.search import _demo_semrush_lookup, _is_systemic_failure, _seed_variants, run_search  # noqa: E402
+
+HV = config.BRANDS["healing_village"]
 
 
 def test_demo_lookup_matches_on_word_overlap_not_just_substring():
     # Regression test: "kairali ayurvedic" is not a substring of any sample
     # keyword (none contain "kairali"), but it shares "ayurvedic" with many
     # of them -- the reported bug was that this returned zero results.
-    matches = _demo_semrush_lookup(["kairali ayurvedic"])
+    matches = _demo_semrush_lookup(["kairali ayurvedic"], HV)
     assert len(matches) > 0
     assert any("ayurvedic" in kw for kw in matches)
 
 
 def test_demo_lookup_empty_for_truly_unrelated_seed():
-    matches = _demo_semrush_lookup(["xyzunmatchedkeyword123"])
+    matches = _demo_semrush_lookup(["xyzunmatchedkeyword123"], HV)
     assert matches == {}
 
 
@@ -125,6 +128,25 @@ def test_run_search_blocks_restricted_seed_term_with_policy_notice():
 def test_run_search_no_policy_notice_for_clean_seed():
     result = run_search({"seedKeyword": "panchakarma"})
     assert result.get("policyNotice") is None
+
+
+def test_run_search_defaults_to_healing_village_when_brand_omitted():
+    result = run_search({"seedKeyword": "panchakarma"})
+    assert result["brand"] == "healing_village"
+
+
+def test_run_search_villaraag_does_not_block_spa_wellness_terms():
+    # Opposite of Healing Village: "spa"/"wellness" are legitimate product
+    # terms for Villaraag, not a restricted-policy match.
+    result = run_search({"brand": "villaraag", "seedKeyword": "spa and wellness villa goa"})
+    assert result["brand"] == "villaraag"
+    assert result.get("policyNotice") is None
+
+
+def test_run_search_villaraag_blocks_explicit_content_terms():
+    result = run_search({"brand": "villaraag", "seedKeyword": "escort service goa villa"})
+    assert result["policyNotice"] is not None
+    assert "escort" in result["policyNotice"]
 
 
 def test_run_search_excludes_restricted_term_from_discovered_matches():

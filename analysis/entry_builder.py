@@ -63,7 +63,7 @@ def priority_band(entry):
 
 
 def build_entry(keyword, semrush_data, gsc_entry, ga4_entry, ads_entry, competitor_gap,
-                 trending_phrases, page_titles):
+                 trending_phrases, page_titles, brand):
     volume_by_country = semrush_data.get("volumeByCountry", {})
     cpc = semrush_data.get("cpc")
     difficulty = semrush_data.get("difficulty")
@@ -73,13 +73,13 @@ def build_entry(keyword, semrush_data, gsc_entry, ga4_entry, ads_entry, competit
     current_position = gsc_entry["position"] if gsc_entry else None
 
     question = intent_and_audience.is_question(keyword)
-    intent = intent_and_audience.classify_intent(keyword)
-    spam_risk = intent_and_audience.spam_risk_flag(keyword)
-    medical_specificity = intent_and_audience.medical_specificity_score(keyword)
-    audience_fit = intent_and_audience.audience_fit_score(keyword, volume_by_country, cpc)
+    intent = intent_and_audience.classify_intent(keyword, brand)
+    spam_risk = intent_and_audience.spam_risk_flag(keyword, brand)
+    medical_specificity = intent_and_audience.specificity_score(keyword, brand)
+    audience_fit = intent_and_audience.audience_fit_score(keyword, volume_by_country, cpc, brand)
 
     ai_voice = ai_voice_readiness.ai_voice_fit(keyword, medical_specificity)
-    compliance_result = compliance.compliance_check(keyword)
+    compliance_result = compliance.compliance_check(keyword, brand)
     confidence_score, confidence_subscores = confidence.compute_confidence(
         gsc_entry, ga4_entry, ads_entry, volume_by_country, difficulty
     )
@@ -138,7 +138,7 @@ def build_entry(keyword, semrush_data, gsc_entry, ga4_entry, ads_entry, competit
 
 def enrich_with_cached_signal(entry, cached_entry):
     """Live Search tool only: if the searched keyword already exists in the
-    last weekly-committed data/keyword_research_data.json snapshot, borrow
+    last weekly-committed data/keyword_research_data_<brand>.json snapshot, borrow
     its real GSC/GA4/Ads signal (ranking position, mapped page,
     underperformance, and the three subscores) into a freshly-built
     Semrush-only entry, then recompute the composite confidence/priority so

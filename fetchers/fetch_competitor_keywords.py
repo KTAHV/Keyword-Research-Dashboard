@@ -1,27 +1,28 @@
 """
 Tier-A competitor keyword gap: keywords a Tier-A competitor
-(config.TIER_A_COMPETITORS) ranks for that we don't, or ranks meaningfully
+(brand.tier_a_competitors) ranks for that we don't, or ranks meaningfully
 ahead of us on.
 
-Phase "sample": reads data/sample/competitor_keywords_sample.json.
+Phase "sample": reads data/sample/competitor_keywords_sample.json
+(Healing Village only -- brands with no sample fixture get {}).
 
 Phase "live" (future): Semrush `domain_organic_keywords` for each Tier-A
-competitor's domain, diffed against our own GSC ranking set. Same
-SEMRUSH_API_KEY as fetch_semrush.py.
+competitor's domain, diffed against our own GSC ranking set -- not
+implemented yet for any brand, so this returns {} rather than crashing
+the weekly build (same graceful-degradation pattern used elsewhere in
+this repo for not-yet-available data sources). Brands with no
+tier_a_competitors configured at all (e.g. Villaraag, pending real rival
+names) always return {} regardless of phase -- there's nothing to diff
+against.
 """
-import os
-
 from fetchers._util import load_sample
 
 
-def fetch(phase="sample"):
+def fetch(phase, brand):
+    if not brand.tier_a_competitors:
+        return {}
     if phase == "live":
-        if not os.environ.get("SEMRUSH_API_KEY"):
-            raise RuntimeError(
-                "SEMRUSH_API_KEY is not set -- competitor keyword gap live fetch "
-                "cannot run. See module docstring / .env.example."
-            )
-        raise NotImplementedError(
-            "Live Semrush competitor-keyword-gap fetch is not wired up yet (see module docstring)."
-        )
-    return load_sample("competitor_keywords_sample.json")
+        return {}  # Semrush domain_organic_keywords not wired up yet -- Competitor Gap shows empty until it is
+    if brand.key == "healing_village":
+        return load_sample("competitor_keywords_sample.json")
+    return {}

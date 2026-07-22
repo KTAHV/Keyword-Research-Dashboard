@@ -38,18 +38,18 @@ jobs:
           GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
         run: python scripts/write_credentials.py
 
-      - name: Build dashboard with fresh data
+      - name: Build dashboard with fresh data (every registered brand)
         env:
           SEMRUSH_API_KEY: ${{ secrets.SEMRUSH_API_KEY }}
         run: python build_keyword_research_dashboard.py --phase live
 
-      - name: Verify build
+      - name: Verify build (every brand data file)
         run: python scripts/verify_build.py
 
       - name: Commit refreshed data + dashboard
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/keyword_research_data.json data/keyword_history.json index.html
+          git add data/keyword_research_data_*.json data/keyword_history_*.json index.html
           git diff --cached --quiet || git commit -m "refresh: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           git push

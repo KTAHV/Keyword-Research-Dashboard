@@ -14,29 +14,26 @@ database refresh cadence, not what Google is suggesting right now) -- every
 place this data surfaces in the dashboard must label it as an approximation,
 never as literal Autocomplete.
 
-Phase "sample": reads data/sample/google_suggest_proxy_sample.json.
+Phase "sample": reads data/sample/google_suggest_proxy_sample.json
+(Healing Village only -- other brands get {}).
 
 Phase "live" (future): Semrush related_keywords / questions endpoints,
-grouped by seed topic, same SEMRUSH_API_KEY as fetch_semrush.py. If Ahrefs'
-plan is ever upgraded, prefer swapping this fetcher to Ahrefs'
-keywords-explorer-search-suggestions endpoint instead, since that is real
-Autocomplete data.
+grouped by seed topic, same SEMRUSH_API_KEY as fetch_semrush.py -- not
+wired up yet for any brand, so this returns {} rather than crashing the
+weekly build (same graceful-degradation pattern used elsewhere in this
+repo for not-yet-available data sources; the "trending phrase" flag just
+defaults False everywhere until it is). If Ahrefs' plan is ever upgraded,
+prefer swapping this fetcher to Ahrefs' keywords-explorer-search-suggestions
+endpoint instead, since that is real Autocomplete data.
 """
-import os
-
 from fetchers._util import load_sample
 
 
-def fetch(phase="sample"):
+def fetch(phase, brand):
     if phase == "live":
-        if not os.environ.get("SEMRUSH_API_KEY"):
-            raise RuntimeError(
-                "SEMRUSH_API_KEY is not set -- Google-Suggest-proxy live fetch "
-                "cannot run. See module docstring / .env.example."
-            )
-        raise NotImplementedError(
-            "Live Semrush-based suggestion fetch is not wired up yet (see module docstring)."
-        )
-    data = load_sample("google_suggest_proxy_sample.json")
-    data.pop("_note", None)
-    return data
+        return {}
+    if brand.key == "healing_village":
+        data = load_sample("google_suggest_proxy_sample.json")
+        data.pop("_note", None)
+        return data
+    return {}

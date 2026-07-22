@@ -7,10 +7,11 @@ Phase "sample": reads data/sample/gsc_queries_sample.json.
 Phase "live": raw REST `searchAnalytics.query` via AuthorizedSession -- same
 pattern as Combined Marketing Dashboard/GSC Dashboard/fetch_gsc_data.py and
 fetch_url_health_cwv.py (not google-api-python-client's build()). Queried
-for every config.GSC_SITE_URLS property and merged into one dict keyed by
+for every brand.gsc_site_urls property and merged into one dict keyed by
 the exact query string. The returned page URL is matched back to a
-config.PAGE_IDS entry (or None if it doesn't match any tracked page --
-that's a Content Gap candidate).
+brand.pages entry (or None if it doesn't match any tracked page -- that's
+a Content Gap candidate). Same shared OAuth client/refresh token for every
+brand (see scripts/authenticate_all.py) -- only the target site URLs differ.
 
 Needs token_gsc.json in the repo root (see scripts/authenticate_gsc.py for
 the one-time OAuth setup, or scripts/write_credentials.py for how CI
@@ -80,15 +81,15 @@ def _normalize_url(url):
     return f"{host}{path}"
 
 
-def _match_page_id(page_url):
+def _match_page_id(page_url, brand):
     normalized = _normalize_url(page_url)
-    for page in config.PAGES:
+    for page in brand.pages:
         if _normalize_url(page["url"]) == normalized:
             return page["id"]
     return None
 
 
-def _fetch_live():
+def _fetch_live(brand):
     from google.auth.transport.requests import AuthorizedSession
 
     creds = load_credentials()
@@ -98,7 +99,7 @@ def _fetch_live():
     start_date = end_date - timedelta(days=config.GSC_LOOKBACK_DAYS)
 
     merged = {}
-    for site in config.GSC_SITE_URLS:
+    for site in brand.gsc_site_urls:
         rows = _query_site(session, site, start_date.isoformat(), end_date.isoformat())
         for row in rows:
             query, page_url = row["keys"]
@@ -113,7 +114,7 @@ def _fetch_live():
             entry["clicks"] += clicks
             entry["_position_weighted_sum"] += position * max(impressions, 1)
             if entry["page"] is None:
-                entry["page"] = _match_page_id(page_url)
+                entry["page"] = _match_page_id(page_url, brand)
 
     result = {}
     for query, entry in merged.items():
@@ -128,7 +129,9 @@ def _fetch_live():
     return result
 
 
-def fetch(phase="sample"):
+def fetch(phase, brand):
     if phase == "live":
-        return _fetch_live()
-    return load_sample("gsc_queries_sample.json")
+        return _fetch_live(brand)
+    if brand.key == "healing_village":
+        return load_sample("gsc_queries_sample.json")
+    return {}

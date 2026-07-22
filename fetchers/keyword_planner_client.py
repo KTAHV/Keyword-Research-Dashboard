@@ -13,9 +13,11 @@ row carries `.text` and `.keyword_idea_metrics`
 (avg_monthly_searches/competition_index/average_cpc_micros).
 
 Geo targeting uses config.KEYWORD_PLANNER_GEO_TARGETS -- standard, stable
-IDs I could not verify against a live account in this environment (no
-credentials here). If the API rejects them, retries once without geo
-targeting rather than failing the whole search.
+IDs, shared across brands (not brand-specific geo scope). If the API
+rejects them, retries once without geo targeting rather than failing the
+whole search. `customer_id` comes from the caller's `brand` (config.BrandConfig)
+-- same shared OAuth client/refresh token and MCC login_customer_id
+(google-ads.yaml) for every brand.
 """
 import config
 from fetchers import ads_client
@@ -23,14 +25,14 @@ from fetchers import ads_client
 MAX_KEYWORDS_PER_CALL = 20  # Google Ads API limit for KeywordSeed.keywords
 
 
-def _run(keywords, client, use_geo_targeting):
+def _run(keywords, client, use_geo_targeting, brand):
     idea_service = client.get_service("KeywordPlanIdeaService")
 
     keyword_seed = client.get_type("KeywordSeed")
     keyword_seed.keywords.extend(keywords)
 
     request = client.get_type("GenerateKeywordIdeasRequest")
-    request.customer_id = config.ADS_CUSTOMER_ID
+    request.customer_id = brand.ads_customer_id
     request.keyword_seed = keyword_seed
     request.include_adult_keywords = False
     if use_geo_targeting:
@@ -39,7 +41,7 @@ def _run(keywords, client, use_geo_targeting):
     return idea_service.generate_keyword_ideas(request=request)
 
 
-def generate_keyword_ideas(keywords):
+def generate_keyword_ideas(keywords, brand):
     """keywords: list of strings (only the first MAX_KEYWORDS_PER_CALL are
     used -- caller should already have narrowed to "still missing volume"
     candidates). Returns a dict keyed by lowercased keyword text ->
@@ -51,9 +53,9 @@ def generate_keyword_ideas(keywords):
     keywords = keywords[:MAX_KEYWORDS_PER_CALL]
 
     try:
-        response = _run(keywords, client, use_geo_targeting=True)
+        response = _run(keywords, client, use_geo_targeting=True, brand=brand)
     except Exception:
-        response = _run(keywords, client, use_geo_targeting=False)
+        response = _run(keywords, client, use_geo_targeting=False, brand=brand)
 
     result = {}
     for row in response:

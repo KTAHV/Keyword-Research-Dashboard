@@ -11,8 +11,10 @@ Phase "sample": reads data/sample/google_ads_search_terms_sample.json.
 
 Phase "live": same search_term_view GAQL query as Combined Marketing
 Dashboard/Kairali Google ad/fetch_search_terms.py, against
-config.ADS_CUSTOMER_ID. Credential loading is shared with
-keyword_planner_client.py -- see fetchers/ads_client.py.
+brand.ads_customer_id. Credential loading is shared with
+keyword_planner_client.py -- see fetchers/ads_client.py. Same shared
+OAuth client/refresh token and MCC login_customer_id for every brand,
+only the target customer_id differs.
 """
 import config
 from fetchers import ads_client
@@ -31,13 +33,13 @@ QUERY = """
 """
 
 
-def _fetch_live():
+def _fetch_live(brand):
     client = ads_client.get_client()
     ga_service = client.get_service("GoogleAdsService")
     query = QUERY.format(lookback=config.ADS_LOOKBACK)
 
     result = {}
-    for row in ga_service.search(customer_id=config.ADS_CUSTOMER_ID, query=query):
+    for row in ga_service.search(customer_id=brand.ads_customer_id, query=query):
         term = row.search_term_view.search_term.strip().lower()
         result[term] = {
             "impressions": row.metrics.impressions,
@@ -49,7 +51,9 @@ def _fetch_live():
     return result
 
 
-def fetch(phase="sample"):
+def fetch(phase, brand):
     if phase == "live":
-        return _fetch_live()
-    return load_sample("google_ads_search_terms_sample.json")
+        return _fetch_live(brand)
+    if brand.key == "healing_village":
+        return load_sample("google_ads_search_terms_sample.json")
+    return {}

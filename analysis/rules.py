@@ -2,7 +2,7 @@
 Rule-based "Needs Attention" alert generation. Runs after every other
 analysis module has populated a keyword entry, so rules can key off any
 field: mappedPageId, complianceRisk, confidence sub-scores, or a position
-delta vs the previous refresh (from data/keyword_history.json).
+delta vs the previous refresh (from data/keyword_history_<brand>.json).
 """
 
 CONTENT_GAP_VOLUME_THRESHOLD = 1200

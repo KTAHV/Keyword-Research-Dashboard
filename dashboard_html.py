@@ -153,6 +153,12 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:'Work Sans',-ap
 .tier-panel{display:none}
 .tier-panel.active{display:block}
 
+.brand-selector{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap}
+.brand-option{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;color:var(--text-muted);
+  background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:7px 14px;cursor:pointer;
+  transition:all .15s ease}
+.brand-option:has(input:checked){background:var(--green);color:#fff;border-color:var(--green)}
+.brand-option input{accent-color:var(--green)}
 .search-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;
   box-shadow:0 2px 10px rgba(38,38,32,0.06);margin-bottom:1.5rem}
 .search-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:1.1rem}
@@ -287,6 +293,7 @@ def _main_shell_html():
   </div>
 
   <div id="viewSearch" class="view active">
+    <div class="brand-selector" id="brandSelectorSearch"></div>
     <div class="search-panel">
       <div class="search-grid">
         <div class="search-field">
@@ -311,6 +318,7 @@ def _main_shell_html():
   </div>
 
   <div id="viewWeeklyreport" class="view">
+    <div class="brand-selector" id="brandSelectorWeekly"></div>
     <div class="kpi-grid" id="kpiGrid"></div>
     <div class="two-panel">
       <div class="panel needs-attention">
@@ -348,7 +356,7 @@ def _main_shell_html():
   </div>
 
   <footer>
-    <span>Kairali Ayurvedic Healing Village — Keyword Research Dashboard</span>
+    <span id="footerBrand"></span>
     <span id="footerNote"></span>
   </footer>
 </div>
@@ -524,7 +532,8 @@ function renderCompetitorGap() {
     return '<tr><td>' + c.keyword + '</td><td>' + c.competitor + '</td><td>' + c.competitorPosition + '</td>' +
       '<td>' + (c.ourPosition === null ? 'Not ranking' : c.ourPosition) + '</td></tr>';
   }).join('');
-  document.getElementById('competitorGapTable').innerHTML = head + body;
+  document.getElementById('competitorGapTable').innerHTML = head + body ||
+    '<tr><td class="na-note">Not available yet for this brand.</td></tr>';
 }
 
 function renderUnderperforming() {
@@ -590,7 +599,7 @@ function runSearch() {
   fetch('/api/search', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ seedKeyword: seedKeyword, url: url, content: content }),
+    body: JSON.stringify({ brand: CURRENT_BRAND, seedKeyword: seedKeyword, url: url, content: content }),
   })
     .then(function (r) { return r.json().then(function (data) { return { ok: r.ok, data: data }; }); })
     .then(function (res) {
@@ -651,8 +660,59 @@ function wireTierTabs() {
 }
 
 function renderFooterAndMeta() {
+  var brand = BRAND_LIST.filter(function (b) { return b.key === CURRENT_BRAND; })[0];
+  document.getElementById('footerBrand').textContent = (brand ? brand.label : CURRENT_BRAND) + ' — Keyword Research Dashboard';
   document.getElementById('footerNote').textContent = DATA.entries.length + ' keywords · phase: ' + DATA.phase;
   document.getElementById('lastRefreshed').textContent = 'Last refreshed: ' + new Date(DATA.generatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+// One shared "active brand" for the whole dashboard -- Weekly Report,
+// Needs Attention, and Analytics all read whichever brand's data is
+// currently selected (see renderAll()); the Search tab sends it with
+// every /api/search request instead.
+var CURRENT_BRAND = BRAND_LIST[0].key;
+var DATA = BRAND_DATA[CURRENT_BRAND];
+
+function renderAll() {
+  renderKpis();
+  renderNeedsAttention();
+  renderContentGapSnapshot();
+  renderPriorityKeywords();
+  renderAeo();
+  renderContentGap();
+  renderAvoidList();
+  renderCompetitorGap();
+  renderUnderperforming();
+  renderAnalytics();
+  renderFooterAndMeta();
+}
+
+function renderBrandSelectors() {
+  // Each container gets its OWN radio-group name -- sharing one name
+  // across two separate DOM locations doesn't sync their displayed
+  // selection, it just makes the browser's native "only one checked in
+  // the whole group" rule fight itself across containers. Instead: two
+  // independent radio groups, explicitly rebuilt (including their
+  // `checked` attribute) from CURRENT_BRAND after every change so both
+  // always agree.
+  var groups = { brandSelectorSearch: 'brandSelectSearch', brandSelectorWeekly: 'brandSelectWeekly' };
+  Object.keys(groups).forEach(function (containerId) {
+    var el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = BRAND_LIST.map(function (b) {
+      var checked = b.key === CURRENT_BRAND ? ' checked' : '';
+      return '<label class="brand-option"><input type="radio" name="' + groups[containerId] + '" value="' + b.key + '"' + checked + '> ' + b.label + '</label>';
+    }).join('');
+  });
+  document.querySelectorAll('.brand-selector input[type="radio"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      if (!this.checked) return;
+      CURRENT_BRAND = this.value;
+      DATA = BRAND_DATA[CURRENT_BRAND];
+      renderAll();
+      renderBrandSelectors();
+    });
+  });
 }
 
 function wireNav() {
@@ -671,18 +731,9 @@ function wireNav() {
 }
 
 renderHero();
-renderKpis();
-renderNeedsAttention();
-renderContentGapSnapshot();
-renderPriorityKeywords();
-renderAeo();
-renderContentGap();
-renderAvoidList();
-renderCompetitorGap();
-renderUnderperforming();
-renderAnalytics();
+renderBrandSelectors();
+renderAll();
 renderSettings();
-renderFooterAndMeta();
 wireNav();
 wireTierTabs();
 wireSearch();
@@ -690,6 +741,19 @@ wireSearch();
 """
 
 
-def render_html(data, js_const):
-    data_script = f"<script>\n{js_const('DATA', data)}\n</script>\n"
+def render_html(brand_data, brand_list, js_const):
+    """brand_data: {brand_key: <same shape as the old single `data` blob>}.
+    brand_list: [{"key":..., "label":...}, ...] in the order the brand
+    selector should show them -- the first entry is the default/initial
+    brand. Everything is baked in as inline consts (no runtime fetch()),
+    same convention as before, just one BRAND_DATA object instead of one
+    DATA object; DATA itself stays as a live alias the JS reassigns when
+    the brand selector changes, so every existing render*() function
+    (which reads the global DATA) needs no further changes."""
+    data_script = (
+        "<script>\n"
+        + js_const("BRAND_DATA", brand_data) + "\n"
+        + js_const("BRAND_LIST", brand_list) + "\n"
+        + "</script>\n"
+    )
     return TEMPLATE_HEAD + '<div class="app">' + _sidebar_html() + _main_shell_html() + "</div>\n" + data_script + DASHBOARD_JS + TEMPLATE_TAIL

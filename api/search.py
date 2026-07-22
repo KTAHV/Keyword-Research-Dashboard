@@ -1,20 +1,25 @@
 """
 Vercel Python serverless function: POST /api/search
-Body: {"seedKeyword": str, "url": str, "content": str} -- any subset filled.
+Body: {"brand": str, "seedKeyword": str, "url": str, "content": str} --
+`brand` is one of config.BRANDS's keys (defaults to config.DEFAULT_BRAND
+if omitted, for backward compatibility with any cached client). Any
+subset of seedKeyword/url/content may be filled.
 
 Runs live/on-demand (unlike the weekly batch):
 
-1. Ideation -- Claude proposes candidate keyword phrases (analysis/
-   ai_keyword_ideation.py) if ANTHROPIC_API_KEY is set, else a regex-based
+1. Ideation -- Claude proposes candidate keyword phrases using the
+   selected brand's persona (analysis/ai_keyword_ideation.py,
+   brand.ai_system_prompt) if ANTHROPIC_API_KEY is set, else a regex-based
    fallback (analysis/phrase_extraction.py).
 2. Compliance filter -- candidates matching "patient(s)" + a specific
    nationality/country name are dropped entirely before scoring (see
-   analysis/compliance.py::is_patient_nationality_pattern). Separately, a
-   *typed seed keyword* matching config.RESTRICTED_SEED_TERMS_AHV
-   (ayurvedichealingvillage.com's Google-Ads/tax/medical-claims policy doc)
-   is never searched at all -- the request returns a "policyNotice" and
-   swaps in FALLBACK_SAFE_SEED so the user still gets a full table of
-   compliant suggestions instead of the blocked term.
+   analysis/compliance.py::is_patient_nationality_pattern; empty for
+   brands with no nationality_country_terms, e.g. Villaraag). Separately,
+   a *typed seed keyword* matching brand.restricted_seed_terms (each
+   brand's own sourced policy list) is never searched at all -- the
+   request returns a "policyNotice" and swaps in a brand-appropriate
+   fallback seed so the user still gets a full table of compliant
+   suggestions instead of the blocked term.
 3. Semrush discovery -- `phrase_related` (real, volume-backed discovery,
    not exact-match) on the shortest/primary seed, across every database in
    config.SEMRUSH_SEARCH_DATABASES, PLUS a best-effort `phrase_this` exact
@@ -23,21 +28,23 @@ Runs live/on-demand (unlike the weekly batch):
    the earlier exact-match-only design returned almost nothing).
 4. Google Keyword Planner fallback -- for any AI-suggested candidate still
    missing volume after step 3, if Google Ads credentials are available
-   (fetchers/keyword_planner_client.py).
+   (fetchers/keyword_planner_client.py), targeting brand.ads_customer_id.
 5. Live GSC + Ads cross-reference -- if Google credentials are available,
    queries them live (not just the cached weekly snapshot) for
-   position/mapped-page/paid-verification signal. GA4 is deliberately
-   excluded from this live path: GA4 has no native search-query dimension
-   (only GSC does), so a per-search GA4 lookup here would be
-   page-level-only and couldn't actually be attributed to the searched
-   keyword the way GSC and Ads can. GA4 signal only ever reaches an entry
-   via the cached weekly snapshot (enrich_with_cached_signal, when the
-   keyword already exists in last week's build) -- never a live call from
+   position/mapped-page/paid-verification signal, targeting the selected
+   brand's GSC site URLs / Ads customer ID. GA4 is deliberately excluded
+   from this live path: GA4 has no native search-query dimension (only
+   GSC does), so a per-search GA4 lookup here would be page-level-only
+   and couldn't actually be attributed to the searched keyword the way
+   GSC and Ads can. GA4 signal only ever reaches an entry via the cached
+   weekly snapshot (enrich_with_cached_signal, when the keyword already
+   exists in that brand's last week's build) -- never a live call from
    this endpoint.
 6. Scores everything through the same analysis/ pipeline the batch build
    uses (analysis/entry_builder.py, so the two paths can't drift apart),
-   attaches a Search-Volume + source label per entry, and returns a
-   priority-sorted list.
+   passing the selected brand through so compliance/spam/audience-fit
+   logic matches that brand's business context, attaches a Search-Volume +
+   source label per entry, and returns a priority-sorted list.
 
 Static HTML can't call Semrush/Claude/GSC/GA4/Ads directly -- the API keys
 and OAuth secrets can't safely live in browser JS, and most of these APIs
@@ -48,8 +55,12 @@ Vercel's filesystem is read-only except /tmp -- live Google credentials
 (if configured) are materialized there at request time via
 scripts/write_credentials.py, then the existing fetchers (fetch_gsc.py,
 fetch_ga4.py, fetch_google_ads_search_terms.py -- the same ones used by
-the weekly batch, built and verified earlier this session) are pointed at
-/tmp via their env-var path overrides. Nothing here is ever committed.
+the weekly batch) are pointed at /tmp via their env-var path overrides.
+Nothing here is ever committed. Every brand shares the same OAuth client/
+refresh tokens (confirmed this session against the sibling Combined
+Marketing Dashboard repo's per-brand credential files) -- only the
+target GSC site/GA4 property/Ads customer ID differs per brand, which is
+config, not credentials.
 """
 import json
 import os
@@ -73,22 +84,37 @@ MAX_AI_KEYWORDS = 25  # cap for AI-ideation candidates; kept above the ~20-in-ta
 # since compliance exclusions and dedup can trim the list before it reaches the table.
 # keyword_planner_client.py slices its own MAX_KEYWORDS_PER_CALL internally, so this
 # doesn't overrun that API's per-call limit.
-FALLBACK_SAFE_SEED = "ayurvedic healing village treatments and wellness programs"  # used
-# in place of a seed that matches config.RESTRICTED_SEED_TERMS_AHV, so a blocked search
-# still produces a full table of compliant Ayurvedic Healing Village suggestions.
-DEMO_SEMRUSH_PATH = os.path.join(ROOT, "data", "sample", "semrush_keywords_sample.json")
-CACHED_DATA_PATH = os.path.join(ROOT, "data", "keyword_research_data.json")
+
+# Used in place of a seed that matches brand.restricted_seed_terms, so a
+# blocked search still produces a full table of compliant suggestions for
+# that brand specifically (not a generic/wrong-brand fallback).
+_FALLBACK_SAFE_SEEDS = {
+    "healing_village": "ayurvedic healing village treatments and wellness programs",
+    "villaraag": "villaraag luxury villa resort yoga and wellness retreat goa",
+}
+
+
+def _fallback_safe_seed(brand):
+    return _FALLBACK_SAFE_SEEDS.get(brand.key, f"{brand.label} services")
+
+
+def _demo_semrush_path(brand):
+    return os.path.join(ROOT, "data", "sample", "semrush_keywords_sample.json") if brand.key == "healing_village" else None
+
+
+def _cached_data_path(brand):
+    return os.path.join(ROOT, "data", f"keyword_research_data_{brand.key}.json")
 
 
 def _load_json(path):
-    if not os.path.exists(path):
+    if not path or not os.path.exists(path):
         return None
     with open(path, encoding="utf-8") as f:
         return json.load(f)
 
 
-def _page_titles():
-    return {p["id"]: p["title"] for p in config.PAGES}
+def _page_titles(brand):
+    return {p["id"]: p["title"] for p in brand.pages}
 
 
 def _fetch_url_text(url):
@@ -101,13 +127,18 @@ def _fetch_url_text(url):
     return extract_page_text(soup)
 
 
-def _demo_semrush_lookup(seed_phrases):
+def _demo_semrush_lookup(seed_phrases, brand):
     """Word-overlap matching (not strict substring) against the local
     sample keyword universe -- demo mode exists to show the tool's shape
-    without a Semrush key."""
+    without a Semrush key. Only Healing Village has a sample fixture
+    today; other brands get {} in demo mode (real live mode doesn't need
+    one -- see fetch_semrush.py)."""
     from analysis.phrase_extraction import content_words
 
-    universe = _load_json(DEMO_SEMRUSH_PATH) or {}
+    path = _demo_semrush_path(brand)
+    if not path:
+        return {}
+    universe = _load_json(path) or {}
     seed_word_sets = [set(content_words(p)) for p in seed_phrases]
     seed_word_sets = [s for s in seed_word_sets if s]
     matched = {}
@@ -132,12 +163,12 @@ def _dedupe_phrases(phrases):
     return deduped
 
 
-def _resolve_candidates(seed_keyword, resolved_text):
+def _resolve_candidates(seed_keyword, resolved_text, brand):
     """Returns (candidates, ideation, primary_seed). `candidates` includes
     the seed keyword itself plus every ideation-sourced phrase."""
     ai_input = ai_keyword_ideation.build_input_text(seed_keyword, resolved_text)
     try:
-        ai_keywords = ai_keyword_ideation.suggest_keywords(ai_input)
+        ai_keywords = ai_keyword_ideation.suggest_keywords(ai_input, brand)
         candidates = _dedupe_phrases(([seed_keyword] if seed_keyword else []) + ai_keywords)[:MAX_AI_KEYWORDS]
         ideation = "ai"
     except Exception:
@@ -164,7 +195,9 @@ def _materialize_google_credentials():
     (empty dict if GOOGLE_ADS_CLIENT_ID/SECRET aren't set at all). GA4 is
     intentionally never materialized here -- this endpoint never makes a
     live GA4 call (see module docstring); GA4_REFRESH_TOKEN only needs to
-    exist in GitHub Actions secrets for the weekly batch, not in Vercel."""
+    exist in GitHub Actions secrets for the weekly batch, not in Vercel.
+    Brand-agnostic: the same shared OAuth client/refresh tokens work for
+    every brand, only the fetchers' *target* IDs differ per brand."""
     tmp_dir = tempfile.gettempdir()
     written = write_credentials.materialize_all(output_dir=tmp_dir)
     written.pop("ga4", None)
@@ -187,7 +220,7 @@ def _clean_exc_message(exc, max_len=180):
     return text
 
 
-def _fetch_live_google_signal(available, warnings):
+def _fetch_live_google_signal(available, warnings, brand):
     """Live per-search GSC + Ads, used instead of the cached weekly
     snapshot when Google credentials are configured. Each source fails
     independently -- one down doesn't block the other. No GA4 call here --
@@ -195,12 +228,12 @@ def _fetch_live_google_signal(available, warnings):
     gsc_data, ads_data = {}, {}
     if "gsc" in available:
         try:
-            gsc_data = fetch_gsc.fetch("live")
+            gsc_data = fetch_gsc.fetch("live", brand)
         except Exception as exc:
             warnings.append(f"Live GSC lookup failed: {_clean_exc_message(exc)}")
     if "ads" in available:
         try:
-            ads_data = fetch_google_ads_search_terms.fetch("live")
+            ads_data = fetch_google_ads_search_terms.fetch("live", brand)
         except Exception as exc:
             warnings.append(f"Live Google Ads lookup failed: {_clean_exc_message(exc)}")
     return gsc_data, ads_data
@@ -279,14 +312,14 @@ def _semrush_live_lookup(primary_seed, ai_candidates, api_key, warnings):
     return matches
 
 
-def _keyword_planner_fallback(ai_candidates, matches, google_available, warnings):
+def _keyword_planner_fallback(ai_candidates, matches, google_available, warnings, brand):
     if "ads" not in google_available:
         return {}
     missing = [kw for kw in ai_candidates if kw not in matches]
     if not missing:
         return {}
     try:
-        kp_data = keyword_planner_client.generate_keyword_ideas(missing)
+        kp_data = keyword_planner_client.generate_keyword_ideas(missing, brand)
     except Exception as exc:
         if "DEVELOPER_TOKEN_NOT_APPROVED" in str(exc):
             warnings.append(
@@ -323,6 +356,9 @@ def _volume_and_source(mode, semrush_data):
 
 
 def run_search(body):
+    brand_key = body.get("brand") or config.DEFAULT_BRAND
+    brand = config.BRANDS.get(brand_key, config.BRANDS[config.DEFAULT_BRAND])
+
     seed_keyword = (body.get("seedKeyword") or "").strip()
     url = (body.get("url") or "").strip()
     content = (body.get("content") or "").strip()
@@ -342,44 +378,44 @@ def run_search(body):
     if not seed_keyword and not resolved_text:
         return {"error": "Type a seed keyword, paste a URL, or paste some content first."}
 
-    # Restricted-keyword policy (Google Ads weight-loss policy + tax
-    # compliance + medical-claims compliance, ayurvedichealingvillage.com-
-    # specific -- see config.RESTRICTED_SEED_TERMS_AHV). A seed matching
-    # this list is never searched directly: no Semrush/GSC/Ads lookup runs
-    # on it at all. Instead it's swapped for a fixed safe seed so the user
-    # still gets a full table of compliant alternative suggestions.
-    seed_policy_matches = compliance.find_restricted_seed_terms(seed_keyword) if seed_keyword else []
+    # Restricted-keyword policy (each brand's own sourced Google-Ads/tax/
+    # medical-claims doc -- see config.BrandConfig.restricted_seed_terms).
+    # A seed matching this list is never searched directly: no Semrush/
+    # GSC/Ads lookup runs on it at all. Instead it's swapped for a fixed
+    # brand-appropriate safe seed so the user still gets a full table of
+    # compliant alternative suggestions.
+    seed_policy_matches = compliance.find_restricted_seed_terms(seed_keyword, brand) if seed_keyword else []
     if seed_policy_matches:
         policy_notice = (
-            f"\"{seed_keyword}\" was not searched -- it matches Ayurvedic Healing Village's "
-            "restricted-keyword policy (Google Ads policy / tax compliance / medical-claims "
-            f"compliance): {', '.join(seed_policy_matches)}. Showing compliant alternative "
-            "suggestions for Ayurvedic Healing Village instead."
+            f"\"{seed_keyword}\" was not searched -- it matches {brand.label}'s "
+            f"restricted-keyword policy: {', '.join(seed_policy_matches)}. Showing compliant "
+            f"alternative suggestions for {brand.label} instead."
         )
-        seed_keyword = FALLBACK_SAFE_SEED
+        seed_keyword = _fallback_safe_seed(brand)
         resolved_text = ""
 
-    candidates, ideation, primary_seed = _resolve_candidates(seed_keyword, resolved_text)
+    candidates, ideation, primary_seed = _resolve_candidates(seed_keyword, resolved_text, brand)
     if not candidates:
         return {"error": "Type a seed keyword, paste a URL, or paste some content first.", "policyNotice": policy_notice}
 
-    # Compliance: drop "patient(s)" + specific-nationality/country patterns,
-    # and anything matching the restricted-keyword policy above, before
-    # they're ever scored or shown -- see analysis/compliance.py.
+    # Compliance: drop "patient(s)" + specific-nationality/country patterns
+    # (no-op for brands with no nationality_country_terms), and anything
+    # matching the restricted-keyword policy above, before they're ever
+    # scored or shown -- see analysis/compliance.py.
     compliant_candidates = [
         k for k in candidates
-        if not compliance.is_patient_nationality_pattern(k) and not compliance.find_restricted_seed_terms(k)
+        if not compliance.is_patient_nationality_pattern(k, brand) and not compliance.find_restricted_seed_terms(k, brand)
     ]
     excluded_count = len(candidates) - len(compliant_candidates)
     if excluded_count:
         warnings.append(
             f"{excluded_count} suggested keyword(s) excluded for compliance "
-            "(pairs \"patient(s)\" with a specific nationality/country)."
+            "(nationality-pairing or restricted-keyword policy)."
         )
     candidates = compliant_candidates
     if not candidates:
         return {
-            "mode": "demo", "ideation": ideation, "resolvedSeeds": candidates,
+            "mode": "demo", "brand": brand.key, "ideation": ideation, "resolvedSeeds": candidates,
             "warnings": warnings + ["All candidate keywords were excluded by the compliance filter."],
             "entries": [], "policyNotice": policy_notice,
         }
@@ -391,12 +427,12 @@ def run_search(body):
 
     if mode == "live":
         matches = _semrush_live_lookup(primary_seed, candidates, semrush_api_key, warnings)
-        matches.update(_keyword_planner_fallback(candidates, matches, google_available, warnings))
+        matches.update(_keyword_planner_fallback(candidates, matches, google_available, warnings, brand))
         warnings.append(
             f"Semrush volume from {', '.join(c.upper() for c in config.SEMRUSH_SEARCH_DATABASES)}."
         )
     else:
-        matches = _demo_semrush_lookup(candidates)
+        matches = _demo_semrush_lookup(candidates, brand)
         warnings.append(
             "Demo data -- SEMRUSH_API_KEY isn't set in Vercel yet, so these are sample keywords, "
             "not a live Semrush lookup."
@@ -409,7 +445,7 @@ def run_search(body):
     # slip back in via fuzzy match.
     newly_excluded = [
         k for k in matches
-        if compliance.is_patient_nationality_pattern(k) or compliance.find_restricted_seed_terms(k)
+        if compliance.is_patient_nationality_pattern(k, brand) or compliance.find_restricted_seed_terms(k, brand)
     ]
     if newly_excluded:
         for k in newly_excluded:
@@ -432,13 +468,13 @@ def run_search(body):
     for kw in candidates:
         all_keywords.setdefault(kw, empty_semrush)
 
-    page_titles = _page_titles()
+    page_titles = _page_titles(brand)
     live_google = bool(google_available) and mode == "live"
 
     if live_google:
-        gsc_data, ads_data = _fetch_live_google_signal(google_available, warnings)
+        gsc_data, ads_data = _fetch_live_google_signal(google_available, warnings, brand)
     else:
-        cached_data = _load_json(CACHED_DATA_PATH)
+        cached_data = _load_json(_cached_data_path(brand))
         cached_by_keyword = {e["keyword"]: e for e in (cached_data or {}).get("entries", [])}
         if not cached_data:
             warnings.append(
@@ -451,9 +487,9 @@ def run_search(body):
         if live_google:
             gsc_entry = gsc_data.get(keyword)
             ads_entry = ads_data.get(keyword)
-            entry = build_entry(keyword, semrush_data, gsc_entry, None, ads_entry, None, set(), page_titles)
+            entry = build_entry(keyword, semrush_data, gsc_entry, None, ads_entry, None, set(), page_titles, brand)
         else:
-            entry = build_entry(keyword, semrush_data, None, None, None, None, set(), page_titles)
+            entry = build_entry(keyword, semrush_data, None, None, None, None, set(), page_titles, brand)
             entry = enrich_with_cached_signal(entry, cached_by_keyword.get(keyword))
         entry["searchVolume"], entry["volumeSource"] = _volume_and_source(mode, semrush_data)
         entries.append(entry)
@@ -463,6 +499,7 @@ def run_search(body):
 
     return {
         "mode": mode,
+        "brand": brand.key,
         "ideation": ideation,
         "liveGoogleCrossReference": live_google,
         "resolvedSeeds": candidates,
@@ -492,7 +529,7 @@ class handler(BaseHTTPRequestHandler):
         self._send_json(result, status=status)
 
     def do_GET(self):
-        self._send_json({"error": "Use POST with a JSON body: {seedKeyword, url, content}."}, status=405)
+        self._send_json({"error": "Use POST with a JSON body: {brand, seedKeyword, url, content}."}, status=405)
 
     def _send_json(self, payload, status=200):
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")

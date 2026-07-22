@@ -15,8 +15,10 @@ on phase accordingly; see that module.
 Phase "live": `google.analytics.data_v1beta.BetaAnalyticsDataClient.run_report()`,
 same AuthorizedSession-equivalent Credentials pattern as
 Combined Marketing Dashboard/GA4 Dashboard/fetch_ga4_data.py, against
-config.GA4_PROPERTY_ID. Needs token_ga4.json in the repo root (see
-scripts/authenticate_ga4.py for the one-time OAuth setup).
+brand.ga4_property_id. Needs token_ga4.json in the repo root (see
+scripts/authenticate_ga4.py for the one-time OAuth setup) -- same shared
+OAuth client/refresh token for every brand, only the target property
+differs.
 """
 import json
 import os
@@ -54,8 +56,8 @@ def load_credentials():
     return creds
 
 
-def _match_page_id(page_path):
-    for page in config.PAGES:
+def _match_page_id(page_path, brand):
+    for page in brand.pages:
         # page["url"] is absolute (https://domain/path.html); pagePath from
         # GA4 is relative (/path.html) -- compare on the path tail only.
         if page["url"].rstrip("/").endswith(page_path.rstrip("/")) and page_path not in ("", "/"):
@@ -63,7 +65,7 @@ def _match_page_id(page_path):
     return None
 
 
-def _fetch_live():
+def _fetch_live(brand):
     from google.analytics.data_v1beta import BetaAnalyticsDataClient
     from google.analytics.data_v1beta.types import DateRange, Dimension, Metric, RunReportRequest
 
@@ -74,7 +76,7 @@ def _fetch_live():
     start_date = end_date - timedelta(days=config.GSC_LOOKBACK_DAYS)
 
     request = RunReportRequest(
-        property=f"properties/{config.GA4_PROPERTY_ID}",
+        property=f"properties/{brand.ga4_property_id}",
         date_ranges=[DateRange(start_date=start_date.isoformat(), end_date=end_date.isoformat())],
         dimensions=[Dimension(name="pagePath")],
         metrics=[
@@ -90,7 +92,7 @@ def _fetch_live():
     result = {}
     for row in response.rows:
         page_path = row.dimension_values[0].value
-        page_id = _match_page_id(page_path)
+        page_id = _match_page_id(page_path, brand)
         if page_id is None:
             continue
         sessions = float(row.metric_values[0].value or 0)
@@ -106,7 +108,9 @@ def _fetch_live():
     return result
 
 
-def fetch(phase="sample"):
+def fetch(phase, brand):
     if phase == "live":
-        return _fetch_live()
-    return load_sample("ga4_engagement_sample.json")
+        return _fetch_live(brand)
+    if brand.key == "healing_village":
+        return load_sample("ga4_engagement_sample.json")
+    return {}

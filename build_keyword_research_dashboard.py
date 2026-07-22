@@ -1,14 +1,21 @@
 """
-Orchestrator: load fetcher output (sample or live) -> merge into one entry
-per keyword -> run every analysis module -> compute KPIs + Needs Attention
-alerts + history deltas -> write data/keyword_research_data.json +
-data/keyword_history.json -> emit the self-contained static index.html
-(named index.html, not keyword-research-dashboard.html, so Vercel serves it
-at the domain root with zero output-directory/rewrite configuration).
+Orchestrator: for every registered brand (config.BRANDS) -- load fetcher
+output (sample or live) -> merge into one entry per keyword -> run every
+analysis module with that brand's business context -> compute KPIs +
+Needs Attention alerts + history deltas -> write
+data/keyword_research_data_<brand>.json + data/keyword_history_<brand>.json
+-- then emit ONE self-contained static index.html with every brand's data
+baked in (named index.html, not keyword-research-dashboard.html, so
+Vercel serves it at the domain root with zero output-directory/rewrite
+configuration).
 
 Usage:
-    python build_keyword_research_dashboard.py            # --phase sample (default)
-    python build_keyword_research_dashboard.py --phase live
+    python build_keyword_research_dashboard.py                    # all brands, --phase sample (default)
+    python build_keyword_research_dashboard.py --phase live       # all brands, live (weekly GitHub Actions run)
+    python build_keyword_research_dashboard.py --phase live --brand villaraag   # one brand only (local testing) --
+        writes just that brand's data file, then re-renders index.html using
+        whichever brands already have a data file on disk (doesn't require
+        or touch brands you haven't built locally).
 
 Follows the same data-flow convention as the sibling Page Quality Dashboard:
 fetch -> merge -> score -> bake into static HTML as inline JS consts via
@@ -36,23 +43,32 @@ from fetchers import (
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(ROOT, "data")
 SAMPLE_DIR = os.path.join(DATA_DIR, "sample")
-OUTPUT_JSON = os.path.join(DATA_DIR, "keyword_research_data.json")
-HISTORY_JSON = os.path.join(DATA_DIR, "keyword_history.json")
 OUTPUT_HTML = os.path.join(ROOT, "index.html")
 
 MAX_POSITION_HISTORY_POINTS = 8
 
 
-def load_history():
-    if os.path.exists(HISTORY_JSON):
-        with open(HISTORY_JSON, encoding="utf-8") as f:
+def _output_json_path(brand_key):
+    return os.path.join(DATA_DIR, f"keyword_research_data_{brand_key}.json")
+
+
+def _history_json_path(brand_key):
+    return os.path.join(DATA_DIR, f"keyword_history_{brand_key}.json")
+
+
+def load_history(brand_key):
+    path = _history_json_path(brand_key)
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
             return json.load(f)
-    with open(os.path.join(SAMPLE_DIR, "keyword_history_sample.json"), encoding="utf-8") as f:
-        return json.load(f)
+    if brand_key == "healing_village":
+        with open(os.path.join(SAMPLE_DIR, "keyword_history_sample.json"), encoding="utf-8") as f:
+            return json.load(f)
+    return {"kpiHistory": [], "positionHistory": {}}
 
 
-def page_title_by_id():
-    return {p["id"]: p["title"] for p in config.PAGES}
+def page_title_by_id(brand):
+    return {p["id"]: p["title"] for p in brand.pages}
 
 
 def collect_trending_phrases(suggest_proxy_data):
@@ -139,33 +155,42 @@ def js_const(name, obj):
     return f"const {name} = {dumped};"
 
 
-def build(phase):
-    semrush = fetch_semrush.fetch(phase)
-    gsc = fetch_gsc.fetch(phase)
-    ga4 = fetch_ga4.fetch(phase)
-    ads = fetch_google_ads_search_terms.fetch(phase)
-    suggest_proxy = fetch_google_suggest_proxy.fetch(phase)
-    competitor_keywords = fetch_competitor_keywords.fetch(phase)
+def build_brand_data(phase, brand):
+    """Returns one brand's full output_data dict (same shape the dashboard
+    HTML/JS expects) and writes it to disk -- or returns None and writes
+    nothing if the fetch produced zero entries (e.g. sample phase for a
+    brand with no sample fixture yet, like Villaraag today), so a no-data
+    run never clobbers a previously-good data file with an empty one."""
+    semrush = fetch_semrush.fetch(phase, brand)
+    gsc = fetch_gsc.fetch(phase, brand)
+    ga4 = fetch_ga4.fetch(phase, brand)
+    ads = fetch_google_ads_search_terms.fetch(phase, brand)
+    suggest_proxy = fetch_google_suggest_proxy.fetch(phase, brand)
+    competitor_keywords = fetch_competitor_keywords.fetch(phase, brand)
 
     trending_phrases = collect_trending_phrases(suggest_proxy)
-    page_titles = page_title_by_id()
+    page_titles = page_title_by_id(brand)
 
     entries = [
         build_entry(
             keyword, semrush_data, gsc.get(keyword),
             resolve_ga4_entry(phase, keyword, gsc.get(keyword), ga4), ads.get(keyword),
             competitor_and_gap.competitor_overlap(keyword, competitor_keywords),
-            trending_phrases, page_titles,
+            trending_phrases, page_titles, brand,
         )
         for keyword, semrush_data in semrush.items()
     ]
+
+    if not entries:
+        print(f"Skipping {brand.key}: no keyword data for phase={phase} (leaving any existing data file untouched)")
+        return None
 
     cannibalized = competitor_and_gap.detect_cannibalization(entries)
     for e in entries:
         if e["keyword"] in cannibalized:
             e["competitorContentGap"]["cannibalizationRisk"] = True
 
-    history = load_history()
+    history = load_history(brand.key)
     position_history = history.get("positionHistory", {})
     needs_attention = rules.generate_needs_attention(entries, position_history)
 
@@ -198,22 +223,49 @@ def build(phase):
     }
 
     os.makedirs(DATA_DIR, exist_ok=True)
-    with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
+    with open(_output_json_path(brand.key), "w", encoding="utf-8") as f:
         json.dump(output_data, f, ensure_ascii=False, indent=2)
 
     new_history = {"kpiHistory": new_kpi_history[-12:], "positionHistory": new_position_history}
-    with open(HISTORY_JSON, "w", encoding="utf-8") as f:
+    with open(_history_json_path(brand.key), "w", encoding="utf-8") as f:
         json.dump(new_history, f, ensure_ascii=False, indent=2)
 
-    html = render_html(output_data, js_const)
+    return output_data
+
+
+def build(phase, brand_key=None):
+    brand_keys = [brand_key] if brand_key else list(config.BRANDS.keys())
+    built_counts = {}
+    for key in brand_keys:
+        brand = config.BRANDS[key]
+        output_data = build_brand_data(phase, brand)
+        if output_data is not None:
+            built_counts[key] = len(output_data["entries"])
+
+    # Combined index.html always includes every brand that currently has a
+    # data file on disk -- so building just one brand locally (--brand)
+    # doesn't require or clobber the others.
+    brand_data = {}
+    brand_list = []
+    for key, brand in config.BRANDS.items():
+        path = _output_json_path(key)
+        if not os.path.exists(path):
+            continue
+        with open(path, encoding="utf-8") as f:
+            brand_data[key] = json.load(f)
+        brand_list.append({"key": key, "label": brand.label})
+
+    html = render_html(brand_data, brand_list, js_const)
     with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
         f.write(html)
 
-    print(f"Built {OUTPUT_HTML} ({len(entries)} keywords, phase={phase})")
+    summary = ", ".join(f"{k}={v}" for k, v in built_counts.items())
+    print(f"Built {OUTPUT_HTML} ({summary} keywords, phase={phase}, brands in HTML: {list(brand_data.keys())})")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--phase", choices=["sample", "live"], default="sample")
+    parser.add_argument("--brand", choices=list(config.BRANDS.keys()), default=None)
     args = parser.parse_args()
-    build(args.phase)
+    build(args.phase, args.brand)
