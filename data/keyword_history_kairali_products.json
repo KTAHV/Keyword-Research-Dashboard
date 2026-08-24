@@ -1,0 +1,86 @@
+{
+  "kpiHistory": [
+    {
+      "totalKeywords": 12,
+      "highPriorityKeywords": 0,
+      "contentGapsIdentified": 3,
+      "complianceRiskFlagged": 0,
+      "avgConfidenceScore": 73.1,
+      "date": "2026-08-24"
+    }
+  ],
+  "positionHistory": {
+    "kairali ayurvedic products": [
+      {
+        "date": "2026-08-24",
+        "position": 2.6
+      }
+    ],
+    "ayurvedic medicine for erectile dysfunction": [
+      {
+        "date": "2026-08-24",
+        "position": 3.4
+      }
+    ],
+    "ayurvedic medicine for premature ejaculation": [
+      {
+        "date": "2026-08-24",
+        "position": 2.4
+      }
+    ],
+    "brahmi oil": [
+      {
+        "date": "2026-08-24",
+        "position": 4.3
+      }
+    ],
+    "nalpamaradi thailam": [
+      {
+        "date": "2026-08-24",
+        "position": 10.0
+      }
+    ],
+    "durance capsules": [
+      {
+        "date": "2026-08-24",
+        "position": 3.7
+      }
+    ],
+    "lipidex capsule": [
+      {
+        "date": "2026-08-24",
+        "position": 1.1
+      }
+    ],
+    "safed musli tablet": [
+      {
+        "date": "2026-08-24",
+        "position": 5.5
+      }
+    ],
+    "neem soap": [
+      {
+        "date": "2026-08-24",
+        "position": 10.9
+      }
+    ],
+    "manasamitram gulika": [
+      {
+        "date": "2026-08-24",
+        "position": 2.1
+      }
+    ],
+    "ayurvedic medicine for cholesterol": [
+      {
+        "date": "2026-08-24",
+        "position": 3.8
+      }
+    ],
+    "yograj guggulu": [
+      {
+        "date": "2026-08-24",
+        "position": 5.5
+      }
+    ]
+  }
+}

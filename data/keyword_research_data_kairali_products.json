@@ -1,0 +1,877 @@
+{
+  "generatedAt": "2026-08-24T03:33:24.938701+00:00",
+  "phase": "live",
+  "kpis": {
+    "totalKeywords": 12,
+    "highPriorityKeywords": 0,
+    "contentGapsIdentified": 3,
+    "complianceRiskFlagged": 0,
+    "avgConfidenceScore": 73.1
+  },
+  "kpiDeltas": {
+    "totalKeywords": null,
+    "highPriorityKeywords": null,
+    "contentGapsIdentified": null,
+    "complianceRiskFlagged": null,
+    "avgConfidenceScore": null
+  },
+  "entries": [
+    {
+      "keyword": "kairali ayurvedic products",
+      "type": "Primary",
+      "suggestedPlacement": "H1",
+      "answerable": true,
+      "intent": "Informational",
+      "aiVoiceSearchFit": "Low",
+      "audienceFitScore": "Medium",
+      "spamRisk": "None",
+      "complianceRisk": "Low",
+      "complianceFlaggedTerms": [],
+      "confidenceScore": 64,
+      "mappedPageId": "kp-home",
+      "mappedPage": "Kairali Products — Home",
+      "parentTopic": null,
+      "underperformanceFlag": false,
+      "competitorGap": null,
+      "coreSearchMetrics": {
+        "volumeByCountry": {
+          "in": 170,
+          "us": 20,
+          "uk": 20
+        },
+        "competition": 25,
+        "cpc": 5,
+        "currentRankingPosition": 2.6,
+        "trendingPhrase": false
+      },
+      "audienceFitIntent": {
+        "intent": "Informational",
+        "audienceFitScore": "Medium",
+        "spamRiskFlag": "None",
+        "medicalSpecificityScore": 0
+      },
+      "aiVoiceReadiness": {
+        "aeoScore": 20,
+        "answerabilityScore": 60,
+        "geoVisibilityScore": 25,
+        "schemaReadiness": "None",
+        "compositeScore": 36,
+        "fit": "Low"
+      },
+      "complianceCheck": {
+        "medicalComplianceRisk": "Low",
+        "adsHealthcarePolicyRisk": "Low",
+        "ymylPolicyRisk": "Low",
+        "overallRisk": "Low",
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
+      },
+      "crossSourceConfidence": {
+        "confidenceScore": 64,
+        "subscores": {
+          "gsc": 85,
+          "ga4": null,
+          "ads": null,
+          "semrush": 27
+        },
+        "underperformanceFlag": false
+      },
+      "contentGapCandidate": false,
+      "competitorContentGap": {
+        "competitorOverlap": null,
+        "cannibalizationRisk": false,
+        "contentGap": false
+      },
+      "priority": "Medium"
+    },
+    {
+      "keyword": "ayurvedic medicine for erectile dysfunction",
+      "type": "Long-tail",
+      "suggestedPlacement": "H3",
+      "answerable": true,
+      "intent": "Commercial",
+      "aiVoiceSearchFit": "Medium",
+      "audienceFitScore": "Medium",
+      "spamRisk": "None",
+      "complianceRisk": "Low",
+      "complianceFlaggedTerms": [],
+      "confidenceScore": 83,
+      "mappedPageId": "erectile-dysfunction",
+      "mappedPage": "Erectile Dysfunction Support",
+      "parentTopic": null,
+      "underperformanceFlag": false,
+      "competitorGap": null,
+      "coreSearchMetrics": {
+        "volumeByCountry": {
+          "in": 1900,
+          "us": 10,
+          "uk": 10,
+          "ae": 30
+        },
+        "competition": 21,
+        "cpc": 7,
+        "currentRankingPosition": 3.4,
+        "trendingPhrase": false
+      },
+      "audienceFitIntent": {
+        "intent": "Commercial",
+        "audienceFitScore": "Medium",
+        "spamRiskFlag": "None",
+        "medicalSpecificityScore": 0
+      },
+      "aiVoiceReadiness": {
+        "aeoScore": 40,
+        "answerabilityScore": 60,
+        "geoVisibilityScore": 25,
+        "schemaReadiness": "None",
+        "compositeScore": 42,
+        "fit": "Medium"
+      },
+      "complianceCheck": {
+        "medicalComplianceRisk": "Low",
+        "adsHealthcarePolicyRisk": "Low",
+        "ymylPolicyRisk": "Low",
+        "overallRisk": "Low",
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
+      },
+      "crossSourceConfidence": {
+        "confidenceScore": 83,
+        "subscores": {
+          "gsc": 92,
+          "ga4": 87,
+          "ads": null,
+          "semrush": 63
+        },
+        "underperformanceFlag": false
+      },
+      "contentGapCandidate": false,
+      "competitorContentGap": {
+        "competitorOverlap": null,
+        "cannibalizationRisk": false,
+        "contentGap": false
+      },
+      "priority": "Medium"
+    },
+    {
+      "keyword": "ayurvedic medicine for premature ejaculation",
+      "type": "Long-tail",
+      "suggestedPlacement": "H3",
+      "answerable": true,
+      "intent": "Commercial",
+      "aiVoiceSearchFit": "Medium",
+      "audienceFitScore": "Medium",
+      "spamRisk": "None",
+      "complianceRisk": "Low",
+      "complianceFlaggedTerms": [],
+      "confidenceScore": 77,
+      "mappedPageId": "premature-ejaculation",
+      "mappedPage": "Premature Ejaculation Support",
+      "parentTopic": null,
+      "underperformanceFlag": false,
+      "competitorGap": null,
+      "coreSearchMetrics": {
+        "volumeByCountry": {
+          "in": 720,
+          "us": 30,
+          "uk": 20,
+          "ae": 20
+        },
+        "competition": 12,
+        "cpc": 20,
+        "currentRankingPosition": 2.4,
+        "trendingPhrase": false
+      },
+      "audienceFitIntent": {
+        "intent": "Commercial",
+        "audienceFitScore": "Medium",
+        "spamRiskFlag": "None",
+        "medicalSpecificityScore": 0
+      },
+      "aiVoiceReadiness": {
+        "aeoScore": 40,
+        "answerabilityScore": 60,
+        "geoVisibilityScore": 25,
+        "schemaReadiness": "None",
+        "compositeScore": 42,
+        "fit": "Medium"
+      },
+      "complianceCheck": {
+        "medicalComplianceRisk": "Low",
+        "adsHealthcarePolicyRisk": "Low",
+        "ymylPolicyRisk": "Low",
+        "overallRisk": "Low",
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
+      },
+      "crossSourceConfidence": {
+        "confidenceScore": 77,
+        "subscores": {
+          "gsc": 87,
+          "ga4": 90,
+          "ads": null,
+          "semrush": 42
+        },
+        "underperformanceFlag": false
+      },
+      "contentGapCandidate": false,
+      "competitorContentGap": {
+        "competitorOverlap": null,
+        "cannibalizationRisk": false,
+        "contentGap": false
+      },
+      "priority": "Medium"
+    },
+    {
+      "keyword": "brahmi oil",
+      "type": "Primary",
+      "suggestedPlacement": "H1",
+      "answerable": false,
+      "intent": "Informational",
+      "aiVoiceSearchFit": "Low",
+      "audienceFitScore": "Medium",
+      "spamRisk": "None",
+      "complianceRisk": "Low",
+      "complianceFlaggedTerms": [],
+      "confidenceScore": 75,
+      "mappedPageId": "brahmi-thailam",
+      "mappedPage": "Brahmi Thailam Head Massage Oil",
+      "parentTopic": null,
+      "underperformanceFlag": false,
+      "competitorGap": null,
+      "coreSearchMetrics": {
+        "volumeByCountry": {
+          "in": 3600,
+          "us": 390,
+          "uk": 260,
+          "ae": 30
+        },
+        "competition": 20,
+        "cpc": 5,
+        "currentRankingPosition": 4.3,
+        "trendingPhrase": false
+      },
+      "audienceFitIntent": {
+        "intent": "Informational",
+        "audienceFitScore": "Medium",
+        "spamRiskFlag": "None",
+        "medicalSpecificityScore": 0
+      },
+      "aiVoiceReadiness": {
+        "aeoScore": 20,
+        "answerabilityScore": 30,
+        "geoVisibilityScore": 25,
+        "schemaReadiness": "None",
+        "compositeScore": 25,
+        "fit": "Low"
+      },
+      "complianceCheck": {
+        "medicalComplianceRisk": "Low",
+        "adsHealthcarePolicyRisk": "Low",
+        "ymylPolicyRisk": "Low",
+        "overallRisk": "Low",
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
+      },
+      "crossSourceConfidence": {
+        "confidenceScore": 75,
+        "subscores": {
+          "gsc": 75,
+          "ga4": 60,
+          "ads": null,
+          "semrush": 94
+        },
+        "underperformanceFlag": false
+      },
+      "contentGapCandidate": false,
+      "competitorContentGap": {
+        "competitorOverlap": null,
+        "cannibalizationRisk": false,
+        "contentGap": false
+      },
+      "priority": "Medium"
+    },
+    {
+      "keyword": "nalpamaradi thailam",
+      "type": "Primary",
+      "suggestedPlacement": "H1",
+      "answerable": false,
+      "intent": "Informational",
+      "aiVoiceSearchFit": "Low",
+      "audienceFitScore": "Medium",
+      "spamRisk": "None",
+      "complianceRisk": "Low",
+      "complianceFlaggedTerms": [],
+      "confidenceScore": 83,
+      "mappedPageId": "nalpamaradi-thailam",
+      "mappedPage": "Nalpamaradi Thailam Skin Oil",
+      "parentTopic": null,
+      "underperformanceFlag": false,
+      "competitorGap": null,
+      "coreSearchMetrics": {
+        "volumeByCountry": {
+          "in": 40500,
+          "us": 320,
+          "uk": 170,
+          "ae": 1000
+        },
+        "competition": 24,
+        "cpc": 4,
+        "currentRankingPosition": 10.0,
+        "trendingPhrase": false
+      },
+      "audienceFitIntent": {
+        "intent": "Informational",
+        "audienceFitScore": "Medium",
+        "spamRiskFlag": "None",
+        "medicalSpecificityScore": 0
+      },
+      "aiVoiceReadiness": {
+        "aeoScore": 20,
+        "answerabilityScore": 30,
+        "geoVisibilityScore": 25,
+        "schemaReadiness": "None",
+        "compositeScore": 25,
+        "fit": "Low"
+      },
+      "complianceCheck": {
+        "medicalComplianceRisk": "Low",
+        "adsHealthcarePolicyRisk": "Low",
+        "ymylPolicyRisk": "Low",
+        "overallRisk": "Low",
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
+      },
+      "crossSourceConfidence": {
+        "confidenceScore": 83,
+        "subscores": {
+          "gsc": 70,
+          "ga4": 93,
+          "ads": null,
+          "semrush": 93
+        },
+        "underperformanceFlag": false
+      },
+      "contentGapCandidate": false,
+      "competitorContentGap": {
+        "competitorOverlap": null,
+        "cannibalizationRisk": false,
+        "contentGap": false
+      },
+      "priority": "Medium"
+    },
+    {
+      "keyword": "durance capsules",
+      "type": "Primary",
+      "suggestedPlacement": "H1",
+      "answerable": false,
+      "intent": "Informational",
+      "aiVoiceSearchFit": "Low",
+      "audienceFitScore": "Medium",
+      "spamRisk": "None",
+      "complianceRisk": "Low",
+      "complianceFlaggedTerms": [],
+      "confidenceScore": 70,
+      "mappedPageId": "durance-capsules",
+      "mappedPage": "Durance Ayurvedic Medicine for PE & ED",
+      "parentTopic": null,
+      "underperformanceFlag": false,
+      "competitorGap": null,
+      "coreSearchMetrics": {
+        "volumeByCountry": {
+          "in": 140,
+          "us": 10,
+          "uk": 10
+        },
+        "competition": 16,
+        "cpc": 1,
+        "currentRankingPosition": 3.7,
+        "trendingPhrase": false
+      },
+      "audienceFitIntent": {
+        "intent": "Informational",
+        "audienceFitScore": "Medium",
+        "spamRiskFlag": "None",
+        "medicalSpecificityScore": 0
+      },
+      "aiVoiceReadiness": {
+        "aeoScore": 20,
+        "answerabilityScore": 30,
+        "geoVisibilityScore": 25,
+        "schemaReadiness": "None",
+        "compositeScore": 25,
+        "fit": "Low"
+      },
+      "complianceCheck": {
+        "medicalComplianceRisk": "Low",
+        "adsHealthcarePolicyRisk": "Low",
+        "ymylPolicyRisk": "Low",
+        "overallRisk": "Low",
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
+      },
+      "crossSourceConfidence": {
+        "confidenceScore": 70,
+        "subscores": {
+          "gsc": 76,
+          "ga4": 95,
+          "ads": null,
+          "semrush": 28
+        },
+        "underperformanceFlag": false
+      },
+      "contentGapCandidate": false,
+      "competitorContentGap": {
+        "competitorOverlap": null,
+        "cannibalizationRisk": false,
+        "contentGap": false
+      },
+      "priority": "Medium"
+    },
+    {
+      "keyword": "lipidex capsule",
+      "type": "Primary",
+      "suggestedPlacement": "Meta Title",
+      "answerable": false,
+      "intent": "Informational",
+      "aiVoiceSearchFit": "Low",
+      "audienceFitScore": "Medium",
+      "spamRisk": "None",
+      "complianceRisk": "Low",
+      "complianceFlaggedTerms": [],
+      "confidenceScore": 58,
+      "mappedPageId": null,
+      "mappedPage": "Content Gap",
+      "parentTopic": null,
+      "underperformanceFlag": false,
+      "competitorGap": null,
+      "coreSearchMetrics": {
+        "volumeByCountry": {
+          "in": 260
+        },
+        "competition": 27,
+        "cpc": 0,
+        "currentRankingPosition": 1.1,
+        "trendingPhrase": false
+      },
+      "audienceFitIntent": {
+        "intent": "Informational",
+        "audienceFitScore": "Medium",
+        "spamRiskFlag": "None",
+        "medicalSpecificityScore": 0
+      },
+      "aiVoiceReadiness": {
+        "aeoScore": 20,
+        "answerabilityScore": 30,
+        "geoVisibilityScore": 25,
+        "schemaReadiness": "None",
+        "compositeScore": 25,
+        "fit": "Low"
+      },
+      "complianceCheck": {
+        "medicalComplianceRisk": "Low",
+        "adsHealthcarePolicyRisk": "Low",
+        "ymylPolicyRisk": "Low",
+        "overallRisk": "Low",
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
+      },
+      "crossSourceConfidence": {
+        "confidenceScore": 58,
+        "subscores": {
+          "gsc": 75,
+          "ga4": null,
+          "ads": null,
+          "semrush": 27
+        },
+        "underperformanceFlag": false
+      },
+      "contentGapCandidate": true,
+      "competitorContentGap": {
+        "competitorOverlap": null,
+        "cannibalizationRisk": false,
+        "contentGap": true
+      },
+      "priority": "Medium"
+    },
+    {
+      "keyword": "safed musli tablet",
+      "type": "Primary",
+      "suggestedPlacement": "Meta Title",
+      "answerable": true,
+      "intent": "Informational",
+      "aiVoiceSearchFit": "Low",
+      "audienceFitScore": "Medium",
+      "spamRisk": "None",
+      "complianceRisk": "Low",
+      "complianceFlaggedTerms": [],
+      "confidenceScore": 72,
+      "mappedPageId": null,
+      "mappedPage": "Content Gap",
+      "parentTopic": null,
+      "underperformanceFlag": false,
+      "competitorGap": null,
+      "coreSearchMetrics": {
+        "volumeByCountry": {
+          "in": 2400,
+          "us": 20,
+          "uk": 20
+        },
+        "competition": 18,
+        "cpc": 4,
+        "currentRankingPosition": 5.5,
+        "trendingPhrase": false
+      },
+      "audienceFitIntent": {
+        "intent": "Informational",
+        "audienceFitScore": "Medium",
+        "spamRiskFlag": "None",
+        "medicalSpecificityScore": 0
+      },
+      "aiVoiceReadiness": {
+        "aeoScore": 20,
+        "answerabilityScore": 60,
+        "geoVisibilityScore": 25,
+        "schemaReadiness": "None",
+        "compositeScore": 36,
+        "fit": "Low"
+      },
+      "complianceCheck": {
+        "medicalComplianceRisk": "Low",
+        "adsHealthcarePolicyRisk": "Low",
+        "ymylPolicyRisk": "Low",
+        "overallRisk": "Low",
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
+      },
+      "crossSourceConfidence": {
+        "confidenceScore": 72,
+        "subscores": {
+          "gsc": 72,
+          "ga4": null,
+          "ads": null,
+          "semrush": 73
+        },
+        "underperformanceFlag": false
+      },
+      "contentGapCandidate": true,
+      "competitorContentGap": {
+        "competitorOverlap": null,
+        "cannibalizationRisk": false,
+        "contentGap": true
+      },
+      "priority": "Medium"
+    },
+    {
+      "keyword": "neem soap",
+      "type": "Primary",
+      "suggestedPlacement": "H1",
+      "answerable": false,
+      "intent": "Informational",
+      "aiVoiceSearchFit": "Low",
+      "audienceFitScore": "Medium",
+      "spamRisk": "None",
+      "complianceRisk": "Low",
+      "complianceFlaggedTerms": [],
+      "confidenceScore": 72,
+      "mappedPageId": "neem-soap",
+      "mappedPage": "Neem Soap",
+      "parentTopic": null,
+      "underperformanceFlag": false,
+      "competitorGap": null,
+      "coreSearchMetrics": {
+        "volumeByCountry": {
+          "in": 12100,
+          "us": 720,
+          "uk": 480,
+          "ae": 210
+        },
+        "competition": 15,
+        "cpc": 7,
+        "currentRankingPosition": 10.9,
+        "trendingPhrase": false
+      },
+      "audienceFitIntent": {
+        "intent": "Informational",
+        "audienceFitScore": "Medium",
+        "spamRiskFlag": "None",
+        "medicalSpecificityScore": 0
+      },
+      "aiVoiceReadiness": {
+        "aeoScore": 20,
+        "answerabilityScore": 30,
+        "geoVisibilityScore": 25,
+        "schemaReadiness": "None",
+        "compositeScore": 25,
+        "fit": "Low"
+      },
+      "complianceCheck": {
+        "medicalComplianceRisk": "Low",
+        "adsHealthcarePolicyRisk": "Low",
+        "ymylPolicyRisk": "Low",
+        "overallRisk": "Low",
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
+      },
+      "crossSourceConfidence": {
+        "confidenceScore": 72,
+        "subscores": {
+          "gsc": 43,
+          "ga4": 94,
+          "ads": null,
+          "semrush": 96
+        },
+        "underperformanceFlag": false
+      },
+      "contentGapCandidate": false,
+      "competitorContentGap": {
+        "competitorOverlap": null,
+        "cannibalizationRisk": false,
+        "contentGap": false
+      },
+      "priority": "Medium"
+    },
+    {
+      "keyword": "manasamitram gulika",
+      "type": "Primary",
+      "suggestedPlacement": "H1",
+      "answerable": false,
+      "intent": "Informational",
+      "aiVoiceSearchFit": "Low",
+      "audienceFitScore": "Medium",
+      "spamRisk": "None",
+      "complianceRisk": "Low",
+      "complianceFlaggedTerms": [],
+      "confidenceScore": 69,
+      "mappedPageId": "manasamitram-gulika",
+      "mappedPage": "Manasamitram Gulika (Insomnia/Anxiety)",
+      "parentTopic": null,
+      "underperformanceFlag": false,
+      "competitorGap": null,
+      "coreSearchMetrics": {
+        "volumeByCountry": {
+          "in": 390,
+          "us": 40,
+          "uk": 20
+        },
+        "competition": 11,
+        "cpc": 2,
+        "currentRankingPosition": 2.1,
+        "trendingPhrase": false
+      },
+      "audienceFitIntent": {
+        "intent": "Informational",
+        "audienceFitScore": "Medium",
+        "spamRiskFlag": "None",
+        "medicalSpecificityScore": 0
+      },
+      "aiVoiceReadiness": {
+        "aeoScore": 20,
+        "answerabilityScore": 30,
+        "geoVisibilityScore": 25,
+        "schemaReadiness": "None",
+        "compositeScore": 25,
+        "fit": "Low"
+      },
+      "complianceCheck": {
+        "medicalComplianceRisk": "Low",
+        "adsHealthcarePolicyRisk": "Low",
+        "ymylPolicyRisk": "Low",
+        "overallRisk": "Low",
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
+      },
+      "crossSourceConfidence": {
+        "confidenceScore": 69,
+        "subscores": {
+          "gsc": 70,
+          "ga4": 95,
+          "ads": null,
+          "semrush": 36
+        },
+        "underperformanceFlag": false
+      },
+      "contentGapCandidate": false,
+      "competitorContentGap": {
+        "competitorOverlap": null,
+        "cannibalizationRisk": false,
+        "contentGap": false
+      },
+      "priority": "Medium"
+    },
+    {
+      "keyword": "ayurvedic medicine for cholesterol",
+      "type": "Secondary",
+      "suggestedPlacement": "H2",
+      "answerable": true,
+      "intent": "Commercial",
+      "aiVoiceSearchFit": "Medium",
+      "audienceFitScore": "Medium",
+      "spamRisk": "None",
+      "complianceRisk": "Low",
+      "complianceFlaggedTerms": [],
+      "confidenceScore": 73,
+      "mappedPageId": "cholesterol-treatment",
+      "mappedPage": "Cholesterol Support",
+      "parentTopic": null,
+      "underperformanceFlag": false,
+      "competitorGap": null,
+      "coreSearchMetrics": {
+        "volumeByCountry": {
+          "in": 1600,
+          "us": 140,
+          "uk": 30,
+          "ae": 30
+        },
+        "competition": 10,
+        "cpc": 7,
+        "currentRankingPosition": 3.8,
+        "trendingPhrase": false
+      },
+      "audienceFitIntent": {
+        "intent": "Commercial",
+        "audienceFitScore": "Medium",
+        "spamRiskFlag": "None",
+        "medicalSpecificityScore": 0
+      },
+      "aiVoiceReadiness": {
+        "aeoScore": 40,
+        "answerabilityScore": 60,
+        "geoVisibilityScore": 25,
+        "schemaReadiness": "None",
+        "compositeScore": 42,
+        "fit": "Medium"
+      },
+      "complianceCheck": {
+        "medicalComplianceRisk": "Low",
+        "adsHealthcarePolicyRisk": "Low",
+        "ymylPolicyRisk": "Low",
+        "overallRisk": "Low",
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
+      },
+      "crossSourceConfidence": {
+        "confidenceScore": 73,
+        "subscores": {
+          "gsc": 76,
+          "ga4": 77,
+          "ads": null,
+          "semrush": 63
+        },
+        "underperformanceFlag": false
+      },
+      "contentGapCandidate": false,
+      "competitorContentGap": {
+        "competitorOverlap": null,
+        "cannibalizationRisk": false,
+        "contentGap": false
+      },
+      "priority": "Medium"
+    },
+    {
+      "keyword": "yograj guggulu",
+      "type": "Primary",
+      "suggestedPlacement": "Meta Title",
+      "answerable": false,
+      "intent": "Informational",
+      "aiVoiceSearchFit": "Low",
+      "audienceFitScore": "Medium",
+      "spamRisk": "None",
+      "complianceRisk": "Low",
+      "complianceFlaggedTerms": [],
+      "confidenceScore": 81,
+      "mappedPageId": null,
+      "mappedPage": "Content Gap",
+      "parentTopic": null,
+      "underperformanceFlag": false,
+      "competitorGap": null,
+      "coreSearchMetrics": {
+        "volumeByCountry": {
+          "in": 6600,
+          "us": 110,
+          "uk": 20,
+          "ae": 20
+        },
+        "competition": 20,
+        "cpc": 3,
+        "currentRankingPosition": 5.5,
+        "trendingPhrase": false
+      },
+      "audienceFitIntent": {
+        "intent": "Informational",
+        "audienceFitScore": "Medium",
+        "spamRiskFlag": "None",
+        "medicalSpecificityScore": 0
+      },
+      "aiVoiceReadiness": {
+        "aeoScore": 20,
+        "answerabilityScore": 30,
+        "geoVisibilityScore": 25,
+        "schemaReadiness": "None",
+        "compositeScore": 25,
+        "fit": "Low"
+      },
+      "complianceCheck": {
+        "medicalComplianceRisk": "Low",
+        "adsHealthcarePolicyRisk": "Low",
+        "ymylPolicyRisk": "Low",
+        "overallRisk": "Low",
+        "flaggedTerms": [],
+        "patientNationalityPattern": false
+      },
+      "crossSourceConfidence": {
+        "confidenceScore": 81,
+        "subscores": {
+          "gsc": 73,
+          "ga4": null,
+          "ads": null,
+          "semrush": 94
+        },
+        "underperformanceFlag": false
+      },
+      "contentGapCandidate": true,
+      "competitorContentGap": {
+        "competitorOverlap": null,
+        "cannibalizationRisk": false,
+        "contentGap": true
+      },
+      "priority": "Medium"
+    }
+  ],
+  "needsAttention": [
+    {
+      "severity": "high",
+      "category": "CONTENT GAP",
+      "keyword": "safed musli tablet",
+      "text": "“safed musli tablet” is high-volume (2,440/mo across tracked countries) but no page currently targets it.",
+      "source": "Semrush"
+    },
+    {
+      "severity": "high",
+      "category": "CONTENT GAP",
+      "keyword": "yograj guggulu",
+      "text": "“yograj guggulu” is high-volume (6,750/mo across tracked countries) but no page currently targets it.",
+      "source": "Semrush"
+    }
+  ],
+  "topContentGapOpportunities": [
+    {
+      "keyword": "yograj guggulu",
+      "totalVolume": 6750,
+      "parentTopic": null
+    },
+    {
+      "keyword": "safed musli tablet",
+      "totalVolume": 2440,
+      "parentTopic": null
+    },
+    {
+      "keyword": "lipidex capsule",
+      "totalVolume": 260,
+      "parentTopic": null
+    }
+  ],
+  "avoidList": [],
+  "competitorGapList": [],
+  "underperformingPages": []
+}

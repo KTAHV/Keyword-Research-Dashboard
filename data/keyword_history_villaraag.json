@@ -1,0 +1,26 @@
+{
+  "kpiHistory": [
+    {
+      "totalKeywords": 8,
+      "highPriorityKeywords": 0,
+      "contentGapsIdentified": 6,
+      "complianceRiskFlagged": 0,
+      "avgConfidenceScore": 39.8,
+      "date": "2026-08-24"
+    }
+  ],
+  "positionHistory": {
+    "villa raag agonda": [
+      {
+        "date": "2026-08-24",
+        "position": 4.3
+      }
+    ],
+    "agonda villas goa": [
+      {
+        "date": "2026-08-24",
+        "position": 6.0
+      }
+    ]
+  }
+}

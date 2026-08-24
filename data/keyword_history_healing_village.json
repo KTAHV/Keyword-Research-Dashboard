@@ -14,14 +14,6 @@
       "contentGapsIdentified": 6,
       "complianceRiskFlagged": 6,
       "avgConfidenceScore": 56.3,
-      "date": "2026-07-21"
-    },
-    {
-      "totalKeywords": 38,
-      "highPriorityKeywords": 8,
-      "contentGapsIdentified": 6,
-      "complianceRiskFlagged": 6,
-      "avgConfidenceScore": 56.3,
       "date": "2026-07-22"
     },
     {
@@ -95,6 +87,14 @@
       "complianceRiskFlagged": 6,
       "avgConfidenceScore": 56.3,
       "date": "2026-07-22"
+    },
+    {
+      "totalKeywords": 8,
+      "highPriorityKeywords": 0,
+      "contentGapsIdentified": 2,
+      "complianceRiskFlagged": 0,
+      "avgConfidenceScore": 33.8,
+      "date": "2026-08-24"
     }
   ],
   "positionHistory": {
@@ -128,8 +128,8 @@
         "position": 12.4
       },
       {
-        "date": "2026-07-22",
-        "position": 12.4
+        "date": "2026-08-24",
+        "position": 8.4
       }
     ],
     "panchakarma treatment cost kerala": [
@@ -196,8 +196,8 @@
         "position": 4.2
       },
       {
-        "date": "2026-07-22",
-        "position": 4.2
+        "date": "2026-08-24",
+        "position": 18.6
       }
     ],
     "ayurvedic treatment packages kerala": [
@@ -264,8 +264,8 @@
         "position": 8.5
       },
       {
-        "date": "2026-07-22",
-        "position": 8.5
+        "date": "2026-08-24",
+        "position": 15.3
       }
     ],
     "nabh accredited ayurveda hospital": [
@@ -502,8 +502,8 @@
         "position": 15.2
       },
       {
-        "date": "2026-07-22",
-        "position": 15.2
+        "date": "2026-08-24",
+        "position": 12.1
       }
     ],
     "how long does panchakarma treatment take": [
@@ -536,8 +536,8 @@
         "position": 22.0
       },
       {
-        "date": "2026-07-22",
-        "position": 22.0
+        "date": "2026-08-24",
+        "position": 7.8
       }
     ],
     "is ayurveda treatment effective for chronic pain": [
@@ -810,6 +810,12 @@
       {
         "date": "2026-07-22",
         "position": 6.4
+      }
+    ],
+    "ayurvedic massage near me": [
+      {
+        "date": "2026-08-24",
+        "position": 14.1
       }
     ]
   }
