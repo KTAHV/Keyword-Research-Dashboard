@@ -7,6 +7,14 @@
       "complianceRiskFlagged": 0,
       "avgConfidenceScore": 73.1,
       "date": "2026-08-24"
+    },
+    {
+      "totalKeywords": 12,
+      "highPriorityKeywords": 0,
+      "contentGapsIdentified": 3,
+      "complianceRiskFlagged": 0,
+      "avgConfidenceScore": 73.1,
+      "date": "2026-08-31"
     }
   ],
   "positionHistory": {
@@ -14,41 +22,69 @@
       {
         "date": "2026-08-24",
         "position": 2.6
+      },
+      {
+        "date": "2026-08-31",
+        "position": 2.8
       }
     ],
     "ayurvedic medicine for erectile dysfunction": [
       {
         "date": "2026-08-24",
         "position": 3.4
+      },
+      {
+        "date": "2026-08-31",
+        "position": 3.7
       }
     ],
     "ayurvedic medicine for premature ejaculation": [
       {
         "date": "2026-08-24",
         "position": 2.4
+      },
+      {
+        "date": "2026-08-31",
+        "position": 2.5
       }
     ],
     "brahmi oil": [
       {
         "date": "2026-08-24",
         "position": 4.3
+      },
+      {
+        "date": "2026-08-31",
+        "position": 4.6
       }
     ],
     "nalpamaradi thailam": [
       {
         "date": "2026-08-24",
         "position": 10.0
+      },
+      {
+        "date": "2026-08-31",
+        "position": 9.8
       }
     ],
     "durance capsules": [
       {
         "date": "2026-08-24",
         "position": 3.7
+      },
+      {
+        "date": "2026-08-31",
+        "position": 3.6
       }
     ],
     "lipidex capsule": [
       {
         "date": "2026-08-24",
+        "position": 1.1
+      },
+      {
+        "date": "2026-08-31",
         "position": 1.1
       }
     ],
@@ -56,17 +92,29 @@
       {
         "date": "2026-08-24",
         "position": 5.5
+      },
+      {
+        "date": "2026-08-31",
+        "position": 5.6
       }
     ],
     "neem soap": [
       {
         "date": "2026-08-24",
         "position": 10.9
+      },
+      {
+        "date": "2026-08-31",
+        "position": 10.8
       }
     ],
     "manasamitram gulika": [
       {
         "date": "2026-08-24",
+        "position": 2.1
+      },
+      {
+        "date": "2026-08-31",
         "position": 2.1
       }
     ],
@@ -74,12 +122,20 @@
       {
         "date": "2026-08-24",
         "position": 3.8
+      },
+      {
+        "date": "2026-08-31",
+        "position": 3.7
       }
     ],
     "yograj guggulu": [
       {
         "date": "2026-08-24",
         "position": 5.5
+      },
+      {
+        "date": "2026-08-31",
+        "position": 5.2
       }
     ]
   }

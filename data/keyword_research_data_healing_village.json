@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-08-24T03:32:30.903286+00:00",
+  "generatedAt": "2026-08-31T08:51:04.021951+00:00",
   "phase": "live",
   "kpis": {
     "totalKeywords": 8,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 2,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 33.8
+    "avgConfidenceScore": 33.6
   },
   "kpiDeltas": {
-    "totalKeywords": -30,
-    "highPriorityKeywords": -8,
-    "contentGapsIdentified": -4,
-    "complianceRiskFlagged": -6,
-    "avgConfidenceScore": -22.5
+    "totalKeywords": 0,
+    "highPriorityKeywords": 0,
+    "contentGapsIdentified": 0,
+    "complianceRiskFlagged": 0,
+    "avgConfidenceScore": -0.2
   },
   "entries": [
     {
@@ -27,7 +27,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 39,
+      "confidenceScore": 38,
       "mappedPageId": "panchakarma-treatment",
       "mappedPage": "Panchakarma Treatment",
       "parentTopic": null,
@@ -42,7 +42,7 @@
         },
         "competition": 28,
         "cpc": 19,
-        "currentRankingPosition": 18.6,
+        "currentRankingPosition": 19.4,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -68,10 +68,10 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 39,
+        "confidenceScore": 38,
         "subscores": {
-          "gsc": 28,
-          "ga4": 88,
+          "gsc": 27,
+          "ga4": 86,
           "ads": 0,
           "semrush": 34
         },
@@ -105,12 +105,11 @@
       "coreSearchMetrics": {
         "volumeByCountry": {
           "in": 1900,
-          "us": 10,
-          "ae": 20
+          "ae": 10
         },
         "competition": 48,
         "cpc": 16,
-        "currentRankingPosition": 15.3,
+        "currentRankingPosition": 13.4,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -139,7 +138,7 @@
         "confidenceScore": 50,
         "subscores": {
           "gsc": 20,
-          "ga4": 88,
+          "ga4": 90,
           "ads": null,
           "semrush": 54
         },
@@ -179,7 +178,7 @@
         },
         "competition": 33,
         "cpc": 27,
-        "currentRankingPosition": 8.4,
+        "currentRankingPosition": 8.2,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -243,12 +242,12 @@
         "volumeByCountry": {
           "in": 2900,
           "us": 90,
-          "uk": 70,
+          "uk": 50,
           "ae": 20
         },
         "competition": 34,
         "cpc": 5,
-        "currentRankingPosition": 12.1,
+        "currentRankingPosition": 13.1,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -316,7 +315,7 @@
         },
         "competition": 0,
         "cpc": 0,
-        "currentRankingPosition": 7.8,
+        "currentRankingPosition": 7.6,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -385,7 +384,7 @@
         },
         "competition": 19,
         "cpc": 19,
-        "currentRankingPosition": 14.1,
+        "currentRankingPosition": 13.6,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -413,7 +412,7 @@
       "crossSourceConfidence": {
         "confidenceScore": 45,
         "subscores": {
-          "gsc": 43,
+          "gsc": 42,
           "ga4": null,
           "ads": 0,
           "semrush": 94
@@ -568,28 +567,14 @@
       "severity": "high",
       "category": "CONTENT GAP",
       "keyword": "what is panchakarma treatment",
-      "text": "“what is panchakarma treatment” is high-volume (3,080/mo across tracked countries) but no page currently targets it.",
+      "text": "“what is panchakarma treatment” is high-volume (3,060/mo across tracked countries) but no page currently targets it.",
       "source": "Semrush"
-    },
-    {
-      "severity": "medium",
-      "category": "RANK DROP",
-      "keyword": "panchakarma treatment kerala",
-      "text": "Ranking for “panchakarma treatment kerala” dropped from position 4.2 to 18.6 since the last refresh.",
-      "source": "GSC"
-    },
-    {
-      "severity": "medium",
-      "category": "RANK DROP",
-      "keyword": "best ayurveda hospital kerala",
-      "text": "Ranking for “best ayurveda hospital kerala” dropped from position 8.5 to 15.3 since the last refresh.",
-      "source": "GSC"
     }
   ],
   "topContentGapOpportunities": [
     {
       "keyword": "what is panchakarma treatment",
-      "totalVolume": 3080,
+      "totalVolume": 3060,
       "parentTopic": null
     },
     {

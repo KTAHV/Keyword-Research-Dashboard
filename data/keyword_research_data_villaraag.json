@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-08-24T03:32:55.829997+00:00",
+  "generatedAt": "2026-08-31T08:51:30.516456+00:00",
   "phase": "live",
   "kpis": {
     "totalKeywords": 8,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 6,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 39.8
+    "avgConfidenceScore": 39.5
   },
   "kpiDeltas": {
-    "totalKeywords": null,
-    "highPriorityKeywords": null,
-    "contentGapsIdentified": null,
-    "complianceRiskFlagged": null,
-    "avgConfidenceScore": null
+    "totalKeywords": 0,
+    "highPriorityKeywords": 0,
+    "contentGapsIdentified": 0,
+    "complianceRiskFlagged": 0,
+    "avgConfidenceScore": -0.3
   },
   "entries": [
     {
@@ -27,7 +27,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 35,
+      "confidenceScore": 34,
       "mappedPageId": "villaraag-home",
       "mappedPage": "Villaraag — Luxury Villa Resort, Agonda Goa",
       "parentTopic": null,
@@ -36,11 +36,11 @@
       "coreSearchMetrics": {
         "volumeByCountry": {
           "us": 10,
-          "uk": 10
+          "uk": 20
         },
         "competition": 0,
         "cpc": 0,
-        "currentRankingPosition": 4.3,
+        "currentRankingPosition": 4.0,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -66,12 +66,12 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 35,
+        "confidenceScore": 34,
         "subscores": {
-          "gsc": 65,
+          "gsc": 63,
           "ga4": null,
-          "ads": 3,
-          "semrush": 15
+          "ads": 0,
+          "semrush": 16
         },
         "underperformanceFlag": false
       },
@@ -107,7 +107,7 @@
           "uk": 110,
           "ae": 140
         },
-        "competition": 24,
+        "competition": 27,
         "cpc": 15,
         "currentRankingPosition": null,
         "trendingPhrase": false
@@ -140,7 +140,7 @@
           "gsc": null,
           "ga4": null,
           "ads": 0,
-          "semrush": 93
+          "semrush": 92
         },
         "underperformanceFlag": false
       },
@@ -163,7 +163,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 47,
+      "confidenceScore": 46,
       "mappedPageId": null,
       "mappedPage": "Content Gap",
       "parentTopic": null,
@@ -171,10 +171,10 @@
       "competitorGap": null,
       "coreSearchMetrics": {
         "volumeByCountry": {
-          "in": 5400,
+          "in": 4400,
           "ae": 20
         },
-        "competition": 19,
+        "competition": 24,
         "cpc": 15,
         "currentRankingPosition": null,
         "trendingPhrase": false
@@ -202,12 +202,12 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 47,
+        "confidenceScore": 46,
         "subscores": {
           "gsc": null,
           "ga4": null,
           "ads": 0,
-          "semrush": 94
+          "semrush": 93
         },
         "underperformanceFlag": false
       },
@@ -343,7 +343,7 @@
         "subscores": {
           "gsc": 40,
           "ga4": null,
-          "ads": 3,
+          "ads": 2,
           "semrush": 89
         },
         "underperformanceFlag": false
@@ -448,7 +448,7 @@
           "uk": 40,
           "ae": 140
         },
-        "competition": 24,
+        "competition": 27,
         "cpc": 15,
         "currentRankingPosition": null,
         "trendingPhrase": false
@@ -481,7 +481,7 @@
           "gsc": null,
           "ga4": null,
           "ads": 0,
-          "semrush": 93
+          "semrush": 92
         },
         "underperformanceFlag": false
       },
@@ -575,7 +575,7 @@
       "severity": "high",
       "category": "CONTENT GAP",
       "keyword": "villa in goa with private pool",
-      "text": "“villa in goa with private pool” is high-volume (5,420/mo across tracked countries) but no page currently targets it.",
+      "text": "“villa in goa with private pool” is high-volume (4,420/mo across tracked countries) but no page currently targets it.",
       "source": "Semrush"
     },
     {
@@ -620,7 +620,7 @@
     },
     {
       "keyword": "villa in goa with private pool",
-      "totalVolume": 5420,
+      "totalVolume": 4420,
       "parentTopic": null
     },
     {
