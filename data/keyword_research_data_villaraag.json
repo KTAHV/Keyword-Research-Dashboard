@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-08-31T08:51:30.516456+00:00",
+  "generatedAt": "2026-09-14T08:04:20.544854+00:00",
   "phase": "live",
   "kpis": {
     "totalKeywords": 8,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 6,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 39.5
+    "avgConfidenceScore": 37.6
   },
   "kpiDeltas": {
     "totalKeywords": 0,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 0,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": -0.3
+    "avgConfidenceScore": -1.9
   },
   "entries": [
     {
@@ -27,7 +27,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 34,
+      "confidenceScore": 32,
       "mappedPageId": "villaraag-home",
       "mappedPage": "Villaraag — Luxury Villa Resort, Agonda Goa",
       "parentTopic": null,
@@ -40,7 +40,7 @@
         },
         "competition": 0,
         "cpc": 0,
-        "currentRankingPosition": 4.0,
+        "currentRankingPosition": 3.7,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -66,9 +66,9 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 34,
+        "confidenceScore": 32,
         "subscores": {
-          "gsc": 63,
+          "gsc": 60,
           "ga4": null,
           "ads": 0,
           "semrush": 16
@@ -275,7 +275,7 @@
         "subscores": {
           "gsc": null,
           "ga4": null,
-          "ads": 0,
+          "ads": 1,
           "semrush": 83
         },
         "underperformanceFlag": false
@@ -299,9 +299,9 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 43,
-      "mappedPageId": "villaraag-home",
-      "mappedPage": "Villaraag — Luxury Villa Resort, Agonda Goa",
+      "confidenceScore": 30,
+      "mappedPageId": "luxury-resort-goa",
+      "mappedPage": "Luxury Resort in Goa",
       "parentTopic": null,
       "underperformanceFlag": false,
       "competitorGap": null,
@@ -313,7 +313,7 @@
         },
         "competition": 36,
         "cpc": 8,
-        "currentRankingPosition": 6.0,
+        "currentRankingPosition": 20.2,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -339,11 +339,11 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 43,
+        "confidenceScore": 30,
         "subscores": {
-          "gsc": 40,
-          "ga4": null,
-          "ads": 2,
+          "gsc": 5,
+          "ga4": 40,
+          "ads": 1,
           "semrush": 89
         },
         "underperformanceFlag": false
@@ -605,6 +605,13 @@
       "keyword": "yoga teacher training goa",
       "text": "“yoga teacher training goa” is high-volume (1,300/mo across tracked countries) but no page currently targets it.",
       "source": "Semrush"
+    },
+    {
+      "severity": "medium",
+      "category": "RANK DROP",
+      "keyword": "agonda villas goa",
+      "text": "Ranking for “agonda villas goa” dropped from position 6.0 to 20.2 since the last refresh.",
+      "source": "GSC"
     }
   ],
   "topContentGapOpportunities": [

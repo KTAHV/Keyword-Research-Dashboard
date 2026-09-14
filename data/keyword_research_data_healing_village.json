@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-08-31T08:51:04.021951+00:00",
+  "generatedAt": "2026-09-14T08:03:58.692749+00:00",
   "phase": "live",
   "kpis": {
     "totalKeywords": 8,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 2,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 33.6
+    "avgConfidenceScore": 34.2
   },
   "kpiDeltas": {
     "totalKeywords": 0,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 0,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": -0.2
+    "avgConfidenceScore": 0.6
   },
   "entries": [
     {
@@ -27,7 +27,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 38,
+      "confidenceScore": 37,
       "mappedPageId": "panchakarma-treatment",
       "mappedPage": "Panchakarma Treatment",
       "parentTopic": null,
@@ -42,7 +42,7 @@
         },
         "competition": 28,
         "cpc": 19,
-        "currentRankingPosition": 19.4,
+        "currentRankingPosition": 20.0,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -68,10 +68,10 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 38,
+        "confidenceScore": 37,
         "subscores": {
-          "gsc": 27,
-          "ga4": 86,
+          "gsc": 26,
+          "ga4": 85,
           "ads": 0,
           "semrush": 34
         },
@@ -109,7 +109,7 @@
         },
         "competition": 48,
         "cpc": 16,
-        "currentRankingPosition": 13.4,
+        "currentRankingPosition": 12.3,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -138,7 +138,7 @@
         "confidenceScore": 50,
         "subscores": {
           "gsc": 20,
-          "ga4": 90,
+          "ga4": 89,
           "ads": null,
           "semrush": 54
         },
@@ -178,7 +178,7 @@
         },
         "competition": 33,
         "cpc": 27,
-        "currentRankingPosition": 8.2,
+        "currentRankingPosition": 8.0,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -206,7 +206,7 @@
       "crossSourceConfidence": {
         "confidenceScore": 51,
         "subscores": {
-          "gsc": 49,
+          "gsc": 50,
           "ga4": 100,
           "ads": 0,
           "semrush": 42
@@ -247,7 +247,7 @@
         },
         "competition": 34,
         "cpc": 5,
-        "currentRankingPosition": 13.1,
+        "currentRankingPosition": 10.4,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -301,7 +301,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 23,
+      "confidenceScore": 31,
       "mappedPageId": null,
       "mappedPage": "Content Gap",
       "parentTopic": null,
@@ -315,7 +315,7 @@
         },
         "competition": 0,
         "cpc": 0,
-        "currentRankingPosition": 7.6,
+        "currentRankingPosition": 8.0,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -341,11 +341,11 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 23,
+        "confidenceScore": 31,
         "subscores": {
           "gsc": 40,
           "ga4": null,
-          "ads": 0,
+          "ads": null,
           "semrush": 16
         },
         "underperformanceFlag": false
@@ -369,7 +369,7 @@
       "spamRisk": "Flagged",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 45,
+      "confidenceScore": 43,
       "mappedPageId": null,
       "mappedPage": "Content Gap",
       "parentTopic": null,
@@ -384,7 +384,7 @@
         },
         "competition": 19,
         "cpc": 19,
-        "currentRankingPosition": 13.6,
+        "currentRankingPosition": 15.6,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -410,9 +410,9 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 45,
+        "confidenceScore": 43,
         "subscores": {
-          "gsc": 42,
+          "gsc": 39,
           "ga4": null,
           "ads": 0,
           "semrush": 94

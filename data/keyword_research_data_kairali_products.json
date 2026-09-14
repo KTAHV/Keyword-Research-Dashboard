@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-08-31T08:51:57.070021+00:00",
+  "generatedAt": "2026-09-14T08:04:45.336887+00:00",
   "phase": "live",
   "kpis": {
     "totalKeywords": 12,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 3,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 73.1
+    "avgConfidenceScore": 72.6
   },
   "kpiDeltas": {
     "totalKeywords": 0,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 0,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 0.0
+    "avgConfidenceScore": -0.5
   },
   "entries": [
     {
@@ -27,7 +27,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 63,
+      "confidenceScore": 60,
       "mappedPageId": "kp-home",
       "mappedPage": "Kairali Products — Home",
       "parentTopic": null,
@@ -41,7 +41,7 @@
         },
         "competition": 25,
         "cpc": 5,
-        "currentRankingPosition": 2.8,
+        "currentRankingPosition": 3.0,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -67,9 +67,9 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 63,
+        "confidenceScore": 60,
         "subscores": {
-          "gsc": 83,
+          "gsc": 79,
           "ga4": null,
           "ads": null,
           "semrush": 27
@@ -95,7 +95,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 83,
+      "confidenceScore": 82,
       "mappedPageId": "erectile-dysfunction",
       "mappedPage": "Erectile Dysfunction Support",
       "parentTopic": null,
@@ -110,7 +110,7 @@
         },
         "competition": 21,
         "cpc": 7,
-        "currentRankingPosition": 3.7,
+        "currentRankingPosition": 4.0,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -136,10 +136,10 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 83,
+        "confidenceScore": 82,
         "subscores": {
-          "gsc": 91,
-          "ga4": 88,
+          "gsc": 89,
+          "ga4": 89,
           "ads": null,
           "semrush": 63
         },
@@ -179,7 +179,7 @@
         },
         "competition": 12,
         "cpc": 20,
-        "currentRankingPosition": 2.5,
+        "currentRankingPosition": 2.9,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -248,7 +248,7 @@
         },
         "competition": 11,
         "cpc": 3,
-        "currentRankingPosition": 4.6,
+        "currentRankingPosition": 5.1,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -276,7 +276,7 @@
       "crossSourceConfidence": {
         "confidenceScore": 66,
         "subscores": {
-          "gsc": 75,
+          "gsc": 74,
           "ga4": 30,
           "ads": null,
           "semrush": 97
@@ -317,7 +317,7 @@
         },
         "competition": 23,
         "cpc": 3,
-        "currentRankingPosition": 9.8,
+        "currentRankingPosition": 9.3,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -371,7 +371,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 70,
+      "confidenceScore": 69,
       "mappedPageId": "durance-capsules",
       "mappedPage": "Durance Ayurvedic Medicine for PE & ED",
       "parentTopic": null,
@@ -385,7 +385,7 @@
         },
         "competition": 16,
         "cpc": 1,
-        "currentRankingPosition": 3.6,
+        "currentRankingPosition": 3.8,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -411,10 +411,10 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 70,
+        "confidenceScore": 69,
         "subscores": {
-          "gsc": 76,
-          "ga4": 95,
+          "gsc": 75,
+          "ga4": 94,
           "ads": null,
           "semrush": 28
         },
@@ -519,7 +519,7 @@
         },
         "competition": 18,
         "cpc": 4,
-        "currentRankingPosition": 5.6,
+        "currentRankingPosition": 5.5,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -573,7 +573,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 73,
+      "confidenceScore": 71,
       "mappedPageId": "neem-soap",
       "mappedPage": "Neem Soap",
       "parentTopic": null,
@@ -588,7 +588,7 @@
         },
         "competition": 15,
         "cpc": 5,
-        "currentRankingPosition": 10.8,
+        "currentRankingPosition": 11.1,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -614,10 +614,10 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 73,
+        "confidenceScore": 71,
         "subscores": {
-          "gsc": 44,
-          "ga4": 95,
+          "gsc": 38,
+          "ga4": 96,
           "ads": null,
           "semrush": 96
         },
@@ -642,7 +642,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 70,
+      "confidenceScore": 71,
       "mappedPageId": "manasamitram-gulika",
       "mappedPage": "Manasamitram Gulika (Insomnia/Anxiety)",
       "parentTopic": null,
@@ -656,7 +656,7 @@
         },
         "competition": 11,
         "cpc": 2,
-        "currentRankingPosition": 2.1,
+        "currentRankingPosition": 2.2,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -682,10 +682,10 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 70,
+        "confidenceScore": 71,
         "subscores": {
-          "gsc": 70,
-          "ga4": 96,
+          "gsc": 72,
+          "ga4": 97,
           "ads": null,
           "semrush": 36
         },
@@ -725,7 +725,7 @@
         },
         "competition": 19,
         "cpc": 7,
-        "currentRankingPosition": 3.7,
+        "currentRankingPosition": 3.4,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -754,7 +754,7 @@
         "confidenceScore": 80,
         "subscores": {
           "gsc": 77,
-          "ga4": 78,
+          "ga4": 80,
           "ads": null,
           "semrush": 86
         },
@@ -794,7 +794,7 @@
         },
         "competition": 19,
         "cpc": 3,
-        "currentRankingPosition": 5.2,
+        "currentRankingPosition": 5.0,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
