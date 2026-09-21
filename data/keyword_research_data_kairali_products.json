@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-14T08:04:45.336887+00:00",
+  "generatedAt": "2026-09-21T08:10:23.436355+00:00",
   "phase": "live",
   "kpis": {
     "totalKeywords": 12,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 3,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 72.6
+    "avgConfidenceScore": 70.8
   },
   "kpiDeltas": {
     "totalKeywords": 0,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 0,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": -0.5
+    "avgConfidenceScore": -1.8
   },
   "entries": [
     {
@@ -27,7 +27,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 60,
+      "confidenceScore": 59,
       "mappedPageId": "kp-home",
       "mappedPage": "Kairali Products — Home",
       "parentTopic": null,
@@ -41,7 +41,7 @@
         },
         "competition": 25,
         "cpc": 5,
-        "currentRankingPosition": 3.0,
+        "currentRankingPosition": 3.2,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -67,9 +67,9 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 60,
+        "confidenceScore": 59,
         "subscores": {
-          "gsc": 79,
+          "gsc": 78,
           "ga4": null,
           "ads": null,
           "semrush": 27
@@ -110,7 +110,7 @@
         },
         "competition": 21,
         "cpc": 7,
-        "currentRankingPosition": 4.0,
+        "currentRankingPosition": 4.3,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -138,7 +138,7 @@
       "crossSourceConfidence": {
         "confidenceScore": 82,
         "subscores": {
-          "gsc": 89,
+          "gsc": 88,
           "ga4": 89,
           "ads": null,
           "semrush": 63
@@ -179,7 +179,7 @@
         },
         "competition": 12,
         "cpc": 20,
-        "currentRankingPosition": 2.9,
+        "currentRankingPosition": 3.0,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -207,7 +207,7 @@
       "crossSourceConfidence": {
         "confidenceScore": 77,
         "subscores": {
-          "gsc": 87,
+          "gsc": 88,
           "ga4": 91,
           "ads": null,
           "semrush": 42
@@ -248,7 +248,7 @@
         },
         "competition": 11,
         "cpc": 3,
-        "currentRankingPosition": 5.1,
+        "currentRankingPosition": 5.2,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -302,7 +302,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 84,
+      "confidenceScore": 67,
       "mappedPageId": "nalpamaradi-thailam",
       "mappedPage": "Nalpamaradi Thailam Skin Oil",
       "parentTopic": null,
@@ -317,7 +317,7 @@
         },
         "competition": 23,
         "cpc": 3,
-        "currentRankingPosition": 9.3,
+        "currentRankingPosition": 8.8,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -343,11 +343,11 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 84,
+        "confidenceScore": 67,
         "subscores": {
           "gsc": 70,
           "ga4": 95,
-          "ads": null,
+          "ads": 0,
           "semrush": 93
         },
         "underperformanceFlag": false
@@ -385,7 +385,7 @@
         },
         "competition": 16,
         "cpc": 1,
-        "currentRankingPosition": 3.8,
+        "currentRankingPosition": 3.9,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -519,7 +519,7 @@
         },
         "competition": 18,
         "cpc": 4,
-        "currentRankingPosition": 5.5,
+        "currentRankingPosition": 5.6,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -547,7 +547,7 @@
       "crossSourceConfidence": {
         "confidenceScore": 72,
         "subscores": {
-          "gsc": 72,
+          "gsc": 71,
           "ga4": null,
           "ads": null,
           "semrush": 73
@@ -573,7 +573,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 71,
+      "confidenceScore": 68,
       "mappedPageId": "neem-soap",
       "mappedPage": "Neem Soap",
       "parentTopic": null,
@@ -588,7 +588,7 @@
         },
         "competition": 15,
         "cpc": 5,
-        "currentRankingPosition": 11.1,
+        "currentRankingPosition": 12.5,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -614,9 +614,9 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 71,
+        "confidenceScore": 68,
         "subscores": {
-          "gsc": 38,
+          "gsc": 32,
           "ga4": 96,
           "ads": null,
           "semrush": 96
@@ -642,7 +642,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 71,
+      "confidenceScore": 70,
       "mappedPageId": "manasamitram-gulika",
       "mappedPage": "Manasamitram Gulika (Insomnia/Anxiety)",
       "parentTopic": null,
@@ -682,9 +682,9 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 71,
+        "confidenceScore": 70,
         "subscores": {
-          "gsc": 72,
+          "gsc": 71,
           "ga4": 97,
           "ads": null,
           "semrush": 36
@@ -725,7 +725,7 @@
         },
         "competition": 19,
         "cpc": 7,
-        "currentRankingPosition": 3.4,
+        "currentRankingPosition": 3.5,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -754,7 +754,7 @@
         "confidenceScore": 80,
         "subscores": {
           "gsc": 77,
-          "ga4": 80,
+          "ga4": 81,
           "ads": null,
           "semrush": 86
         },
@@ -794,7 +794,7 @@
         },
         "competition": 19,
         "cpc": 3,
-        "currentRankingPosition": 5.0,
+        "currentRankingPosition": 4.9,
         "trendingPhrase": false
       },
       "audienceFitIntent": {

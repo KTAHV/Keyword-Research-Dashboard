@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-14T08:03:58.692749+00:00",
+  "generatedAt": "2026-09-21T08:09:25.882704+00:00",
   "phase": "live",
   "kpis": {
     "totalKeywords": 8,
     "highPriorityKeywords": 0,
-    "contentGapsIdentified": 2,
+    "contentGapsIdentified": 4,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 34.2
+    "avgConfidenceScore": 30.0
   },
   "kpiDeltas": {
     "totalKeywords": 0,
     "highPriorityKeywords": 0,
-    "contentGapsIdentified": 0,
+    "contentGapsIdentified": 2,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 0.6
+    "avgConfidenceScore": -4.2
   },
   "entries": [
     {
@@ -96,9 +96,9 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 50,
-      "mappedPageId": "wellness-resort-kerala",
-      "mappedPage": "Wellness Resort Kerala",
+      "confidenceScore": 32,
+      "mappedPageId": null,
+      "mappedPage": "Content Gap",
       "parentTopic": null,
       "underperformanceFlag": false,
       "competitorGap": null,
@@ -109,7 +109,7 @@
         },
         "competition": 48,
         "cpc": 16,
-        "currentRankingPosition": 12.3,
+        "currentRankingPosition": 12.0,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -135,20 +135,20 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 50,
+        "confidenceScore": 32,
         "subscores": {
           "gsc": 20,
-          "ga4": 89,
+          "ga4": null,
           "ads": null,
           "semrush": 54
         },
         "underperformanceFlag": false
       },
-      "contentGapCandidate": false,
+      "contentGapCandidate": true,
       "competitorContentGap": {
         "competitorOverlap": null,
         "cannibalizationRisk": false,
-        "contentGap": false
+        "contentGap": true
       },
       "priority": "Medium"
     },
@@ -163,9 +163,9 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 51,
-      "mappedPageId": "ayurvedic-treatment-packages",
-      "mappedPage": "Ayurvedic Treatment Packages",
+      "confidenceScore": 35,
+      "mappedPageId": null,
+      "mappedPage": "Content Gap",
       "parentTopic": null,
       "underperformanceFlag": false,
       "competitorGap": null,
@@ -204,20 +204,20 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 51,
+        "confidenceScore": 35,
         "subscores": {
           "gsc": 50,
-          "ga4": 100,
+          "ga4": null,
           "ads": 0,
           "semrush": 42
         },
         "underperformanceFlag": false
       },
-      "contentGapCandidate": false,
+      "contentGapCandidate": true,
       "competitorContentGap": {
         "competitorOverlap": null,
         "cannibalizationRisk": false,
-        "contentGap": false
+        "contentGap": true
       },
       "priority": "Medium"
     },
@@ -247,7 +247,7 @@
         },
         "competition": 34,
         "cpc": 5,
-        "currentRankingPosition": 10.4,
+        "currentRankingPosition": 18.0,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -384,7 +384,7 @@
         },
         "competition": 19,
         "cpc": 19,
-        "currentRankingPosition": 15.6,
+        "currentRankingPosition": 15.2,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -412,7 +412,7 @@
       "crossSourceConfidence": {
         "confidenceScore": 43,
         "subscores": {
-          "gsc": 39,
+          "gsc": 38,
           "ga4": null,
           "ads": 0,
           "semrush": 94
@@ -566,15 +566,39 @@
     {
       "severity": "high",
       "category": "CONTENT GAP",
+      "keyword": "best ayurveda hospital kerala",
+      "text": "“best ayurveda hospital kerala” is high-volume (1,910/mo across tracked countries) but no page currently targets it.",
+      "source": "Semrush"
+    },
+    {
+      "severity": "high",
+      "category": "CONTENT GAP",
       "keyword": "what is panchakarma treatment",
       "text": "“what is panchakarma treatment” is high-volume (3,060/mo across tracked countries) but no page currently targets it.",
       "source": "Semrush"
+    },
+    {
+      "severity": "medium",
+      "category": "RANK DROP",
+      "keyword": "what is panchakarma treatment",
+      "text": "Ranking for “what is panchakarma treatment” dropped from position 10.4 to 18.0 since the last refresh.",
+      "source": "GSC"
     }
   ],
   "topContentGapOpportunities": [
     {
       "keyword": "what is panchakarma treatment",
       "totalVolume": 3060,
+      "parentTopic": null
+    },
+    {
+      "keyword": "best ayurveda hospital kerala",
+      "totalVolume": 1910,
+      "parentTopic": null
+    },
+    {
+      "keyword": "ayurvedic weight loss treatment",
+      "totalVolume": 1080,
       "parentTopic": null
     },
     {

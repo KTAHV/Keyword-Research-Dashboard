@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-14T08:04:20.544854+00:00",
+  "generatedAt": "2026-09-21T08:09:52.138480+00:00",
   "phase": "live",
   "kpis": {
     "totalKeywords": 8,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 6,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 37.6
+    "avgConfidenceScore": 37.8
   },
   "kpiDeltas": {
     "totalKeywords": 0,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 0,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": -1.9
+    "avgConfidenceScore": 0.2
   },
   "entries": [
     {
@@ -27,7 +27,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 32,
+      "confidenceScore": 33,
       "mappedPageId": "villaraag-home",
       "mappedPage": "Villaraag — Luxury Villa Resort, Agonda Goa",
       "parentTopic": null,
@@ -40,7 +40,7 @@
         },
         "competition": 0,
         "cpc": 0,
-        "currentRankingPosition": 3.7,
+        "currentRankingPosition": 3.1,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -66,11 +66,11 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 32,
+        "confidenceScore": 33,
         "subscores": {
           "gsc": 60,
           "ga4": null,
-          "ads": 0,
+          "ads": 1,
           "semrush": 16
         },
         "underperformanceFlag": false
@@ -139,7 +139,7 @@
         "subscores": {
           "gsc": null,
           "ga4": null,
-          "ads": 0,
+          "ads": 1,
           "semrush": 92
         },
         "underperformanceFlag": false
@@ -605,13 +605,6 @@
       "keyword": "yoga teacher training goa",
       "text": "“yoga teacher training goa” is high-volume (1,300/mo across tracked countries) but no page currently targets it.",
       "source": "Semrush"
-    },
-    {
-      "severity": "medium",
-      "category": "RANK DROP",
-      "keyword": "agonda villas goa",
-      "text": "Ranking for “agonda villas goa” dropped from position 6.0 to 20.2 since the last refresh.",
-      "source": "GSC"
     }
   ],
   "topContentGapOpportunities": [
