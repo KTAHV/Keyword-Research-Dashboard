@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-21T08:09:25.882704+00:00",
+  "generatedAt": "2026-09-28T08:54:10.226781+00:00",
   "phase": "live",
   "kpis": {
     "totalKeywords": 8,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 4,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 30.0
+    "avgConfidenceScore": 31.8
   },
   "kpiDeltas": {
     "totalKeywords": 0,
     "highPriorityKeywords": 0,
-    "contentGapsIdentified": 2,
+    "contentGapsIdentified": 0,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": -4.2
+    "avgConfidenceScore": 1.8
   },
   "entries": [
     {
@@ -42,7 +42,7 @@
         },
         "competition": 28,
         "cpc": 19,
-        "currentRankingPosition": 20.0,
+        "currentRankingPosition": 19.4,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -70,8 +70,8 @@
       "crossSourceConfidence": {
         "confidenceScore": 37,
         "subscores": {
-          "gsc": 26,
-          "ga4": 85,
+          "gsc": 25,
+          "ga4": 84,
           "ads": 0,
           "semrush": 34
         },
@@ -369,9 +369,9 @@
       "spamRisk": "Flagged",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 43,
-      "mappedPageId": null,
-      "mappedPage": "Content Gap",
+      "confidenceScore": 57,
+      "mappedPageId": "ayurvedic-treatment-packages",
+      "mappedPage": "Ayurvedic Treatment Packages",
       "parentTopic": null,
       "underperformanceFlag": false,
       "competitorGap": null,
@@ -384,7 +384,7 @@
         },
         "competition": 19,
         "cpc": 19,
-        "currentRankingPosition": 15.2,
+        "currentRankingPosition": 17.8,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -410,10 +410,10 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 43,
+        "confidenceScore": 57,
         "subscores": {
           "gsc": 38,
-          "ga4": null,
+          "ga4": 100,
           "ads": 0,
           "semrush": 94
         },
@@ -423,7 +423,7 @@
       "competitorContentGap": {
         "competitorOverlap": null,
         "cannibalizationRisk": false,
-        "contentGap": true
+        "contentGap": false
       },
       "priority": "Low"
     },
@@ -576,13 +576,6 @@
       "keyword": "what is panchakarma treatment",
       "text": "“what is panchakarma treatment” is high-volume (3,060/mo across tracked countries) but no page currently targets it.",
       "source": "Semrush"
-    },
-    {
-      "severity": "medium",
-      "category": "RANK DROP",
-      "keyword": "what is panchakarma treatment",
-      "text": "Ranking for “what is panchakarma treatment” dropped from position 10.4 to 18.0 since the last refresh.",
-      "source": "GSC"
     }
   ],
   "topContentGapOpportunities": [

@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-21T08:10:23.436355+00:00",
+  "generatedAt": "2026-09-28T08:55:05.807612+00:00",
   "phase": "live",
   "kpis": {
     "totalKeywords": 12,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 3,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 70.8
+    "avgConfidenceScore": 67.9
   },
   "kpiDeltas": {
     "totalKeywords": 0,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 0,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": -1.8
+    "avgConfidenceScore": -2.9
   },
   "entries": [
     {
@@ -27,7 +27,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 59,
+      "confidenceScore": 60,
       "mappedPageId": "kp-home",
       "mappedPage": "Kairali Products — Home",
       "parentTopic": null,
@@ -41,7 +41,7 @@
         },
         "competition": 25,
         "cpc": 5,
-        "currentRankingPosition": 3.2,
+        "currentRankingPosition": 3.3,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -67,9 +67,9 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 59,
+        "confidenceScore": 60,
         "subscores": {
-          "gsc": 78,
+          "gsc": 79,
           "ga4": null,
           "ads": null,
           "semrush": 27
@@ -95,7 +95,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 82,
+      "confidenceScore": 81,
       "mappedPageId": "erectile-dysfunction",
       "mappedPage": "Erectile Dysfunction Support",
       "parentTopic": null,
@@ -110,7 +110,7 @@
         },
         "competition": 21,
         "cpc": 7,
-        "currentRankingPosition": 4.3,
+        "currentRankingPosition": 4.6,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -136,9 +136,9 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 82,
+        "confidenceScore": 81,
         "subscores": {
-          "gsc": 88,
+          "gsc": 86,
           "ga4": 89,
           "ads": null,
           "semrush": 63
@@ -179,7 +179,7 @@
         },
         "competition": 12,
         "cpc": 20,
-        "currentRankingPosition": 3.0,
+        "currentRankingPosition": 3.2,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -248,7 +248,7 @@
         },
         "competition": 11,
         "cpc": 3,
-        "currentRankingPosition": 5.2,
+        "currentRankingPosition": 5.3,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -302,11 +302,11 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 67,
+      "confidenceScore": 43,
       "mappedPageId": "nalpamaradi-thailam",
       "mappedPage": "Nalpamaradi Thailam Skin Oil",
       "parentTopic": null,
-      "underperformanceFlag": false,
+      "underperformanceFlag": true,
       "competitorGap": null,
       "coreSearchMetrics": {
         "volumeByCountry": {
@@ -343,14 +343,14 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 67,
+        "confidenceScore": 43,
         "subscores": {
           "gsc": 70,
-          "ga4": 95,
+          "ga4": 0,
           "ads": 0,
           "semrush": 93
         },
-        "underperformanceFlag": false
+        "underperformanceFlag": true
       },
       "contentGapCandidate": false,
       "competitorContentGap": {
@@ -371,7 +371,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 69,
+      "confidenceScore": 58,
       "mappedPageId": "durance-capsules",
       "mappedPage": "Durance Ayurvedic Medicine for PE & ED",
       "parentTopic": null,
@@ -385,7 +385,7 @@
         },
         "competition": 16,
         "cpc": 1,
-        "currentRankingPosition": 3.9,
+        "currentRankingPosition": 4.1,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -411,10 +411,10 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 69,
+        "confidenceScore": 58,
         "subscores": {
           "gsc": 75,
-          "ga4": 94,
+          "ga4": null,
           "ads": null,
           "semrush": 28
         },
@@ -519,7 +519,7 @@
         },
         "competition": 18,
         "cpc": 4,
-        "currentRankingPosition": 5.6,
+        "currentRankingPosition": 5.7,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -547,7 +547,7 @@
       "crossSourceConfidence": {
         "confidenceScore": 72,
         "subscores": {
-          "gsc": 71,
+          "gsc": 72,
           "ga4": null,
           "ads": null,
           "semrush": 73
@@ -573,7 +573,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 68,
+      "confidenceScore": 67,
       "mappedPageId": "neem-soap",
       "mappedPage": "Neem Soap",
       "parentTopic": null,
@@ -588,7 +588,7 @@
         },
         "competition": 15,
         "cpc": 5,
-        "currentRankingPosition": 12.5,
+        "currentRankingPosition": 12.1,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -614,9 +614,9 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 68,
+        "confidenceScore": 67,
         "subscores": {
-          "gsc": 32,
+          "gsc": 30,
           "ga4": 96,
           "ads": null,
           "semrush": 96
@@ -656,7 +656,7 @@
         },
         "competition": 11,
         "cpc": 2,
-        "currentRankingPosition": 2.2,
+        "currentRankingPosition": 2.3,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -684,7 +684,7 @@
       "crossSourceConfidence": {
         "confidenceScore": 70,
         "subscores": {
-          "gsc": 71,
+          "gsc": 70,
           "ga4": 97,
           "ads": null,
           "semrush": 36
@@ -710,7 +710,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 80,
+      "confidenceScore": 82,
       "mappedPageId": "cholesterol-treatment",
       "mappedPage": "Cholesterol Support",
       "parentTopic": null,
@@ -725,7 +725,7 @@
         },
         "competition": 19,
         "cpc": 7,
-        "currentRankingPosition": 3.5,
+        "currentRankingPosition": 3.6,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -751,10 +751,10 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 80,
+        "confidenceScore": 82,
         "subscores": {
           "gsc": 77,
-          "ga4": 81,
+          "ga4": 85,
           "ads": null,
           "semrush": 86
         },
@@ -794,7 +794,7 @@
         },
         "competition": 19,
         "cpc": 3,
-        "currentRankingPosition": 4.9,
+        "currentRankingPosition": 5.0,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -852,6 +852,13 @@
       "keyword": "yograj guggulu",
       "text": "“yograj guggulu” is high-volume (8,250/mo across tracked countries) but no page currently targets it.",
       "source": "Semrush"
+    },
+    {
+      "severity": "medium",
+      "category": "LOW ENGAGEMENT",
+      "keyword": "nalpamaradi thailam",
+      "text": "“nalpamaradi thailam” ranks well (position 8.8) but GA4 engagement is poor -- likely a content/page problem, not a visibility problem.",
+      "source": "GA4"
     }
   ],
   "topContentGapOpportunities": [
@@ -873,5 +880,12 @@
   ],
   "avoidList": [],
   "competitorGapList": [],
-  "underperformingPages": []
+  "underperformingPages": [
+    {
+      "keyword": "nalpamaradi thailam",
+      "mappedPage": "Nalpamaradi Thailam Skin Oil",
+      "position": 8.8,
+      "confidenceScore": 43
+    }
+  ]
 }

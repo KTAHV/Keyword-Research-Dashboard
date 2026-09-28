@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T08:09:52.138480+00:00",
+  "generatedAt": "2026-09-28T08:54:37.670817+00:00",
   "phase": "live",
   "kpis": {
     "totalKeywords": 8,
@@ -13,7 +13,7 @@
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 0,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 0.2
+    "avgConfidenceScore": 0.0
   },
   "entries": [
     {
@@ -40,7 +40,7 @@
         },
         "competition": 0,
         "cpc": 0,
-        "currentRankingPosition": 3.1,
+        "currentRankingPosition": 2.7,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -275,7 +275,7 @@
         "subscores": {
           "gsc": null,
           "ga4": null,
-          "ads": 1,
+          "ads": 0,
           "semrush": 83
         },
         "underperformanceFlag": false
@@ -343,7 +343,7 @@
         "subscores": {
           "gsc": 5,
           "ga4": 40,
-          "ads": 1,
+          "ads": 2,
           "semrush": 89
         },
         "underperformanceFlag": false

@@ -31,6 +31,14 @@
       "complianceRiskFlagged": 0,
       "avgConfidenceScore": 37.8,
       "date": "2026-09-21"
+    },
+    {
+      "totalKeywords": 8,
+      "highPriorityKeywords": 0,
+      "contentGapsIdentified": 6,
+      "complianceRiskFlagged": 0,
+      "avgConfidenceScore": 37.8,
+      "date": "2026-09-28"
     }
   ],
   "positionHistory": {
@@ -50,6 +58,10 @@
       {
         "date": "2026-09-21",
         "position": 3.1
+      },
+      {
+        "date": "2026-09-28",
+        "position": 2.7
       }
     ],
     "agonda villas goa": [
@@ -67,6 +79,10 @@
       },
       {
         "date": "2026-09-21",
+        "position": 20.2
+      },
+      {
+        "date": "2026-09-28",
         "position": 20.2
       }
     ]
