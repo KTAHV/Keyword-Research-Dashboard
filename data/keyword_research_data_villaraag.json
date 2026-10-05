@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-28T08:54:37.670817+00:00",
+  "generatedAt": "2026-10-05T09:31:14.045027+00:00",
   "phase": "live",
   "kpis": {
     "totalKeywords": 8,
     "highPriorityKeywords": 0,
-    "contentGapsIdentified": 6,
+    "contentGapsIdentified": 5,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 37.8
+    "avgConfidenceScore": 37.5
   },
   "kpiDeltas": {
     "totalKeywords": 0,
     "highPriorityKeywords": 0,
-    "contentGapsIdentified": 0,
+    "contentGapsIdentified": -1,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 0.0
+    "avgConfidenceScore": -0.3
   },
   "entries": [
     {
@@ -68,9 +68,9 @@
       "crossSourceConfidence": {
         "confidenceScore": 33,
         "subscores": {
-          "gsc": 60,
+          "gsc": 62,
           "ga4": null,
-          "ads": 1,
+          "ads": 0,
           "semrush": 16
         },
         "underperformanceFlag": false
@@ -139,7 +139,7 @@
         "subscores": {
           "gsc": null,
           "ga4": null,
-          "ads": 1,
+          "ads": 0,
           "semrush": 92
         },
         "underperformanceFlag": false
@@ -163,7 +163,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 46,
+      "confidenceScore": 47,
       "mappedPageId": null,
       "mappedPage": "Content Gap",
       "parentTopic": null,
@@ -202,11 +202,11 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 46,
+        "confidenceScore": 47,
         "subscores": {
           "gsc": null,
           "ga4": null,
-          "ads": 0,
+          "ads": 1,
           "semrush": 93
         },
         "underperformanceFlag": false
@@ -313,7 +313,7 @@
         },
         "competition": 36,
         "cpc": 8,
-        "currentRankingPosition": 20.2,
+        "currentRankingPosition": 25.0,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -343,7 +343,7 @@
         "subscores": {
           "gsc": 5,
           "ga4": 40,
-          "ads": 2,
+          "ads": 4,
           "semrush": 89
         },
         "underperformanceFlag": false
@@ -427,7 +427,7 @@
     {
       "keyword": "goa villa",
       "type": "Primary",
-      "suggestedPlacement": "Meta Title",
+      "suggestedPlacement": "H1",
       "answerable": false,
       "intent": "Commercial",
       "aiVoiceSearchFit": "Low",
@@ -435,9 +435,9 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 46,
-      "mappedPageId": null,
-      "mappedPage": "Content Gap",
+      "confidenceScore": 43,
+      "mappedPageId": "villaraag-home",
+      "mappedPage": "Villaraag — Luxury Villa Resort, Agonda Goa",
       "parentTopic": null,
       "underperformanceFlag": false,
       "competitorGap": null,
@@ -450,7 +450,7 @@
         },
         "competition": 27,
         "cpc": 15,
-        "currentRankingPosition": null,
+        "currentRankingPosition": 8.2,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -476,20 +476,20 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 46,
+        "confidenceScore": 43,
         "subscores": {
-          "gsc": null,
+          "gsc": 40,
           "ga4": null,
           "ads": 0,
           "semrush": 92
         },
         "underperformanceFlag": false
       },
-      "contentGapCandidate": true,
+      "contentGapCandidate": false,
       "competitorContentGap": {
         "competitorOverlap": null,
         "cannibalizationRisk": false,
-        "contentGap": true
+        "contentGap": false
       },
       "priority": "Medium"
     },
@@ -595,27 +595,22 @@
     {
       "severity": "high",
       "category": "CONTENT GAP",
-      "keyword": "goa villa",
-      "text": "“goa villa” is high-volume (18,350/mo across tracked countries) but no page currently targets it.",
-      "source": "Semrush"
-    },
-    {
-      "severity": "high",
-      "category": "CONTENT GAP",
       "keyword": "yoga teacher training goa",
       "text": "“yoga teacher training goa” is high-volume (1,300/mo across tracked countries) but no page currently targets it.",
       "source": "Semrush"
+    },
+    {
+      "severity": "medium",
+      "category": "RANK DROP",
+      "keyword": "agonda villas goa",
+      "text": "Ranking for “agonda villas goa” dropped from position 20.2 to 25.0 since the last refresh.",
+      "source": "GSC"
     }
   ],
   "topContentGapOpportunities": [
     {
       "keyword": "villas in goa",
       "totalVolume": 18490,
-      "parentTopic": null
-    },
-    {
-      "keyword": "goa villa",
-      "totalVolume": 18350,
       "parentTopic": null
     },
     {
@@ -631,6 +626,11 @@
     {
       "keyword": "luxury resort in goa",
       "totalVolume": 1360,
+      "parentTopic": null
+    },
+    {
+      "keyword": "yoga teacher training goa",
+      "totalVolume": 1300,
       "parentTopic": null
     }
   ],

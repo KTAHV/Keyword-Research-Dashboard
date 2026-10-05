@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-28T08:55:05.807612+00:00",
+  "generatedAt": "2026-10-05T09:31:31.304295+00:00",
   "phase": "live",
   "kpis": {
     "totalKeywords": 12,
     "highPriorityKeywords": 0,
-    "contentGapsIdentified": 3,
+    "contentGapsIdentified": 4,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 67.9
+    "avgConfidenceScore": 67.4
   },
   "kpiDeltas": {
     "totalKeywords": 0,
     "highPriorityKeywords": 0,
-    "contentGapsIdentified": 0,
+    "contentGapsIdentified": 1,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": -2.9
+    "avgConfidenceScore": -0.5
   },
   "entries": [
     {
@@ -41,7 +41,7 @@
         },
         "competition": 25,
         "cpc": 5,
-        "currentRankingPosition": 3.3,
+        "currentRankingPosition": 3.4,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -110,7 +110,7 @@
         },
         "competition": 21,
         "cpc": 7,
-        "currentRankingPosition": 4.6,
+        "currentRankingPosition": 4.9,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -138,8 +138,8 @@
       "crossSourceConfidence": {
         "confidenceScore": 81,
         "subscores": {
-          "gsc": 86,
-          "ga4": 89,
+          "gsc": 85,
+          "ga4": 91,
           "ads": null,
           "semrush": 63
         },
@@ -179,7 +179,7 @@
         },
         "competition": 12,
         "cpc": 20,
-        "currentRankingPosition": 3.2,
+        "currentRankingPosition": 3.4,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -302,7 +302,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 43,
+      "confidenceScore": 40,
       "mappedPageId": "nalpamaradi-thailam",
       "mappedPage": "Nalpamaradi Thailam Skin Oil",
       "parentTopic": null,
@@ -317,7 +317,7 @@
         },
         "competition": 23,
         "cpc": 3,
-        "currentRankingPosition": 8.8,
+        "currentRankingPosition": 10.0,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -343,9 +343,9 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 43,
+        "confidenceScore": 40,
         "subscores": {
-          "gsc": 70,
+          "gsc": 61,
           "ga4": 0,
           "ads": 0,
           "semrush": 93
@@ -363,7 +363,7 @@
     {
       "keyword": "durance capsules",
       "type": "Primary",
-      "suggestedPlacement": "H1",
+      "suggestedPlacement": "Meta Title",
       "answerable": false,
       "intent": "Informational",
       "aiVoiceSearchFit": "Low",
@@ -371,9 +371,9 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 58,
-      "mappedPageId": "durance-capsules",
-      "mappedPage": "Durance Ayurvedic Medicine for PE & ED",
+      "confidenceScore": 56,
+      "mappedPageId": null,
+      "mappedPage": "Content Gap",
       "parentTopic": null,
       "underperformanceFlag": false,
       "competitorGap": null,
@@ -411,20 +411,20 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 58,
+        "confidenceScore": 56,
         "subscores": {
-          "gsc": 75,
+          "gsc": 72,
           "ga4": null,
           "ads": null,
           "semrush": 28
         },
         "underperformanceFlag": false
       },
-      "contentGapCandidate": false,
+      "contentGapCandidate": true,
       "competitorContentGap": {
         "competitorOverlap": null,
         "cannibalizationRisk": false,
-        "contentGap": false
+        "contentGap": true
       },
       "priority": "Medium"
     },
@@ -439,7 +439,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 58,
+      "confidenceScore": 57,
       "mappedPageId": null,
       "mappedPage": "Content Gap",
       "parentTopic": null,
@@ -451,7 +451,7 @@
         },
         "competition": 27,
         "cpc": 0,
-        "currentRankingPosition": 1.1,
+        "currentRankingPosition": 1.2,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -477,9 +477,9 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 58,
+        "confidenceScore": 57,
         "subscores": {
-          "gsc": 75,
+          "gsc": 74,
           "ga4": null,
           "ads": null,
           "semrush": 27
@@ -519,7 +519,7 @@
         },
         "competition": 18,
         "cpc": 4,
-        "currentRankingPosition": 5.7,
+        "currentRankingPosition": 5.6,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -588,7 +588,7 @@
         },
         "competition": 15,
         "cpc": 5,
-        "currentRankingPosition": 12.1,
+        "currentRankingPosition": 12.2,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -642,7 +642,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 70,
+      "confidenceScore": 69,
       "mappedPageId": "manasamitram-gulika",
       "mappedPage": "Manasamitram Gulika (Insomnia/Anxiety)",
       "parentTopic": null,
@@ -656,7 +656,7 @@
         },
         "competition": 11,
         "cpc": 2,
-        "currentRankingPosition": 2.3,
+        "currentRankingPosition": 2.2,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -682,9 +682,9 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 70,
+        "confidenceScore": 69,
         "subscores": {
-          "gsc": 70,
+          "gsc": 68,
           "ga4": 97,
           "ads": null,
           "semrush": 36
@@ -710,7 +710,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 82,
+      "confidenceScore": 83,
       "mappedPageId": "cholesterol-treatment",
       "mappedPage": "Cholesterol Support",
       "parentTopic": null,
@@ -725,7 +725,7 @@
         },
         "competition": 19,
         "cpc": 7,
-        "currentRankingPosition": 3.6,
+        "currentRankingPosition": 3.5,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -751,10 +751,10 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 82,
+        "confidenceScore": 83,
         "subscores": {
           "gsc": 77,
-          "ga4": 85,
+          "ga4": 88,
           "ads": null,
           "semrush": 86
         },
@@ -794,7 +794,7 @@
         },
         "competition": 19,
         "cpc": 3,
-        "currentRankingPosition": 5.0,
+        "currentRankingPosition": 5.1,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -857,7 +857,7 @@
       "severity": "medium",
       "category": "LOW ENGAGEMENT",
       "keyword": "nalpamaradi thailam",
-      "text": "“nalpamaradi thailam” ranks well (position 8.8) but GA4 engagement is poor -- likely a content/page problem, not a visibility problem.",
+      "text": "“nalpamaradi thailam” ranks well (position 10.0) but GA4 engagement is poor -- likely a content/page problem, not a visibility problem.",
       "source": "GA4"
     }
   ],
@@ -876,6 +876,11 @@
       "keyword": "lipidex capsule",
       "totalVolume": 260,
       "parentTopic": null
+    },
+    {
+      "keyword": "durance capsules",
+      "totalVolume": 160,
+      "parentTopic": null
     }
   ],
   "avoidList": [],
@@ -884,8 +889,8 @@
     {
       "keyword": "nalpamaradi thailam",
       "mappedPage": "Nalpamaradi Thailam Skin Oil",
-      "position": 8.8,
-      "confidenceScore": 43
+      "position": 10.0,
+      "confidenceScore": 40
     }
   ]
 }

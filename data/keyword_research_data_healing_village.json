@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-28T08:54:10.226781+00:00",
+  "generatedAt": "2026-10-05T09:30:58.076192+00:00",
   "phase": "live",
   "kpis": {
     "totalKeywords": 8,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 4,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 31.8
+    "avgConfidenceScore": 33.1
   },
   "kpiDeltas": {
     "totalKeywords": 0,
     "highPriorityKeywords": 0,
     "contentGapsIdentified": 0,
     "complianceRiskFlagged": 0,
-    "avgConfidenceScore": 1.8
+    "avgConfidenceScore": 1.3
   },
   "entries": [
     {
@@ -42,7 +42,7 @@
         },
         "competition": 28,
         "cpc": 19,
-        "currentRankingPosition": 19.4,
+        "currentRankingPosition": 19.8,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -70,7 +70,7 @@
       "crossSourceConfidence": {
         "confidenceScore": 37,
         "subscores": {
-          "gsc": 25,
+          "gsc": 26,
           "ga4": 84,
           "ads": 0,
           "semrush": 34
@@ -109,7 +109,7 @@
         },
         "competition": 48,
         "cpc": 16,
-        "currentRankingPosition": 12.0,
+        "currentRankingPosition": 10.2,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -178,7 +178,7 @@
         },
         "competition": 33,
         "cpc": 27,
-        "currentRankingPosition": 8.0,
+        "currentRankingPosition": 7.9,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -232,7 +232,7 @@
       "spamRisk": "None",
       "complianceRisk": "Low",
       "complianceFlaggedTerms": [],
-      "confidenceScore": 31,
+      "confidenceScore": 42,
       "mappedPageId": null,
       "mappedPage": "Content Gap",
       "parentTopic": null,
@@ -273,11 +273,11 @@
         "patientNationalityPattern": false
       },
       "crossSourceConfidence": {
-        "confidenceScore": 31,
+        "confidenceScore": 42,
         "subscores": {
           "gsc": 20,
           "ga4": null,
-          "ads": 0,
+          "ads": null,
           "semrush": 81
         },
         "underperformanceFlag": false
@@ -384,7 +384,7 @@
         },
         "competition": 19,
         "cpc": 19,
-        "currentRankingPosition": 17.8,
+        "currentRankingPosition": 19.0,
         "trendingPhrase": false
       },
       "audienceFitIntent": {
@@ -412,8 +412,8 @@
       "crossSourceConfidence": {
         "confidenceScore": 57,
         "subscores": {
-          "gsc": 38,
-          "ga4": 100,
+          "gsc": 39,
+          "ga4": 99,
           "ads": 0,
           "semrush": 94
         },
